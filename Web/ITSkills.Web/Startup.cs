@@ -2,6 +2,7 @@
 {
     using System.Reflection;
 
+    using ITSkills.Common;
     using ITSkills.Data;
     using ITSkills.Data.Common;
     using ITSkills.Data.Common.Repositories;
@@ -57,7 +58,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender>(x => new SendGridEmailSender("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"));
+            services.AddTransient<IEmailSender>(x => new SendGridEmailSender(GlobalConstants.SendGridAPIKey));
             services.AddTransient<ISettingsService, SettingsService>();
         }
 
