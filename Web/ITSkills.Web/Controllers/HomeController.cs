@@ -4,30 +4,30 @@
     using System.Linq;
 
     using ITSkills.Data;
+    using ITSkills.Data.Common.Repositories;
+    using ITSkills.Data.Models;
+    using ITSkills.Services.Data;
+    using ITSkills.Services.Mapping;
     using ITSkills.Web.ViewModels;
     using ITSkills.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
-        private readonly ApplicationDbContext db;
+        private readonly ICategoriesService categoriesService;
 
-        public HomeController(ApplicationDbContext db)
+        public HomeController(ICategoriesService categoriesService)
         {
-            this.db = db;
+            this.categoriesService = categoriesService;
         }
 
         public IActionResult Index()
         {
             var viewModel = new IndexViewModel();
-            var categories = this.db.Categories.Select(x => new IndexCategoryViewModel {
-            Name = x.Name,
-            Description = x.Description,
-            ImageUrl = x.ImageUrl,
-            })
-                .ToList();
-
+            var categories = this.categoriesService
+                .GetAll<IndexCategoryViewModel>();
             viewModel.Categories = categories;
+
             return this.View(viewModel);
         }
 
