@@ -11,7 +11,7 @@
 
         public string ImageUrl { get; set; }
 
-        public int CoursesCount { get; set; }
+        public int? CoursesCount { get; set; }
 
         public string Url => $"/Category/{this.Name.Replace(" ", "-")}";
     }

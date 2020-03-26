@@ -13,6 +13,8 @@
 
         public string Description { get; set; }
 
+        public int? CoursesCount { get; set; }
+
         public IEnumerable<CoursesInCategoryViewModel> Courses { get; set; }
     }
 }
