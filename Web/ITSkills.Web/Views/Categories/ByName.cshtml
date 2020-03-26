@@ -1,0 +1,22 @@
+﻿@model ITSkills.Web.ViewModels.Categories.CategoryViewModel
+@{ 
+    this.ViewData["Title"] = Model.Name;
+}
+    <h1 class="display-3">@this.ViewData["Title"]</h1>
+<div>
+    @Model.Description
+</div>
+<div class="row">
+    @foreach (var course in Model.Courses)
+    {
+        <div class="col-lg-4 col-md-6">
+            <div class="single__program">
+                <div class="program__content">
+                    <span>@Model.Name</span>
+                    <h4>@course.Title</h4>
+                    <p>Created by @course.UserUserName.</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

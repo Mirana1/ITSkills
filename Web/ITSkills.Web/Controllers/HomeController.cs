@@ -1,13 +1,8 @@
 ﻿namespace ITSkills.Web.Controllers
 {
     using System.Diagnostics;
-    using System.Linq;
 
-    using ITSkills.Data;
-    using ITSkills.Data.Common.Repositories;
-    using ITSkills.Data.Models;
     using ITSkills.Services.Data;
-    using ITSkills.Services.Mapping;
     using ITSkills.Web.ViewModels;
     using ITSkills.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
