@@ -2,39 +2,62 @@
 @{
     this.ViewData["Title"] = Model.Name;
 }
-<h1 class="display-3">@this.ViewData["Title"]</h1>
-<div>
-    @Model.Description
-</div>
-<br />
 
-@if (Model.CoursesCount == 0)
-{
-    <h1>:(</h1>
-    <h2>There are currently no courses in this category.</h2>
-}
-else
-{
-    @foreach (var course in Model.Courses)
+<body>
+    @if (Model.CoursesCount == 0)
     {
-        <div class="row course-in-category">
-            <div class="col-md-9 description-box">
-                <h4 class="media-heading"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
-                <span class="fa fa-play-circle-o">@course.CreatedOn</span>
-                <div class="html-raw-wrapper">@course.Description</div>
-                <p>Created by @course.UserUserName.</p>
-                @if (course.Price == null)
-                {
-                    <p>Free</p>
+        <div class="text-center">
+            <img src="~/img/artboard_1.png" class="center">
+            <p>There are no created courses yet.</p>
+            <style>
+                img {
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 30%;
                 }
-                else
-                {
-                    <p>@course.Price BNG</p>
-                }
-            </div>
-        </div>
 
+                p {
+                    color: black;
+                    font-size: 35px;
+                }
+            </style>
+
+        </div>
     }
-}
+    else
+    {
+        <h1 class="display-3">@this.ViewData["Title"]</h1>
+        <div>
+            @Model.Description
+        </div>
+        <br />
+        @foreach (var course in Model.Courses)
+        {
+            <div class="row course-in-category">
+                <div class="col-md-9 description-box">
+                    <h4 class="media-heading"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
+                    <span class="fa fa-play-circle-o">@course.CreatedOn</span>
+                    <div class="html-raw-wrapper">@course.Description</div>
+                    <p>Created by @course.UserUserName.</p>
+                    @if (course.Price == null)
+                    {
+                        <p>Free</p>
+                    }
+                    else
+                    {
+                        <p>@course.Price BNG</p>
+                    }
+                </div>
+            </div>
+
+        }
+    }
+</body>
+<style>
+    body {
+        background-color: #f1f1f1;
+    }
+</style>
 
 
