@@ -61,6 +61,7 @@
             services.AddTransient<IEmailSender>(x => new SendGridEmailSender(GlobalConstants.SendGridAPIKey));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<ICoursesService, CoursesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,6 +107,7 @@
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("courseCategory", "/Category/{name:minlength(3)}", new { controller = "Categories", action = "ByName"});
+                        endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });

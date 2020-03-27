@@ -19,7 +19,7 @@ else
     {
         <div class="row course-in-category">
             <div class="col-md-9 description-box">
-                <h4 class="media-heading"><a asp-controller="Courses" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
+                <h4 class="media-heading"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
                 <span class="fa fa-play-circle-o">@course.CreatedOn</span>
                 <div class="html-raw-wrapper">@course.Description</div>
                 <p>Created by @course.UserUserName.</p>
