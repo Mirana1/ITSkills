@@ -4,7 +4,7 @@
 
     public interface ICoursesService
     {
-        IEnumerable<T> GetAll<T>();
+        IEnumerable<T> GetAll<T>(int? count);
 
         T GetById<T>(int id);
     }

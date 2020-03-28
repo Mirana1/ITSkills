@@ -16,11 +16,16 @@
             this.coursesRepository = coursesRepository;
         }
 
-        public IEnumerable<T> GetAll<T>()
+        public IEnumerable<T> GetAll<T>(int? count)
         {
             IQueryable<Course> query = this.coursesRepository
             .All()
             .OrderBy(x => x.Title);
+
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
 
             return query.To<T>().ToList();
         }

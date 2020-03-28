@@ -1,6 +1,8 @@
 ﻿namespace ITSkills.Services.Data
 {
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
 
     using ITSkills.Data.Common.Repositories;
@@ -21,6 +23,7 @@
             IQueryable<Category> query = this.categoryRepository
             .All()
             .OrderBy(x => x.Name);
+
             if (count.HasValue)
             {
                 query = query.Take(count.Value);

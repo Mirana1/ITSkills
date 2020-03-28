@@ -1,1 +1,16 @@
-﻿<h1>test</h1>
+﻿@model ITSkills.Web.ViewModels.Courses.CoursesViewModel
+@{
+    this.ViewData["Title"] = Model.Title;
+}
+
+<body>
+    <div class="text-center">
+        <h2>@Model.Title</h2>
+        <p>Created on @Model.CreatedOn @Model.LectionsCount Lections</p>
+    </div>
+    <br />
+    <div class="text-center">
+        <u>>FOR THE COURSE</u>
+        <p>@Model.Description</p>
+    </div>
+</body>
