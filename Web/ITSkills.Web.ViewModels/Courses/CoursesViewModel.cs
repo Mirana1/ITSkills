@@ -22,6 +22,8 @@
 
         public int LectionsCount { get; set; }
 
+        public string UserUserName { get; set; }
+
         public IEnumerable<LectionsInCourseViewModel> Lections { get; set; }
     }
 }

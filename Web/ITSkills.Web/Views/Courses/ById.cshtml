@@ -10,7 +10,40 @@
     </div>
     <br />
     <div class="text-center">
-        <u>>FOR THE COURSE</u>
+        <u>FOR THE COURSE</u>
         <p>@Model.Description</p>
+        <u>LECTIONS</u>
+        <div class="lections">
+            @foreach (var lection in Model.Lections)
+            {
+                <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
+                    <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
+                        <span class="lecture-name">@lection.Title</span>
+                    </li>
+                </ul>
+            }
+        </div>
+        <div class="lector-info">
+            <u>LECTOR</u>
+            <h3>@Model.UserUserName</h3>
+        </div>
+        <u>PRICING</u>
+        @if (Model.Price == null)
+        {
+            <h4>Free</h4>
+        }
+        else
+        {
+            <h4>@Model.Price BGN</h4>
+        }
+        <style>
+            u {
+                font-size: 25px
+            }
+
+            li {
+                list-style-type: none;
+            }
+        </style>
     </div>
 </body>
