@@ -13,6 +13,6 @@
 
         public int? CoursesCount { get; set; }
 
-        public string Url => $"/Category/{this.Name.Replace(" ", "-")}";
+        public string Url => $"/Category/{this.Name.Replace(' ', '-')}";
     }
 }
