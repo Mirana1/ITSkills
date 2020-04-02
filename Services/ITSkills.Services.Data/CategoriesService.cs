@@ -1,8 +1,6 @@
 ﻿namespace ITSkills.Services.Data
 {
-    using System;
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
 
     using ITSkills.Data.Common.Repositories;

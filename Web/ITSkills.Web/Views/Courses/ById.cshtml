@@ -2,11 +2,22 @@
 @{
     this.ViewData["Title"] = Model.Title;
 }
-
+<head>
+    <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
+</head>
 <body>
     <div class="text-center">
-        <h2>@Model.Title</h2>
-        <p>Created on @Model.CreatedOn.ToString("dd MMMM yyyy") @Model.LectionsCount Lections</p>
+        <h1>@Model.Title</h1>
+        <div class="text-center bottom-buffer-lg info">
+            <span class="course-date">
+                <i class="far fa-clock"></i>
+                <span>@Model.CreatedOn.ToString("dd MMMM yyyy")</span>
+            </span>
+            <span class="count-lections">
+                <i class="far fa-file-alt"></i>
+                <span>@Model.LectionsCount Lections</span>
+            </span>
+        </div>
     </div>
     <br />
     <div class="text-center">
@@ -43,6 +54,15 @@
 
             li {
                 list-style-type: none;
+            }
+
+            i {
+                font-size: 20px;
+                font-style: normal;
+            }
+
+            span {
+                font-size: 20px;
             }
         </style>
     </div>
