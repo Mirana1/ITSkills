@@ -3,44 +3,39 @@
     this.ViewData["Title"] = Model.Name;
 }
 
-    <body>
-        @if (Model.CoursesCount == 0)
-        {
-            <partial name="NotFound" />
-        }
-        else
-        {
-            <h1 class="display-3">@this.ViewData["Title"]</h1>
-            <div>
-                @Model.Description
-            </div>
-            <br />
-            @foreach (var course in Model.Courses)
-            {
-                <div class="row course-in-category">
-                    <div class="col-md-9 description-box">
-                        <h4 class="media-heading"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
-                        <p>@course.CreatedOn.ToString("dd MMMM yyyy")</p>
-                        <div class="html-raw-wrapper">@course.Description</div>
-                        <p>Created by @course.UserUserName.</p>
-                        @if (course.Price == null)
-                        {
-                            <p>Free</p>
-                        }
-                        else
-                        {
-                            <p>@course.Price BNG</p>
-                        }
-                    </div>
-                </div>
-
-            }
-        }
-    </body>
-<style>
-    body {
-        background-color: #f1f1f1;
+<body>
+    @if (Model.CoursesCount == 0)
+    {
+        <partial name="NotFound" />
     }
-</style>
+    else
+    {
+        <h1 class="display-3">@this.ViewData["Title"]</h1>
+        <div>
+            @Model.Description
+        </div>
+        <br />
+        @foreach (var course in Model.Courses)
+        {
+            <div class="row course-in-category">
+                <div class="col-md-9 description-box">
+                    <h4 class="media-heading"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
+                    <p>@course.CreatedOn.ToString("dd MMMM yyyy")</p>
+                    <div class="html-raw-wrapper">@course.Description</div>
+                    <p>Created by @course.UserUserName.</p>
+                    @if (course.Price == null)
+                    {
+                        <p>Free</p>
+                    }
+                    else
+                    {
+                        <p>@course.Price BNG</p>
+                    }
+                </div>
+            </div>
+
+        }
+    }
+</body>
 
 

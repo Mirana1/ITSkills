@@ -4,6 +4,7 @@
 }
 <head>
     <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/customCss.css" />
 </head>
 <body>
     <div class="text-center">
@@ -21,49 +22,53 @@
     </div>
     <br />
     <div class="text-center">
-        <u>FOR THE COURSE</u>
-        <p>@Model.Description</p>
-        <u>LECTIONS</u>
-        <div class="lections">
-            @foreach (var lection in Model.Lections)
-            {
-                <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
-                    <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
-                        <span class="lecture-name">@lection.Title</span>
-                    </li>
-                </ul>
-            }
-        </div>
-        <div class="lector-info">
-            <u>LECTOR</u>
-            <h3>@Model.UserUserName</h3>
-        </div>
-        <u>PRICING</u>
-        @if (Model.Price == null)
-        {
-            <h4>Free</h4>
-        }
-        else
-        {
-            <h4>@Model.Price BGN</h4>
-        }
-        <style>
-            u {
-                font-size: 25px
-            }
-
-            li {
-                list-style-type: none;
-            }
-
-            i {
-                font-size: 20px;
-                font-style: normal;
-            }
-
-            span {
-                font-size: 20px;
-            }
-        </style>
+        <section class="grey-container about-section bottom-buffer-lg" id="course-info">
+            <u>FOR THE COURSE</u>
+            <p>@Model.Description</p>
+        </section>
+        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+            <u>LECTIONS</u>
+            <div class="lections">
+                @foreach (var lection in Model.Lections)
+                {
+                    <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
+                        <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
+                            <span class="lecture-name">@lection.Title</span>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </section>
+        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+            <u>WHAT YOU'LL LEARN</u>
+            <div class="acquired-knowledge">
+                <p>@Model.AcquiredKnowledge</p>
+            </div>
+        </section>
+        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+            <u>REQUIREMENTS</u>
+            <div class="requirements-content">
+                <p>@Model.Requirements</p>
+            </div>
+        </section>
+        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+            <div class="lector-info">
+                <u>LECTOR</u>
+                <p class="lector-name">@Model.UserUserName</p>
+            </div>
+        </section>
+        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+            <div class="pricing">
+                <u>PRICING</u>
+                @if (Model.Price == null)
+                {
+                    <p class="price">Free</p>
+                }
+                else
+                {
+                    <p class="price">@Model.Price BGN</p>
+                }
+            </div>
+        </section>
     </div>
 </body>

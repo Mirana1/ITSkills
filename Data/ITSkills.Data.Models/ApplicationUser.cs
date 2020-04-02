@@ -28,6 +28,8 @@ namespace ITSkills.Data.Models
         // Deletable entity
         public bool IsDeleted { get; set; }
 
+        public string AboutInfo { get; set; }
+
         public DateTime? DeletedOn { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
