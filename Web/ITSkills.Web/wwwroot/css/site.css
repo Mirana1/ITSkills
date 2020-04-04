@@ -24,6 +24,56 @@ a {
     border-color: #1861ac;
 }
 
+/* Category Create button */
+
+.btn-submit:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.btn-submit {
+    padding: 10px 12px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    background-color: #5fcf80;
+    color: #fff;
+}
+
+/* Course View Model */
+u {
+    font-size: 25px
+}
+
+li {
+    list-style-type: none;
+}
+
+i {
+    font-size: 20px;
+    font-style: normal;
+}
+
+span {
+    font-size: 17px;
+}
+
+section {
+    background-color: #f2f3f4;
+}
+
+.lector-name {
+    font-size: 20px;
+}
+
+.price {
+    font-size: 20px;
+}
+
+.img-thumbnail {
+    height: 70px;
+    position: absolute;
+    left: 300px;
+    top: 610px;
+}
+
 
 /* Sticky footer styles
 -------------------------------------------------- */

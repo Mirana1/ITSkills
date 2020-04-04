@@ -19,5 +19,10 @@
 
             return this.View(viewModel);
         }
+
+        public IActionResult Create()
+        {
+            return this.View();
+        }
     }
 }
