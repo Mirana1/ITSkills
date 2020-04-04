@@ -26,3 +26,10 @@ section {
 .price {
     font-size: 20px;
 }
+
+.img-thumbnail {
+    height: 70px;
+    position:absolute;
+    left:300px;
+    top:610px;
+}

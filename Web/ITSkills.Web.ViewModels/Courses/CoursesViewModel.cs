@@ -18,11 +18,13 @@
 
         public string UserId { get; set; }
 
+        public string UserUserName { get; set; }
+
+        public string AboutInfo { get; set; }
+
         public DateTime CreatedOn { get; set; }
 
         public int LectionsCount { get; set; }
-
-        public string UserUserName { get; set; }
 
         public string Requirements { get; set; }
 
