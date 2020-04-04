@@ -1,4 +1,20 @@
-﻿<form>
+﻿<div class="title">
+    <h2>Create a new category</h2>
+    <hr class="between" />
+</div>
+<head>
+    <script>
+        function countChar(val) {
+            var len = val.value.length;
+            if (len >= 200) {
+                val.value = val.value.substring(0, 200);
+            } else {
+                $('#charNum').text(200 - len);
+            }
+        };
+    </script>
+</head>
+<form>
     <div class="form-group">
         <label for="categoryName">Name</label>
         <input type="text" class="form-control" id="Name" placeholder="Name...">
@@ -9,8 +25,8 @@
     </div>
     <div class="form-group">
         <label for="Description">Description</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)"></textarea>
+        <div id="charNum"></div>
     </div>
-    <button type="submit" class="btn btn-block btn-submit" title="Create" size="">Create</button>
-   
+    <button type="submit" class="btn btn-success btn-submit" title="Create">Create</button>
 </form>
