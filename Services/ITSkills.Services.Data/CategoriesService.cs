@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Threading.Tasks;
     using ITSkills.Data.Common.Repositories;
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
@@ -14,6 +14,21 @@
         public CategoriesService(IDeletableEntityRepository<Category> categoryRepository)
         {
             this.categoryRepository = categoryRepository;
+        }
+
+        public async Task<int> CreateAsync(string name, string imageUrl, string description)
+        {
+            var category = new Category
+            {
+                Name = name,
+                ImageUrl = imageUrl,
+                Description = description,
+            };
+
+            await this.categoryRepository.AddAsync(category);
+            await this.categoryRepository.SaveChangesAsync();
+
+            return category.Id;
         }
 
         public IEnumerable<T> GetAll<T>(int? count = null)

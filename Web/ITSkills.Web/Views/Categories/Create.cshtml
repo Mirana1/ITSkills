@@ -1,4 +1,8 @@
-﻿<div class="title">
+﻿@model ITSkills.Web.ViewModels.Categories.CreateCategoryViewModel
+@{ 
+    this.ViewData["Title"] = "Create a new category";
+}
+<div class="title">
     <h2>Create a new category</h2>
     <hr class="between" />
 </div>
@@ -14,18 +18,18 @@
         };
     </script>
 </head>
-<form>
+<form method="post" asp-action="Create">
     <div class="form-group">
         <label for="categoryName">Name</label>
-        <input type="text" class="form-control" id="Name" placeholder="Name...">
+        <input asp-for="Name" class="form-control" placeholder="Name...">
     </div>
     <div class="form-group">
-        <label for="exampleFormControlInput1">Image</label>
-        <input type="url" class="form-control" id="ImageUrl" placeholder="Image URL here...">
+        <label for="imageUrl">Image</label>
+        <input asp-for="ImageUrl"class="form-control" placeholder="Image URL here...">
     </div>
     <div class="form-group">
         <label for="Description">Description</label>
-        <textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)"></textarea>
+        <input asp-for="Description" textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)">
         <div id="charNum"></div>
     </div>
     <button type="submit" class="btn btn-success btn-submit" title="Create">Create</button>
