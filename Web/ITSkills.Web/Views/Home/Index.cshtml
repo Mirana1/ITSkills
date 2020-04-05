@@ -11,13 +11,13 @@
 <div class="card-group">
     @foreach (var category in Model.Categories)
     {
-        <div class="card col-md-4 media">
-            <img class="card-img" src="@category.ImageUrl" alt="@category.Name" width="250" height="220">
+        <div class="card">
+            <img src="@category.ImageUrl" class="card-img-top" alt="@category.Name" width="250" height="190">
             <div class="card-body">
                 <h5 class="card-title">@category.Name</h5>
-                <p class="card-text">@category.Description</p>
                 <a href=@category.Url class="btn btn-primary">See category</a>
             </div>
         </div>
     }
 </div>
+

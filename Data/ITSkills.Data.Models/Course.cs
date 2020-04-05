@@ -17,6 +17,8 @@
 
         public decimal? Price { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string UserId { get; set; }
 
         public string Requirements { get; set; }

@@ -1,5 +1,7 @@
 ﻿namespace ITSkills.Web.ViewModels.Home
 {
+    using System.ComponentModel.DataAnnotations;
+
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 

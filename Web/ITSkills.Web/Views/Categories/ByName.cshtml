@@ -2,7 +2,15 @@
 @{
     this.ViewData["Title"] = Model.Name;
 }
+<head>
+    <script>
+        var options = {
+            valueNames: ['name', 'title', 'expertise']
+        };
 
+        var userList = new List('users', options);
+    </script>
+</head>
 <body>
     @if (Model.CoursesCount == 0)
     {
@@ -15,26 +23,34 @@
             @Model.Description
         </div>
         <br />
-        @foreach (var course in Model.Courses)
-        {
-            <div class="row course-in-category">
-                <div class="col-md-9 description-box">
-                    <h4 class="media-heading"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
-                    <p>@course.CreatedOn.ToString("dd MMMM yyyy")</p>
-                    <div class="html-raw-wrapper">@course.Description</div>
-                    <p>Created by @course.UserUserName.</p>
-                    @if (course.Price == null)
-                    {
-                        <p>Free</p>
-                    }
-                    else
-                    {
-                        <p>@course.Price BNG</p>
-                    }
-                </div>
+        <div class="container">
+            <div class="media-container-row">
+                @foreach (var course in Model.Courses)
+                {
+                    <div class="card p-3 col-12 col-md-6 col-lg-4">
+                        <div class="card-wrapper">
+                            <div class="card-img">
+                                <img src="@course.ImageUrl" alt="@course.Title" media-simple="true" width="200">
+                            </div>
+                            <div class="card-box">
+                                <h4 class="card-title mbr-fonts-style display-5"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
+                                <p class="mbr-text mbr-fonts-style display-7">
+                                    @course.Description<br><strong>Created by @course.UserUserName</strong><br>
+                                </p>
+                                @if (course.Price == null)
+                                {
+                                    <p>Free</p>
+                                }
+                                else
+                                {
+                                    <p>@course.Price BNG</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
-
-        }
+        </div>
     }
 </body>
 
