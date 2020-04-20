@@ -1,6 +1,6 @@
 ﻿@{
     this.ViewData["Title"] = "Create a new course";
-     var categories = Model.Categories.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var categories = Model.Categories.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
 @model ITSkills.Web.ViewModels.Courses.CreateCourseViewModel
 
@@ -9,16 +9,7 @@
     <hr class="between" />
 </div>
 <head>
-    <script>
-        function countChar(val) {
-            var len = val.value.length;
-            if (len >= 200) {
-                val.value = val.value.substring(0, 200);
-            } else {
-                $('#charNum').text(200 - len);
-            }
-        };
-    </script>
+    <script src="~/js/custom.js"></script>
 </head>
 <form method="post" asp-action="Create">
     <div class="form-group">
@@ -31,27 +22,26 @@
     </div>
     <div class="form-group">
         <label for="Description">Description</label>
-        <input asp-for="Description" textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)">
+        <input asp-for="Description" textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)" placeholder="Write a short description of the course...">
         <div id="charNum"></div>
     </div>
     <div class="form-group">
         <label for="price">Price</label>
-        <input asp-for="Price" class="form-control" placeholder="Price...">
+        <input type="number" min="0" asp-for="Price" class="form-control" placeholder="Pricing of the course...">
     </div>
     <div class="form-group">
-        <label for="AcquiredKnowledge">Aquired Knowledge</label>
-        <input asp-for="AcquiredKnowledge" textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)">
-        <div id="charNum"></div>
+        <label for="AcquiredKnowledge">Acquired Knowledge</label>
+        <input asp-for="AcquiredKnowledge" textarea class="form-control" placeholder="Acquired knowledge from the course...">
     </div>
     <div class="form-group">
         <label for="Requirements">Requiremens</label>
-        <input asp-for="Requirements" textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)">
-        <div id="charNum"></div>
+        <input asp-for="Requirements" textarea class="form-control" placeholder="Required knowledge to start the course...">
     </div>
     <div>
         <label asp-for="CategoryId"></label>
-        <select asp-for="CategoryId" asp-items="categories"class="form-control"></select>
+        <select asp-for="CategoryId" asp-items="categories" class="form-control"></select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
+    <br />
     <button type="submit" class="btn btn-success btn-submit" title="Create">Create</button>
 </form>

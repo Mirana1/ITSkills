@@ -62,6 +62,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<ICoursesService, CoursesService>();
+            services.AddTransient<ILectionsService, LectionsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,6 +106,7 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapControllerRoute("lectionView", "/Lection/ById/{id}", new { controller = "Lections", action = "ById" });
                         endpoints.MapControllerRoute("categoryCreate", "/Category/Create", new { controller = "Categories", action = "Create" });
                         endpoints.MapControllerRoute("courseCategory", "/Category/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });
                         endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });

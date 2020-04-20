@@ -1,0 +1,7 @@
+﻿@model ITSkills.Web.ViewModels.Lections.LectionsViewModel
+@{
+    this.ViewData["Title"] = Model.Title;
+}
+    <div class="d-flex justify-content-center">
+        <iframe src="@Model.IFrameSource" class="w-50" height="300"></iframe>
+    </div>

@@ -2,6 +2,7 @@
 {
     using System.Diagnostics;
 
+    using ITSkills.Data;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels;
     using ITSkills.Web.ViewModels.Home;
@@ -10,10 +11,12 @@
     public class HomeController : BaseController
     {
         private readonly ICategoriesService categoriesService;
+        private readonly ApplicationDbContext db;
 
-        public HomeController(ICategoriesService categoriesService)
+        public HomeController(ICategoriesService categoriesService, ApplicationDbContext db)
         {
             this.categoriesService = categoriesService;
+            this.db = db;
         }
 
         public IActionResult Index()
@@ -25,6 +28,7 @@
 
             return this.View(viewModel);
         }
+
 
         public IActionResult Privacy()
         {

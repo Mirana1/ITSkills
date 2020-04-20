@@ -4,7 +4,6 @@
 
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
-    using ITSkills.Services.Mapping;
     using ITSkills.Web.ViewModels.Courses;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -42,8 +41,6 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateCourseViewModel input)
         {
-            //var user = this.userManager.GetUserAsync(this.User);
-
             var courseId = await this.coursesService.CreateAsync(input.Title, input.Description, input.CategoryId, input.Price, input.AcquiredKnowledge, input.Requirements, input.ImageUrl);
             this.TempData["InfoMessage"] = "Course created!";
 
