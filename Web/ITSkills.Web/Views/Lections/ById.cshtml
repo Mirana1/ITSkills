@@ -2,6 +2,10 @@
 @{
     this.ViewData["Title"] = Model.Title;
 }
-    <div class="d-flex justify-content-center">
-        <iframe src="@Model.IFrameSource" class="w-50" height="300"></iframe>
-    </div>
+
+<!-- try to put it in a div with col-md-->>
+<h4 class="text-center">@Model.Title</h4>
+<br />
+<div class="d-flex justify-content-center">
+    <iframe src="@Model.IFrameSource" width="640" height="390"></iframe>
+</div>
