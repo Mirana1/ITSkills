@@ -1,9 +1,10 @@
 ﻿namespace ITSkills.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Mvc;
-    using System.Threading.Tasks;
 
     public class CategoriesController : BaseController
     {
@@ -29,8 +30,8 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryViewModel input)
         {
-            var categoryId = await this.categoriesService.CreateAsync(input.Name, input.ImageUrl, input.Description);
-            return this.RedirectToAction(nameof(this.ByName));
+            var category = await this.categoriesService.CreateAsync(input.Name, input.ImageUrl, input.Description);
+            return this.Redirect("/");
         }
     }
 }
