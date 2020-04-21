@@ -2,12 +2,18 @@
     ViewData["Title"] = "Home Page";
 }
 
+
 @model ITSkills.Web.ViewModels.Home.IndexViewModel
 
 <div class="text-center">
     <h1 class="display-4">Categories</h1>
 </div>
-
+<form asp-controller="Home" asp-action="Search" method="get">
+    <p>
+        Title: <input type="text" asp-for="Search" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <div class="card-group">
     @foreach (var category in Model.Categories)
     {
