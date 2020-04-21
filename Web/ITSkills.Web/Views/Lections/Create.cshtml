@@ -1,0 +1,35 @@
+﻿@{
+    this.ViewData["Title"] = "Create a new lection";
+    var courses = Model.Courses.Select(x => new SelectListItem(x.Title, x.Id.ToString()));
+}
+@model ITSkills.Web.ViewModels.Lections.CreateLectionViewModel
+
+<div class="title">
+    <h2>Create a new lection</h2>
+    <hr class="between" />
+</div>
+<head>
+    <script src="~/js/custom.js"></script>
+</head>
+<form method="post" asp-action="Create">
+    <div class="form-group">
+        <label for="courseTitle">Title</label>
+        <input asp-for="Title" class="form-control" placeholder="Title...">
+    </div>
+    <div class="form-group">
+        <label for="Description">Description</label>
+        <input asp-for="Description" textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)" placeholder="Write a short description of the course...">
+        <div id="charNum"></div>
+    </div>
+    <div>
+        <label asp-for="CourseId"></label>
+        <select asp-for="CourseId" asp-items="courses" class="form-control"></select>
+        <span asp-validation-for="CourseId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="videoUrl">Video Url</label>
+        <input asp-for="Url" class="form-control" placeholder="Video URL here...">
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success btn-submit" title="Create">Create</button>
+</form>

@@ -17,6 +17,8 @@
 
         public string Username { get; set; }
 
+        public int CourseId { get; set; }
+
         public string IFrameSource
         {
             get

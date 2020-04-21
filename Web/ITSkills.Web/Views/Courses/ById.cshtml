@@ -28,13 +28,20 @@
         <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
             <u>LECTIONS</u>
             <div class="lections">
-                @foreach (var lection in Model.Lections)
+                @if (Model.Lections.Count() == 0)
                 {
-                    <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
-                        <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
-                            <span class="lecture-name" asp-controller="Lections" asp-action="ById" asp-route-id="@lection.">@lection.Title</span>
-                        </li>
-                    </ul>
+                    <p style="color: darkslateblue;">There are no lections yet.</p>
+                }
+                else
+                {
+                    @foreach (var lection in Model.Lections)
+                    {
+                        <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
+                            <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
+                                <span class="lecture-name"><a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a></span>
+                            </li>
+                        </ul>
+                    }
                 }
             </div>
         </section>
@@ -54,8 +61,8 @@
             <div class="lector-info">
                 <u>LECTOR</u>
                 <div class="lector-avatar">
-                    <img src="~/img/lector.jpg" class="img-thumbnail"/>
-                    </div>
+                    <img src="~/img/lector.jpg" class="img-thumbnail" />
+                </div>
                 <p class="lector-name">@Model.UserUserName</p>
             </div>
         </section>

@@ -3,9 +3,20 @@
     this.ViewData["Title"] = Model.Title;
 }
 
-<!-- try to put it in a div with col-md-->>
+
+<head>
+    <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/backToCoursebtn.css" />
+</head>
 <h4 class="text-center">@Model.Title</h4>
 <br />
-<div class="d-flex justify-content-center">
-    <iframe src="@Model.IFrameSource" width="640" height="390"></iframe>
+<div class="row">
+    <div class="column">
+        <iframe src="@Model.IFrameSource" width="640" height="390"></iframe>
+    </div>
+    <div class="column">
+        <form action="/Course/ById/@Model.CourseId">
+            <button class="button"><span>Back to course </span></button>
+        </form>
+    </div>
 </div>
