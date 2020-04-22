@@ -60,10 +60,14 @@
         <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
             <div class="lector-info">
                 <u>LECTOR</u>
-                <div class="lector-avatar">
-                    <img src="~/img/lector.jpg" class="img-thumbnail" />
+                @*<div class="lector-avatar">
+                        <img src="~/img/lector.jpg" class="img-thumbnail" />
+                    </div>
+                    <p class="lector-name">@Model.UserUserName</p>*@
+                <div class="container lector-info">
+                    <img src="~/img//lector.jpg" alt="Avatar">
+                    <p class="lector-name">@Model.UserUserName</p>
                 </div>
-                <p class="lector-name">@Model.UserUserName</p>
             </div>
         </section>
         <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
@@ -81,3 +85,21 @@
         </section>
     </div>
 </body>
+
+<style>
+    .container lector-info {
+        border: 2px solid #dedede;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px 0;
+    }
+       
+        .container img {
+            float:unset;
+            max-width: 60px;
+            width: 100%;
+            margin-right: 950px;
+            border-radius: 50%;
+        }
+</style>
