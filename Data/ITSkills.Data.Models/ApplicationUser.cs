@@ -28,6 +28,12 @@ namespace ITSkills.Data.Models
         // Deletable entity
         public bool IsDeleted { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string ImageUrl { get; set; }
+
         public string AboutInfo { get; set; }
 
         public DateTime? DeletedOn { get; set; }

@@ -16,11 +16,7 @@
 
         public decimal? Price { get; set; }
 
-        public string UserId { get; set; }
-
-        public string UserUserName { get; set; }
-
-        public string AboutInfo { get; set; }
+        public ApplicationUser User { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

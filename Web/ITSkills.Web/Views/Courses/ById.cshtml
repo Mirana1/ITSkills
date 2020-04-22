@@ -64,11 +64,18 @@
                         <img src="~/img/lector.jpg" class="img-thumbnail" />
                     </div>
                     <p class="lector-name">@Model.UserUserName</p>*@
-                <div class="container lector-info">
-                    <img src="~/img//lector.jpg" alt="Avatar">
-                    <p class="lector-name">@Model.UserUserName</p>
-                    <p class="lector-info">@Model.AboutInfo</p>
-                </div>
+            <div class="container lector-info">
+                @if (Model.User.ImageUrl == null)
+                {
+                    <img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" />
+                }
+                else
+                {
+                    <img src="@Model.User.ImageUrl" alt="Avatar">
+                }
+                <p class="lector-name">@Model.User.FirstName @Model.User.LastName</p>
+                <p class="lector-info">@Model.User.AboutInfo</p>
+            </div>
             </div>
         </section>
         <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
@@ -98,7 +105,7 @@
        
         .container img {
             float:unset;
-            max-width: 60px;
+            max-width: 90px;
             width: 100%;
             margin-right: 950px;
             border-radius: 50%;

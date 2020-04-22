@@ -8,6 +8,7 @@
     using System.Threading.Tasks;
 
     using ITSkills.Data.Models;
+    using ITSkills.Web.Areas.Identity.Data;
     using Microsoft.AspNetCore.Authentication;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -20,6 +21,7 @@
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        //changed applicationuser to itskillsuser
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ILogger<RegisterModel> logger;
@@ -50,6 +52,19 @@
             [StringLength(20, ErrorMessage = "Your username must be at least {2} characters long.", MinimumLength = 5)]
             [Display(Name = "Username")]
             public string Username { get; set; }
+
+            [Required]
+            [StringLength(20, ErrorMessage = "Your first name should be at least {2} characters long.", MinimumLength = 3)]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(20, ErrorMessage = "Your last name should be at least {2} characters long.", MinimumLength = 3)]
+            [Display(Name = "Last Name")]
+            public string LastName { get; set; }
+
+            [Display(Name = "Image URL")]
+            public string ImageUrl { get; set; }
 
             [Required]
             [StringLength(200, ErrorMessage = "Your personal message should have at least 10 characters.")]
@@ -85,7 +100,9 @@
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, AboutInfo = this.Input.AboutInfo };
+                //var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, AboutInfo = this.Input.AboutInfo };
+
+                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, FirstName = this.Input.FirstName, LastName = this.Input.LastName, AboutInfo = this.Input.AboutInfo, ImageUrl = this.Input.ImageUrl };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {
