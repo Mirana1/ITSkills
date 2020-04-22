@@ -2,13 +2,11 @@
 @{
     this.ViewData["Title"] = Model.Title;
 }
-
-
 <head>
     <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="~/css/backToCoursebtn.css" />
 </head>
-<h4 class="text-center">@Model.Title</h4>
+<h4 class="text-center" style="text-transform:uppercase">@Model.Title</h4>
 <br />
 <div class="row">
     <div class="column">
@@ -23,7 +21,9 @@
             @foreach (var lection in Model.Lections)
             {
                 <ul class="list-group">
-                    <li class="list-group-item"><a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@Model.Title</a></li>
+                    <li class="list-group-item" style="text-transform:uppercase">
+                        <a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a>
+                    </li>
                 </ul>
             }
         </div>
