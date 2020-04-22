@@ -52,6 +52,11 @@
             public string Username { get; set; }
 
             [Required]
+            [StringLength(200, ErrorMessage = "Your personal message should have at least 10 characters.")]
+            [Display(Name = "Personal Information")]
+            public string AboutInfo { get; set; }
+
+            [Required]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -80,7 +85,7 @@
             this.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (this.ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email };
+                var user = new ApplicationUser { UserName = this.Input.Username, Email = this.Input.Email, AboutInfo = this.Input.AboutInfo };
                 var result = await this.userManager.CreateAsync(user, this.Input.Password);
                 if (result.Succeeded)
                 {

@@ -35,7 +35,7 @@
             return course.Id;
         }
 
-        public IEnumerable<T> GetAll<T>(int? count)
+        public IEnumerable<T> GetAll<T>(int? count = null)
         {
             IQueryable<Course> query = this.coursesRepository
             .All()

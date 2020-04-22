@@ -1,7 +1,9 @@
 ﻿namespace ITSkills.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using ITSkills.Data.Common.Repositories;
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
@@ -29,6 +31,20 @@
             await this.lectionsRepository.SaveChangesAsync();
 
             return lection.Id;
+        }
+
+        public IEnumerable<T> GetAll<T>(int? count)
+        {
+            IQueryable<Lection> query = this.lectionsRepository
+            .All()
+            .OrderBy(x => x.Title);
+
+            if (count.HasValue)
+            {
+                query = query.Take(count.Value);
+            }
+
+            return query.To<T>().ToList();
         }
 
         public T GetById<T>(int id)

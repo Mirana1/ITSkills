@@ -19,7 +19,9 @@
 
         public IActionResult ById(int id)
         {
+            var lections = this.lectionsService.GetAll<ListLectionsViewModel>();
             var viewModel = this.lectionsService.GetById<LectionsViewModel>(id);
+            viewModel.Lections = lections;
 
             return this.View(viewModel);
         }

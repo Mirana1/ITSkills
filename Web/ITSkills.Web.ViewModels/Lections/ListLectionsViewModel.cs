@@ -1,9 +1,9 @@
-﻿namespace ITSkills.Web.ViewModels.Courses
+﻿namespace ITSkills.Web.ViewModels.Lections
 {
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
-    public class LectionsInCourseViewModel : IMapFrom<Lection>
+    public class ListLectionsViewModel : IMapFrom<Lection>
     {
         public int Id { get; set; }
 

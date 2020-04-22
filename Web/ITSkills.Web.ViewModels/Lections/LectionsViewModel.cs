@@ -1,9 +1,11 @@
 ﻿namespace ITSkills.Web.ViewModels.Lections
 {
+    using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
+    using ITSkills.Web.ViewModels.Courses;
 
     public class LectionsViewModel : IMapFrom<Lection>
     {
@@ -13,11 +15,9 @@
 
         public string Description { get; set; }
 
-        public string UserId { get; set; }
-
-        public string Username { get; set; }
-
         public int CourseId { get; set; }
+
+        public IEnumerable<ListLectionsViewModel> Lections { get; set; }
 
         public string IFrameSource
         {

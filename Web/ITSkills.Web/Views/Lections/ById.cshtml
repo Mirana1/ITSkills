@@ -18,5 +18,15 @@
         <form action="/Course/ById/@Model.CourseId">
             <button class="button"><span>Back to course </span></button>
         </form>
+        <div class="container">
+            <h2>All Lections</h2>
+            @foreach (var lection in Model.Lections)
+            {
+                <ul class="list-group">
+                    <li class="list-group-item"><a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@Model.Title</a></li>
+                </ul>
+            }
+        </div>
+
     </div>
 </div>
