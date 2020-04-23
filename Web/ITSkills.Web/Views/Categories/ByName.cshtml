@@ -37,6 +37,11 @@
                                 <p class="mbr-text mbr-fonts-style display-7">
                                     @course.Description<br><strong>Created by @course.User.FirstName @course.User.LastName</strong><br>
                                 </p>
+                                @*@if (this.User.IsInRole("Admin"))
+                                {*@
+                                    <a asp-page="/Category/Edit" asp-route-id="@course.Id">Edit |</a>
+                                    <a asp-page="/Category/Delete" asp-route-id="@course.Id"> Delete</a>
+                                @*}*@
                                 @if (course.Price == null)
                                 {
                                     <p>Free</p>

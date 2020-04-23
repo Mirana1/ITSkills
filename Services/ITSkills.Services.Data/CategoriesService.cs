@@ -53,5 +53,14 @@
                 .To<T>()
                 .FirstOrDefault();
         }
+
+        public T GetById<T>(int id)
+        {
+            return this.categoryRepository
+                .All()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+        }
     }
 }

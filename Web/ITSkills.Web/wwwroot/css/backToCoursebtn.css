@@ -10,7 +10,7 @@
     width: 170px;
     transition: all 0.5s;
     cursor: pointer;
-    margin: 1px 20px 20px 80px; 
+    margin: 1px 20px 20px 80px;
 }
 
     .button span {
@@ -37,3 +37,38 @@
             opacity: 1;
             right: 0;
         }
+
+/*columns in Lection/ById view*/
+* {
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+}
+
+/* Create two equal columns that sits next to each other */
+.column {
+    flex: 50%;
+    padding: 10px;
+    height: 600px;
+    width: 500px;
+}
+
+iframe {
+    margin-left: -60px;
+    width: 600px;
+    height: 350px;
+}
+
+.list-group-item {
+    text-transform: uppercase;
+    width: 550px;
+}
+
+.list-group {
+    overflow: hidden;
+    overflow-y: scroll;
+    height: 235px;
+    width: 550px;
+}

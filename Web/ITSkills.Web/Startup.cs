@@ -106,13 +106,15 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        
+                        //endpoints.MapControllerRoute("editCategory", "/Category/Edit/{id?}", new { controller = "Categories", action = "Edit" });
                         endpoints.MapControllerRoute("createLection", "/Lection/Create", new { controller = "Lections", action = "Create" });
-                        endpoints.MapControllerRoute("lectionView", "/Lection/ById/{id}", new { controller = "Lections", action = "ById" });
-                        endpoints.MapControllerRoute("categoryCreate", "/Category/Create", new { controller = "Categories", action = "Create" });
-                        endpoints.MapControllerRoute("courseCategory", "/Category/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });
-                        endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });
-                        endpoints.MapControllerRoute("searchCourse", "/Home/Search={searchWord}", new { controller = "Home", action = "Search" });
                         endpoints.MapControllerRoute("createCourse", "/Course/Create", new { controller = "Courses", action = "Create" });
+                        endpoints.MapControllerRoute("categoryCreate", "/Category/Create", new { controller = "Categories", action = "Create" });
+                        endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });
+                        endpoints.MapControllerRoute("lectionView", "/Lection/ById/{id}", new { controller = "Lections", action = "ById" });
+                        endpoints.MapControllerRoute("courseCategory", "/Category/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });
+                        endpoints.MapControllerRoute("searchCourse", "/Home/Search={searchWord}", new { controller = "Home", action = "Search" });
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();

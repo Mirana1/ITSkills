@@ -4,6 +4,7 @@
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Lections;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
         public IActionResult Create()
         {
             var courses = this.coursesService.GetAll<CoursesDropDownMenuViewModel>();
@@ -39,6 +41,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(CreateLectionViewModel input)
         {

@@ -10,7 +10,7 @@
 <br />
 <div class="row">
     <div class="column">
-        <iframe src="@Model.IFrameSource" width="640" height="390"></iframe>
+        <iframe src="@Model.IFrameSource"></iframe>
     </div>
     <div class="column">
         <form action="/Course/ById/@Model.CourseId">
@@ -18,14 +18,14 @@
         </form>
         <div class="container">
             <h2>All Lections</h2>
-            @foreach (var lection in Model.Lections)
-            {
-                <ul class="list-group">
-                    <li class="list-group-item" style="text-transform:uppercase">
+            <ul class="list-group">
+                @foreach (var lection in Model.Lections)
+                {
+                    <li class="list-group-item">
                         <a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a>
                     </li>
-                </ul>
-            }
+                }
+            </ul>
         </div>
 
     </div>
