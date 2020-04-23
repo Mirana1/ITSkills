@@ -41,7 +41,9 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateCourseViewModel input)
         {
-            var courseId = await this.coursesService.CreateAsync(input.Title, input.Description, input.CategoryId, input.Price, input.AcquiredKnowledge, input.Requirements, input.ImageUrl);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = user.Id;
+            var courseId = await this.coursesService.CreateAsync(input.Title, input.Description, input.CategoryId, input.Price, userId, input.AcquiredKnowledge, input.Requirements, input.ImageUrl);
             this.TempData["InfoMessage"] = "Course created!";
 
             return this.RedirectToAction(nameof(this.ById), new { id = courseId });

@@ -17,7 +17,7 @@
             this.coursesRepository = coursesRepository;
         }
 
-        public async Task<int> CreateAsync(string title, string description, int categoryId, decimal? price, string acquiredKnowledge, string requirements, string imageUrl)
+        public async Task<int> CreateAsync(string title, string description, int categoryId, decimal? price, string userId, string acquiredKnowledge, string requirements, string imageUrl)
         {
             var course = new Course
             {
@@ -25,6 +25,7 @@
                 Description = description,
                 CategoryId = categoryId,
                 Price = price,
+                UserId = userId,
                 AcquiredKnowledge = acquiredKnowledge,
                 Requirements = requirements,
                 ImageUrl = imageUrl,

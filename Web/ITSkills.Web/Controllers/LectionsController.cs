@@ -1,20 +1,23 @@
 ﻿namespace ITSkills.Web.Controllers
 {
     using System.Threading.Tasks;
-
+    using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Lections;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class LectionsController : BaseController
     {
         private readonly ILectionsService lectionsService;
         private readonly ICoursesService coursesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public LectionsController(ILectionsService lectionsService, ICoursesService coursesService)
+        public LectionsController(ILectionsService lectionsService, ICoursesService coursesService, UserManager<ApplicationUser> userManager)
         {
             this.lectionsService = lectionsService;
             this.coursesService = coursesService;
+            this.userManager = userManager;
         }
 
         public IActionResult ById(int id)
@@ -39,7 +42,9 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateLectionViewModel input)
         {
-            var lectionId = await this.lectionsService.CreateAsync(input.Title, input.Description, input.CourseId, input.Url);
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = user.Id;
+            var lectionId = await this.lectionsService.CreateAsync(input.Title, input.Description, input.CourseId, input.Url, userId);
 
             return this.RedirectToAction(nameof(this.ById), new { id = lectionId });
         }

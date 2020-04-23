@@ -17,7 +17,7 @@
             this.lectionsRepository = lectionsRepository;
         }
 
-        public async Task<int> CreateAsync(string title, string description, int courseId, string url)
+        public async Task<int> CreateAsync(string title, string description, int courseId, string url, string userId)
         {
             var lection = new Lection
             {
@@ -25,6 +25,7 @@
                 Description = description,
                 CourseId = courseId,
                 Url = url,
+                UserId = userId,
             };
 
             await this.lectionsRepository.AddAsync(lection);
