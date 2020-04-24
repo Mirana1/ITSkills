@@ -11,6 +11,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200424094624_AddedRequirementsToModels.cs" />
+    <Compile Remove="Migrations\20200424094624_AddedRequirementsToModels.Designer.cs" />
+    <Compile Remove="Migrations\20200424101514_AddedMyCourseModel.cs" />
+    <Compile Remove="Migrations\20200424101514_AddedMyCourseModel.Designer.cs" />
+    <Compile Remove="Migrations\20200424101914_MyCourse.cs" />
+    <Compile Remove="Migrations\20200424101914_MyCourse.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 

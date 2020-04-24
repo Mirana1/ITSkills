@@ -1,5 +1,7 @@
 ﻿namespace ITSkills.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     using ITSkills.Data.Common.Models;
 
     public class Lection : BaseDeletableModel<int>

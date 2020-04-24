@@ -1,6 +1,7 @@
 ﻿namespace ITSkills.Data.Models
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     using ITSkills.Data.Common.Models;
 
@@ -21,11 +22,11 @@
 
         public string UserId { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
+
         public string Requirements { get; set; }
 
         public string AcquiredKnowledge { get; set; }
-
-        public virtual ApplicationUser User { get; set; }
 
         public int CategoryId { get; set; }
 

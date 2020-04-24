@@ -32,6 +32,8 @@
 
         public DbSet<Lection> Lections { get; set; }
 
+        public DbSet<MyCourse> MyCourses { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -55,6 +57,12 @@
         {
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
+
+            builder.Entity<MyCourse>(
+                entity =>
+                {
+                    entity.HasKey(uc => new { uc.UserId, uc.CourseId });
+                });
 
             this.ConfigureUserIdentityRelations(builder);
 
