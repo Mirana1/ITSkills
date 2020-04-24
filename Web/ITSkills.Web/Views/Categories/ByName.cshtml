@@ -27,40 +27,42 @@
             @Model.Description
         </div>
         <br />
-        <div class="container">
-            <div class="media-container-row">
-                @foreach (var course in Model.Courses)
-                {
-                    <div class="card p-3 col-12 col-md-6 col-lg-4">
-                        <div class="card-wrapper">
-                            <div class="card-img">
-                                <img src="@course.ImageUrl" alt="@course.Title" media-simple="true" width="200">
+        <div class="card-deck">
+            @foreach (var course in Model.Courses)
+            {
+                <div class="card">
+                    <img class="card-img-top" src="@course.ImageUrl" alt="@course.ImageUrl">
+                    <div class="card-body">
+                        <h4 class="card-title mbr-fonts-style display-5"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
+                        <span class="d-inline-block text-truncate" style="max-width: 320px;">@course.Description</span>
+                        <p class="created-by"><strong>Created by @course.User.FirstName @course.User.LastName</strong></p>
+                        @if (course.Price == null)
+                        {
+                            <div class="card-footer">
+                                <p class="card-text"><small class="text-muted">Free</small></p>
                             </div>
-                            <div class="card-box">
-                                <h4 class="card-title mbr-fonts-style display-5"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
-                                <p class="mbr-text mbr-fonts-style display-7">
-                                    @course.Description<br><strong>Created by @course.User.FirstName @course.User.LastName</strong><br>
-                                </p>
-                                @*@if (this.User.IsInRole("Admin"))
-                                    {*@
-                                <a asp-page="/Category/Edit" asp-route-id="@course.Id">Edit |</a>
-                                <a asp-page="/Category/Delete" asp-route-id="@course.Id"> Delete</a>
-                                @*}*@
-                                @if (course.Price == null)
-                                {
-                                    <p>Free</p>
-                                }
-                                else
-                                {
-                                    <p>@course.Price BNG</p>
-                                }
+                        }
+                        else
+                        {
+                            <div class="card-footer">
+                                <p class="card-text"><small class="text-muted">@course.Price BNG</small></p>
                             </div>
-                        </div>
+                        }
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
     }
 </body>
+<style>
+    .card-img-top {
+        width: 349px;
+        height: 200px;
+    }
+
+    .card {
+        height: 400px;
+    }
+</style>
 
 

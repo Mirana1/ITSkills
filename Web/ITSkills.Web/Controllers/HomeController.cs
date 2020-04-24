@@ -58,7 +58,7 @@
                 courses = courses.Where(c => c.Title == title);
             }
 
-            return View(courses);
+            return View(courses.ToList());
         }
 
         public IActionResult Privacy()

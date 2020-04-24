@@ -50,11 +50,10 @@
             return query.To<T>().ToList();
         }
 
-        public IEnumerable<T> Search<T>(string searchWord)
+        public IEnumerable<T> Search<T>(string searchWord, string title)
         {
             IQueryable<Course> query = this.coursesRepository
                               .All()
-                              .Where(x => x.Title.Contains(searchWord))
                               .OrderBy(x => x.Title);
 
             return query.To<T>().ToList();
@@ -65,6 +64,14 @@
             return this.coursesRepository
                 .All()
                 .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+        }
+
+        public T GetByTitle<T>(string title)
+        {
+            return this.coursesRepository.All()
+                .Where(x => x.Title.Replace(" ", "-") == title.Replace(" ", "-"))
                 .To<T>()
                 .FirstOrDefault();
         }

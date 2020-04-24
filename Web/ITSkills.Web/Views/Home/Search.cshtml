@@ -1,29 +1,31 @@
 ﻿@model ITSkills.Web.ViewModels.Home.SearchCourseViewModel
-    <div class="container">
-        <div class="media-container-row">
-            @foreach (var course in Model.Courses)
-            {
-                <div class="card p-3 col-12 col-md-6 col-lg-4">
-                    <div class="card-wrapper">
-                        <div class="card-img">
-                            <img src="@course.ImageUrl" alt="@course.Title" media-simple="true" width="200">
-                        </div>
-                        <div class="card-box">
-                            <h4 class="card-title mbr-fonts-style display-5"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
+<div class="container">
+    <div class="media-container-row">
+        @foreach (var course in Model.Courses)
+        {
+            <div class="card p-3 col-12 col-md-6 col-lg-4">
+                <div class="card-wrapper">
+                    <div class="card-img">
+                        <img src="@course.ImageUrl" alt="@course.Title" media-simple="true" width="200">
+                    </div>
+                    <div class="card-box">
+                        <h4 class="card-title mbr-fonts-style display-5"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
+                       
                             <p class="mbr-text mbr-fonts-style display-7">
                                 @course.Description<br><strong>Created by </strong><br>
                             </p>
-                            @if (course.Price == null)
-                            {
-                                <p>Free</p>
-                            }
-                            else
-                            {
-                                <p>@course.Price BNG</p>
-                            }
-                        </div>
+                       
+                        @if (course.Price == null)
+                        {
+                            <p>Free</p>
+                        }
+                        else
+                        {
+                            <p>@course.Price BNG</p>
+                        }
                     </div>
                 </div>
-            }
-        </div>
+            </div>
+        }
     </div>
+</div>
