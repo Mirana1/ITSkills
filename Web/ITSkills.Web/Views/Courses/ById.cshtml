@@ -6,92 +6,93 @@
     <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="text-center">
-        <h1>@Model.Title</h1>
-        <div class="text-center bottom-buffer-lg info">
-            <span class="course-date">
-                <i class="far fa-clock"></i>
-                <span>@Model.CreatedOn.ToString("dd MMMM yyyy")</span>
-            </span>
-            <span class="count-lections">
-                <i class="far fa-file-alt"></i>
-                <span>@Model.LectionsCount Lections</span>
-            </span>
+  
+        <div class="text-center">
+            <h1>@Model.Title</h1>
+            <div class="text-center bottom-buffer-lg info">
+                <span class="course-date">
+                    <i class="far fa-clock"></i>
+                    <span>@Model.CreatedOn.ToString("dd MMMM yyyy")</span>
+                </span>
+                <span class="count-lections">
+                    <i class="far fa-file-alt"></i>
+                    <span>@Model.LectionsCount Lections</span>
+                </span>
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="text-center">
-        <section class="grey-container about-section bottom-buffer-lg" id="course-info">
-            <u>FOR THE COURSE</u>
-            <p>@Model.Description</p>
-        </section>
-        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
-            <u>LECTIONS</u>
-            <div class="lections">
-                @if (Model.Lections.Count() == 0)
-                {
-                    <p style="color: darkslateblue;">There are no lections yet.</p>
-                }
-                else
-                {
-                    @foreach (var lection in Model.Lections)
+        <br />
+        <div class="text-center">
+            <section class="grey-container about-section bottom-buffer-lg" id="course-info">
+                <u>FOR THE COURSE</u>
+                <p>@Model.Description</p>
+            </section>
+            <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+                <u>LECTIONS</u>
+                <div class="lections">
+                    @if (Model.Lections.Count() == 0)
                     {
-                        <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
-                            <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
-                                <span class="lecture-name" style="text-transform:uppercase"><a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a></span>
-                            </li>
-                        </ul>
+                        <p style="color: darkslateblue;">There are no lections yet.</p>
                     }
-                }
-            </div>
-        </section>
-        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
-            <u>WHAT YOU'LL LEARN</u>
-            <div class="acquired-knowledge">
-                <p>@Model.AcquiredKnowledge</p>
-            </div>
-        </section>
-        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
-            <u>REQUIREMENTS</u>
-            <div class="requirements-content">
-                <p>@Model.Requirements</p>
-            </div>
-        </section>
-        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
-            <div class="lector-info">
-                <u>LECTOR</u>
-                @*<div class="lector-avatar">
-                        <img src="~/img/lector.jpg" class="img-thumbnail" />
+                    else
+                    {
+                        @foreach (var lection in Model.Lections)
+                        {
+                            <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
+                                <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
+                                    <span class="lecture-name" style="text-transform:uppercase"><a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a></span>
+                                </li>
+                            </ul>
+                        }
+                    }
+                </div>
+            </section>
+            <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+                <u>WHAT YOU'LL LEARN</u>
+                <div class="acquired-knowledge">
+                    <p>@Model.AcquiredKnowledge</p>
+                </div>
+            </section>
+            <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+                <u>REQUIREMENTS</u>
+                <div class="requirements-content">
+                    <p>@Model.Requirements</p>
+                </div>
+            </section>
+            <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+                <div class="lector-info">
+                    <u>LECTOR</u>
+                    @*<div class="lector-avatar">
+                            <img src="~/img/lector.jpg" class="img-thumbnail" />
+                        </div>
+                        <p class="lector-name">@Model.UserUserName</p>*@
+                    <div class="container lector-info">
+                        @if (Model.User.ImageUrl == null)
+                        {
+                            <img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" />
+                        }
+                        else
+                        {
+                            <img src="@Model.User.ImageUrl" alt="Avatar">
+                        }
+                        <p class="lector-name">@Model.User.FirstName @Model.User.LastName</p>
+                        <p class="lector-info">@Model.User.AboutInfo</p>
                     </div>
-                    <p class="lector-name">@Model.UserUserName</p>*@
-            <div class="container lector-info">
-                @if (Model.User.ImageUrl == null)
-                {
-                    <img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" />
-                }
-                else
-                {
-                    <img src="@Model.User.ImageUrl" alt="Avatar">
-                }
-                <p class="lector-name">@Model.User.FirstName @Model.User.LastName</p>
-                <p class="lector-info">@Model.User.AboutInfo</p>
-            </div>
-            </div>
-        </section>
-        <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
-            <div class="pricing">
-                <u>PRICING</u>
-                @if (Model.Price == null)
-                {
-                    <p class="price">Free</p>
-                }
-                else
-                {
-                    <p class="price">@Model.Price BGN</p>
-                }
-            </div>
-        </section>
-    </div>
+                </div>
+            </section>
+            <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
+                <div class="pricing">
+                    <u>PRICING</u>
+                    @if (Model.Price == null)
+                    {
+                        <p class="price">Free</p>
+                    }
+                    else
+                    {
+                        <p class="price">@Model.Price BGN</p>
+                    }
+                </div>
+            </section>
+        </div>
 </body>
 
 <style>
@@ -102,12 +103,12 @@
         padding: 10px;
         margin: 10px 0;
     }
-       
-        .container img {
-            float:unset;
-            max-width: 90px;
-            width: 100%;
-            margin-right: 950px;
-            border-radius: 50%;
-        }
+
+    .container img {
+        float: unset;
+        max-width: 90px;
+        width: 100%;
+        margin-right: 950px;
+        border-radius: 50%;
+    }
 </style>

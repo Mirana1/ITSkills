@@ -12,5 +12,7 @@
         Task<int> CreateAsync(string name, string imageUrl, string description);
 
         T GetById<T>(int id);
+
+        Task<int> GeIdByTitleAsync(string categoryTitle);
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace ITSkills.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -7,10 +8,13 @@
     using ITSkills.Data.Common.Repositories;
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
+    using Microsoft.EntityFrameworkCore;
 
     public class CategoriesService : ICategoriesService
     {
         private readonly IDeletableEntityRepository<Category> categoryRepository;
+
+        public const string InvalidCategoryTitleErrorMessage = "Category with name {0} does not exist.";
 
         public CategoriesService(IDeletableEntityRepository<Category> categoryRepository)
         {
@@ -61,6 +65,18 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();
+        }
+
+        public async Task<int> GeIdByTitleAsync(string categoryTitle)
+        {
+            var category = await this.categoryRepository.AllAsNoTracking().SingleOrDefaultAsync(c => c.Name == categoryTitle);
+
+            if (category == null)
+            {
+                throw new ArgumentNullException(string.Format(InvalidCategoryTitleErrorMessage, categoryTitle));
+            }
+
+            return category.Id;
         }
     }
 }

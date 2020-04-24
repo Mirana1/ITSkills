@@ -40,18 +40,25 @@
         [HttpPost]
         public async Task<IActionResult> Create(CreateCategoryViewModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
             await this.categoriesService.CreateAsync(input.Name, input.ImageUrl, input.Description);
-            return this.Redirect("/");
+
+            return this.Redirect($"/Category/{input.Name}");
         }
 
-        public async Task<IActionResult> Edit(string name)
+
+        public async Task<IActionResult> Edit(int id)
         {
-            if (name == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var category = await dbContext.Categories.FindAsync(name);
+            var category = await dbContext.Categories.FindAsync(id);
 
             if (category == null)
             {
@@ -61,11 +68,12 @@
             return this.View(category);
         }
 
+        [Route("/Category/Edit/{id?}")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string name, [Bind("CreatedOn,ModifiedOn,IsDeleted,DeletedOn,Name, Description,ImageUrl")] Category category)
+        public async Task<IActionResult> Edit(int id, [Bind("CreatedOn,ModifiedOn,IsDeleted,DeletedOn,Name, Description,ImageUrl")] Category category)
         {
-            if (name != category.Name)
+            if (id != category.Id)
             {
                 return NotFound();
             }
@@ -79,7 +87,7 @@
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Name))
+                    if (!CategoryExists(category.Id))
                     {
                         return NotFound();
                     }
@@ -93,9 +101,9 @@
             return View(category);
         }
 
-        private bool CategoryExists(string name)
+        private bool CategoryExists(int id)
         {
-            return dbContext.Categories.Any(c => c.Name == name);
+            return dbContext.Categories.Any(c => c.Id == id);
         }
     }
 }

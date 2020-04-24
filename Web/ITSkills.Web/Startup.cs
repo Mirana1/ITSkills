@@ -1,5 +1,6 @@
 ﻿namespace ITSkills.Web
 {
+    using System;
     using System.Reflection;
 
     using ITSkills.Common;
@@ -17,7 +18,9 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.SqlServer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -40,6 +43,26 @@
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddDistributedSqlServerCache(options =>
+            {
+                options.ConnectionString = this.configuration.GetConnectionString("DefaultConnection");
+                options.SchemaName = "dbo";
+                options.TableName = "CacheRecords";
+            });
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromDays(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            services.AddResponseCaching();
+            services.AddResponseCompression(options =>
+            {
+                options.EnableForHttps = true;
+            });
+
             services.Configure<CookiePolicyOptions>(
                 options =>
                     {
@@ -47,7 +70,10 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
+            //options => { options.Filters.Add(new AutoValidateAntyforgeryTokenAttribute())}
             services.AddControllersWithViews();
+
+            services.AddAntiforgery(options => { options.HeaderName = "X-CSRF-TOKEN"; });
             services.AddRazorPages();
 
             services.AddSingleton(this.configuration);
@@ -94,10 +120,13 @@
                 app.UseHsts();
             }
 
+            app.UseResponseCompression();
+            app.UseResponseCaching();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthentication();
@@ -106,11 +135,6 @@
             app.UseEndpoints(
                 endpoints =>
                     {
-                        
-                        //endpoints.MapControllerRoute("editCategory", "/Category/Edit/{id?}", new { controller = "Categories", action = "Edit" });
-                        endpoints.MapControllerRoute("createLection", "/Lection/Create", new { controller = "Lections", action = "Create" });
-                        endpoints.MapControllerRoute("createCourse", "/Course/Create", new { controller = "Courses", action = "Create" });
-                        endpoints.MapControllerRoute("categoryCreate", "/Category/Create", new { controller = "Categories", action = "Create" });
                         endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });
                         endpoints.MapControllerRoute("lectionView", "/Lection/ById/{id}", new { controller = "Lections", action = "ById" });
                         endpoints.MapControllerRoute("courseCategory", "/Category/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });

@@ -5,10 +5,10 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h4>@ViewData["Title"]</h4>
+<h4>@ViewData["Title"] <button id="update-profile-button" type="submit" class="btn btn-success">Save</button></h4>
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-8">
         <form id="profile-form" method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
@@ -24,19 +24,18 @@
                 <label asp-for="Input.FirstName"></label>
                 <input asp-for="Input.FirstName" class="form-control" />
             </div>
-            <div class="form-group">
-                <label asp-for="Input.LastName"></label>
-                <input asp-for="Input.LastName" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.AboutInfo"></label>
-                <input asp-for="Input.AboutInfo" class="form-control" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Input.ImageUrl"></label>
-                <input asp-for="Input.ImageUrl" class="form-control" />
-            </div>
-            <button id="update-profile-button" type="submit" class="btn btn-success">Save</button>
+                <div class="form-group">
+                    <label asp-for="Input.LastName"></label>
+                    <input asp-for="Input.LastName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.AboutInfo"></label>
+                    <input asp-for="Input.AboutInfo" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.ImageUrl"></label>
+                    <input asp-for="Input.ImageUrl" class="form-control" />
+                </div>
         </form>
     </div>
 </div>
