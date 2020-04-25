@@ -17,6 +17,24 @@
     <Compile Remove="Migrations\20200424101514_AddedMyCourseModel.Designer.cs" />
     <Compile Remove="Migrations\20200424101914_MyCourse.cs" />
     <Compile Remove="Migrations\20200424101914_MyCourse.Designer.cs" />
+    <Compile Remove="Migrations\20200425091449_AddedValidationsToCategoryModel.cs" />
+    <Compile Remove="Migrations\20200425091449_AddedValidationsToCategoryModel.Designer.cs" />
+    <Compile Remove="Migrations\20200425091536_AddedValidationsToCategoryModel.cs" />
+    <Compile Remove="Migrations\20200425091536_AddedValidationsToCategoryModel.Designer.cs" />
+    <Compile Remove="Migrations\20200425091624_AddedValidationsToCategoryModel.cs" />
+    <Compile Remove="Migrations\20200425091624_AddedValidationsToCategoryModel.Designer.cs" />
+    <Compile Remove="Migrations\20200425091746_ValidationsCategoryModel.cs" />
+    <Compile Remove="Migrations\20200425091746_ValidationsCategoryModel.Designer.cs" />
+    <Compile Remove="Migrations\20200425094320_Test.cs" />
+    <Compile Remove="Migrations\20200425094320_Test.Designer.cs" />
+    <Compile Remove="Migrations\20200425094455_Test.cs" />
+    <Compile Remove="Migrations\20200425094455_Test.Designer.cs" />
+    <Compile Remove="Migrations\20200425101902_Initial.cs" />
+    <Compile Remove="Migrations\20200425101902_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200425102238_Initial.cs" />
+    <Compile Remove="Migrations\20200425102238_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20200425102455_Initial.cs" />
+    <Compile Remove="Migrations\20200425102455_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

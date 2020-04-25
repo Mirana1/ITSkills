@@ -70,8 +70,20 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            //options => { options.Filters.Add(new AutoValidateAntyforgeryTokenAttribute())}
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(configure =>
+            {
+                configure.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
+
+            services.AddAuthentication()
+       .AddGoogle(options =>
+       {
+           IConfigurationSection googleAuthNSection =
+               this.configuration.GetSection("Authentication:Google");
+
+           options.ClientId = googleAuthNSection["ClientId"];
+           options.ClientSecret = googleAuthNSection["ClientSecret"];
+       });
 
             services.AddAntiforgery(options => { options.HeaderName = "X-CSRF-TOKEN"; });
             services.AddRazorPages();

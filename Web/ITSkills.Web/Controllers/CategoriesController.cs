@@ -55,14 +55,14 @@
         {
             if (id == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            var category = await dbContext.Categories.FindAsync(id);
+            var category = await this.dbContext.Categories.FindAsync(id);
 
             if (category == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
             return this.View(category);
@@ -73,37 +73,42 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CreatedOn,ModifiedOn,IsDeleted,DeletedOn,Name, Description,ImageUrl")] Category category)
         {
-            if (id != category.Id)
+            if (!this.ModelState.IsValid)
             {
-                return NotFound();
+                return this.View();
             }
 
-            if (ModelState.IsValid)
+            if (id != category.Id)
+            {
+                return this.NotFound();
+            }
+
+            if (this.ModelState.IsValid)
             {
                 try
                 {
-                    dbContext.Update(category);
-                    await dbContext.SaveChangesAsync();
+                    this.dbContext.Update(category);
+                    await this.dbContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoryExists(category.Id))
+                    if (!this.CategoryExists(category.Id))
                     {
-                        return NotFound();
+                        return this.NotFound();
                     }
                     else
                     {
                         throw;
                     }
                 }
-                return Redirect("/");
+                return this.Redirect("/");
             }
-            return View(category);
+            return this.View(category);
         }
 
         private bool CategoryExists(int id)
         {
-            return dbContext.Categories.Any(c => c.Id == id);
+            return this.dbContext.Categories.Any(c => c.Id == id);
         }
     }
 }

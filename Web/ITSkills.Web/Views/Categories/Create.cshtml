@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     this.ViewData["Title"] = "Create a new category";
 }
 @model ITSkills.Web.ViewModels.Categories.CreateCategoryViewModel
@@ -10,13 +10,17 @@
     <script src="~/js/custom.js"></script>
 </head>
 <form method="post" asp-action="Create">
+    @if (this.TempData["Error"] != null)
+    {
+        @await Component.InvokeAsync("ErrorAlert", new { message = this.TempData["Error"] });
+    }
     <div class="form-group">
         <label for="categoryName">Name</label>
         <input asp-for="Name" class="form-control" placeholder="Name...">
     </div>
     <div class="form-group">
         <label for="imageUrl">Image</label>
-        <input asp-for="ImageUrl"class="form-control" placeholder="Image URL here...">
+        <input asp-for="ImageUrl" class="form-control" placeholder="Image URL here...">
     </div>
     <div class="form-group">
         <label for="Description">Description</label>
@@ -25,3 +29,7 @@
     </div>
     <button type="submit" class="btn btn-success btn-submit" title="Create">Create</button>
 </form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

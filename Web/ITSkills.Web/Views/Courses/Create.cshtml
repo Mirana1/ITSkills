@@ -12,6 +12,10 @@
     <script src="~/js/custom.js"></script>
 </head>
 <form method="post" asp-action="Create">
+    @if (this.TempData["Error"] != null)
+    {
+        @await Component.InvokeAsync("ErrorAlert", new { message = this.TempData["Error"] });
+    }
     <div class="form-group">
         <label for="courseTitle">Title</label>
         <input asp-for="Title" class="form-control" placeholder="Title...">
@@ -45,3 +49,6 @@
     <br />
     <button type="submit" class="btn btn-success btn-submit" title="Create">Create</button>
 </form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
