@@ -76,14 +76,14 @@
             });
 
             services.AddAuthentication()
-       .AddGoogle(options =>
-       {
-           IConfigurationSection googleAuthNSection =
-               this.configuration.GetSection("Authentication:Google");
+                    .AddGoogle(options =>
+                    {
+                        IConfigurationSection googleAuthNSection =
+                            this.configuration.GetSection("Authentication:Google");
 
-           options.ClientId = googleAuthNSection["ClientId"];
-           options.ClientSecret = googleAuthNSection["ClientSecret"];
-       });
+                        options.ClientId = googleAuthNSection["ClientId"];
+                        options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    });
 
             services.AddAntiforgery(options => { options.HeaderName = "X-CSRF-TOKEN"; });
             services.AddRazorPages();

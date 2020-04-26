@@ -14,5 +14,7 @@
         T GetById<T>(int id);
 
         Task<int> GeIdByTitleAsync(string categoryTitle);
+
+        bool TryGetCategoryById<T>(string name);
     }
 }

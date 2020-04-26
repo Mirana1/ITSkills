@@ -25,8 +25,12 @@
 
         public IActionResult ByName(string name)
         {
-            var viewModel = this.categoriesService.GetByName<CategoryViewModel>(name);
+            if (!this.categoriesService.TryGetCategoryById<CategoryViewModel>(name))
+            {
+                return this.View("/Views/Shared/NotFound.cshtml");
+            }
 
+            var viewModel = this.categoriesService.GetByName<CategoryViewModel>(name);
             return this.View(viewModel);
         }
 
@@ -50,65 +54,59 @@
             return this.Redirect($"/Category/{input.Name}");
         }
 
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return this.NotFound();
+        //    }
 
-        public async Task<IActionResult> Edit(int id)
-        {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
+        //    var category = await this.dbContext.Categories.FindAsync(id);
 
-            var category = await this.dbContext.Categories.FindAsync(id);
+        //    if (category == null)
+        //    {
+        //        return this.NotFound();
+        //    }
 
-            if (category == null)
-            {
-                return this.NotFound();
-            }
+        //    return this.View(category);
+        //}
 
-            return this.View(category);
-        }
+        //[Route("/Category/Edit/{id?}")]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit(int id, [Bind("CreatedOn,ModifiedOn,IsDeleted,DeletedOn,Name, Description,ImageUrl")] Category category)
+        //{
+        //    if (!this.ModelState.IsValid)
+        //    {
+        //        return this.View();
+        //    }
 
-        [Route("/Category/Edit/{id?}")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CreatedOn,ModifiedOn,IsDeleted,DeletedOn,Name, Description,ImageUrl")] Category category)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View();
-            }
+        //    if (id != category.Id)
+        //    {
+        //        return this.NotFound();
+        //    }
 
-            if (id != category.Id)
-            {
-                return this.NotFound();
-            }
-
-            if (this.ModelState.IsValid)
-            {
-                try
-                {
-                    this.dbContext.Update(category);
-                    await this.dbContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!this.CategoryExists(category.Id))
-                    {
-                        return this.NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return this.Redirect("/");
-            }
-            return this.View(category);
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return this.dbContext.Categories.Any(c => c.Id == id);
-        }
+        //    if (this.ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            this.dbContext.Update(category);
+        //            await this.dbContext.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (!this.CategoryExists(category.Id))
+        //            {
+        //                return this.NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return this.Redirect("/");
+        //    }
+        //    return this.View(category);
+        //}
     }
 }

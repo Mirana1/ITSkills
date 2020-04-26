@@ -24,8 +24,12 @@
 
         public IActionResult ById(int id)
         {
-            var viewModel = this.coursesService.GetById<CoursesViewModel>(id);
+            if (!this.coursesService.TryGetById<CoursesViewModel>(id))
+            {
+                return this.View("/Views/Shared/NotFound.cshtml");
+            }
 
+            var viewModel = this.coursesService.GetById<CoursesViewModel>(id);
             return this.View(viewModel);
         }
 

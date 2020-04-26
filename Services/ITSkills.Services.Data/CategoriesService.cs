@@ -78,5 +78,10 @@
 
             return category.Id;
         }
+
+        public bool TryGetCategoryById<T>(string name)
+        {
+            return this.categoryRepository.AllAsNoTracking().Any(c => c.Name == name);
+        }
     }
 }
