@@ -1,6 +1,7 @@
 ﻿namespace ITSkills.Web.Controllers
 {
     using System.Threading.Tasks;
+
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Lections;
@@ -10,6 +11,8 @@
 
     public class LectionsController : BaseController
     {
+        private const string NotFoundRoute = "NotFound";
+
         private readonly ILectionsService lectionsService;
         private readonly ICoursesService coursesService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -23,6 +26,11 @@
 
         public IActionResult ById(int id)
         {
+            if (!this.lectionsService.TryGetById<LectionsViewModel>(id))
+            {
+                return this.View(NotFoundRoute);
+            }
+
             var lections = this.lectionsService.GetAll<ListLectionsViewModel>();
             var viewModel = this.lectionsService.GetById<LectionsViewModel>(id);
             viewModel.Lections = lections;

@@ -10,5 +10,7 @@
         IEnumerable<T> GetAll<T>(int? count = null);
 
         Task<int> CreateAsync(string title, string description, int courseId, string url, string userId);
+
+        bool TryGetById<T>(int id);
     }
 }

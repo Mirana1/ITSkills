@@ -56,5 +56,11 @@
                  .To<T>()
                  .FirstOrDefault();
         }
+
+        public bool TryGetById<T>(int id)
+        {
+            return this.lectionsRepository.AllAsNoTracking().Any(l => l.Id == id);
+        }
+
     }
 }
