@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ITSkills.Data;
 using ITSkills.Data.Models;
+using ITSkills.Services.Data;
+using ITSkills.Web.ViewModels.Administration.Courses;
 
 namespace ITSkills.Web.Areas.Administration.Controllers
 {
@@ -14,10 +16,14 @@ namespace ITSkills.Web.Areas.Administration.Controllers
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly ICoursesService coursesService;
+        private readonly ICategoriesService categoriesService;
 
-        public CoursesController(ApplicationDbContext context)
+        public CoursesController(ApplicationDbContext context, ICoursesService coursesService, ICategoriesService categoriesService)
         {
             _context = context;
+            this.coursesService = coursesService;
+            this.categoriesService = categoriesService;
         }
 
         // GET: Administration/Courses
@@ -54,6 +60,17 @@ namespace ITSkills.Web.Areas.Administration.Controllers
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
+
+        //public IActionResult Create()
+        //{
+        //    var categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
+        // var user = this.
+        //    var viewModel = new CreateCourseViewModel
+        //    {
+        //        Categories = categories,
+        //    };
+        //    return this.View();
+        //}
 
         // POST: Administration/Courses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 

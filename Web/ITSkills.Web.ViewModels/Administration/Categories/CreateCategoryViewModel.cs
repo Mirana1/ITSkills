@@ -1,11 +1,10 @@
-﻿using ITSkills.Data.Models;
-using ITSkills.Services.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ITSkills.Web.ViewModels.Administration.Categories
+﻿namespace ITSkills.Web.ViewModels.Administration.Categories
 {
+    using System;
+
+    using ITSkills.Data.Models;
+    using ITSkills.Services.Mapping;
+
     public class CreateCategoryViewModel : IMapFrom<Category>
     {
         public int Id { get; set; }
@@ -21,5 +20,7 @@ namespace ITSkills.Web.ViewModels.Administration.Categories
         public DateTime? DeletedOn { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
     }
 }

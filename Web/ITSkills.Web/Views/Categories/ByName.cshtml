@@ -6,10 +6,6 @@
     @if (Model.CoursesCount == 0)
     {
         <partial name="NotFound" />
-        <div class="text-center">
-            <p style="color:lightgray; font-size:16px;">Time to create some courses</p>
-            <a asp-controller="Courses" asp-action="Create" style="text-align:center">Create!</a>
-        </div>
     }
     else
     {

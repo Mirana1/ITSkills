@@ -1,12 +1,15 @@
-﻿@model ITSkills.Data.Models.Category
+﻿@model ITSkills.Web.ViewModels.Administration.Categories.CreateCategoryViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
-
-<h4>Category</h4>
+<head>
+    <script src="~/js/custom.js"></script>
+</head>
+<div class="title">
+    <h2>Create a new category</h2>
+</div>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,9 +21,9 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label for="Description">Description</label>
+                <input asp-for="Description" textarea class="form-control" id="field" rows="3" onkeyup="countChar(this)">
+                <div id="charNum"></div>
             </div>
             <div class="form-group">
                 <label asp-for="ImageUrl" class="control-label"></label>
@@ -50,7 +53,7 @@
                 <span asp-validation-for="ModifiedOn" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />
+                <input type="submit" class="btn btn-success btn-submit" title="Create" value="Create" class="btn btn-success" />
             </div>
         </form>
     </div>
