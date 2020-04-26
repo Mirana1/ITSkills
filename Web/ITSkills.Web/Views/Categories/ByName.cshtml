@@ -2,15 +2,6 @@
 @{
     this.ViewData["Title"] = Model.Name;
 }
-<head>
-    <script>
-        var options = {
-            valueNames: ['name', 'title', 'expertise']
-        };
-
-        var userList = new List('users', options);
-    </script>
-</head>
 <body>
     @if (Model.CoursesCount == 0)
     {

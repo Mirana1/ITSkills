@@ -83,5 +83,6 @@
         {
             return this.categoryRepository.AllAsNoTracking().Any(c => c.Name == name);
         }
+
     }
 }

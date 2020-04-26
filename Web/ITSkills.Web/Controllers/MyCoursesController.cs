@@ -32,7 +32,7 @@
 
             await this.myCourseService.AddCourseToUserAsync(course.Id, wantedUserId);
 
-            return this.RedirectToAction($"/Course/ById/{courseId}");
+            return this.RedirectToAction($"/");
         }
     }
 }

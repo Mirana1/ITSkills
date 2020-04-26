@@ -5,17 +5,23 @@
 
     using ITSkills.Data;
     using ITSkills.Data.Models;
+    using ITSkills.Services.Data;
+    using ITSkills.Web.ViewModels.Administration.Categories;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
 
+    [Authorize]
     [Area("Administration")]
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly ICategoriesService categoriesService;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(ApplicationDbContext context, ICategoriesService categoriesService)
         {
             this.dbContext = context;
+            this.categoriesService = categoriesService;
         }
 
         // GET: Administration/Categories
@@ -42,28 +48,24 @@
             return this.View(category);
         }
 
-        // GET: Administration/Categories/Create
         public IActionResult Create()
         {
             return this.View();
         }
 
-        // POST: Administration/Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,Description,ImageUrl,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Create(CreateCategoryViewModel input)
         {
             if (this.ModelState.IsValid)
             {
-                this.dbContext.Add(category);
-                await this.dbContext.SaveChangesAsync();
+                await this.categoriesService.CreateAsync(input.Name, input.ImageUrl, input.Description);
                 return this.RedirectToAction(nameof(this.Index));
             }
 
-            return this.View(category);
+            return this.View(input);
         }
+
 
         // GET: Administration/Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -82,9 +84,6 @@
             return this.View(category);
         }
 
-        // POST: Administration/Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Name,Description,ImageUrl,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
@@ -117,7 +116,6 @@
             return this.View(category);
         }
 
-        // GET: Administration/Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -135,7 +133,6 @@
             return this.View(category);
         }
 
-        // POST: Administration/Categories/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
