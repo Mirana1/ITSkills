@@ -11,6 +11,7 @@
 
     public class CoursesController : BaseController
     {
+        private const string NotFoundRoute = "NotFound";
         private readonly ICoursesService coursesService;
         private readonly ICategoriesService categoriesService;
         private readonly UserManager<ApplicationUser> userManager;
@@ -26,7 +27,7 @@
         {
             if (!this.coursesService.TryGetById<CoursesViewModel>(id))
             {
-                return this.View("/Views/Shared/NotFound.cshtml");
+                return this.View(NotFoundRoute);
             }
 
             var viewModel = this.coursesService.GetById<CoursesViewModel>(id);

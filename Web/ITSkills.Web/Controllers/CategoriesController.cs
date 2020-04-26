@@ -14,6 +14,7 @@
 
     public class CategoriesController : BaseController
     {
+        private const string NotFoundRoute = "NotFound";
         private readonly ICategoriesService categoriesService;
         private readonly ApplicationDbContext dbContext;
 
@@ -27,7 +28,7 @@
         {
             if (!this.categoriesService.TryGetCategoryById<CategoryViewModel>(name))
             {
-                return this.View("/Views/Shared/NotFound.cshtml");
+                return this.View(NotFoundRoute);
             }
 
             var viewModel = this.categoriesService.GetByName<CategoryViewModel>(name);
