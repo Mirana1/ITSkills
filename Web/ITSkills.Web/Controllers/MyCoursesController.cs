@@ -5,6 +5,7 @@
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Courses;
+    using ITSkills.Web.ViewModels.MyCourses;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -23,16 +24,15 @@
         }
 
         [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> AddCourseToUser(int courseId, string userId)
+        public async Task<IActionResult> Payment()
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var wantedUserId = user.Id;
-            var course = this.courseService.GetById<CoursesViewModel>(courseId);
+            var courses = this.courseService.GetAll<CoursesDropDownViewModel>();
+            var viewModel = new PaymentViewModel
+            {
+                Courses = courses
+            };
 
-            await this.myCourseService.AddCourseToUserAsync(course.Id, wantedUserId);
-
-            return this.RedirectToAction($"/");
+            return this.View(viewModel);
         }
     }
 }

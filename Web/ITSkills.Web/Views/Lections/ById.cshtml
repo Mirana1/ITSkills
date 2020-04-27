@@ -1,6 +1,7 @@
 ﻿@model ITSkills.Web.ViewModels.Lections.LectionsViewModel
 @{
     this.ViewData["Title"] = Model.Title;
+    var courseId = Model.CourseId;
 }
 <head>
     <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
@@ -19,7 +20,7 @@
         <div class="container">
             <h2>All Lections</h2>
             <ul class="list-group">
-                @foreach (var lection in Model.Lections)
+                @foreach (var lection in Model.Lections.Where(x=>x.CourseId == courseId))
                 {
                     <li class="list-group-item">
                         <a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a>
