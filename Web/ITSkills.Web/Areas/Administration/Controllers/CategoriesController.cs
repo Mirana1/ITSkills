@@ -63,9 +63,9 @@
                 return this.RedirectToAction(nameof(this.Index));
             }
 
+            this.TempData["Success"] = "Successfully created course!";
             return this.View(input);
         }
-
 
         // GET: Administration/Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)

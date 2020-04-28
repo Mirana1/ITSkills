@@ -1,0 +1,47 @@
+﻿@{
+    ViewData["Title"] = "Contacts";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/contacts.css" />
+    <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!--The div element for the map -->
+    <div class="row">
+        <div class="column" id="map"></div>
+        <div class="column">
+            <h2>Contacts</h2>
+            <hr />
+            <h4>Email</h4>
+            <span class="email">
+                <i class="fas fa-envelope-open-text"></i>
+                <span>itskills@gmail.com</span>
+            </span>
+            <h4>Phone number</h4>
+            <span class="phone">
+                <i class="fas fa-phone"></i>
+                <span>+359 099 999 999</span>
+            </span>
+        </div>
+    </div>
+
+    <script>
+        // Initialize and add the map
+        function initMap() {
+            // The location of Uluru
+            var uluru = { lat: -25.344, lng: 131.036 };
+            // The map, centered at Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), { zoom: 4, center: uluru });
+            // The marker, positioned at Uluru
+            var marker = new google.maps.Marker({ position: uluru, map: map });
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCqySryLGqAj3_VWFu1DX4LklI6q90x0-E&callback=initMap">
+    </script>
+</body>
+</html>
