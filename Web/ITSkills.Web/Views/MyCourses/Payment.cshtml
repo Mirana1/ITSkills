@@ -3,7 +3,57 @@
     ViewData["Title"] = "Course payment";
 }
 
+<h3>Course payment</h3>
+<hr />
 <div class="row text-center">
-    <div class="col-2">
-    </div>
-</div>
+    <dl class="column col-2">
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Course.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+        @*@if (Model.Course.Price == 0)
+        {
+            <h3>Price : Free</h3>
+        }
+        <hr />
+        else
+        {*@
+        <dt>
+            @Html.DisplayNameFor(model => model.Course.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Course.Price)
+        </dd>
+        @*}*@
+    </dl>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        display: flex;
+    }
+
+    /* Create two equal columns that sits next to each other */
+    .column {
+        flex: 50%;
+        padding: 10px;
+        height: 600px;
+        width: 500px;
+    }
+</style>

@@ -3,15 +3,18 @@
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Logging;
 
     public class CategoriesController : BaseController
     {
         private const string NotFoundRoute = "NotFound";
         private readonly ICategoriesService categoriesService;
+        private readonly ILogger<CategoriesController> logger;
 
-        public CategoriesController(ICategoriesService categoriesService)
+        public CategoriesController(ICategoriesService categoriesService, ILogger<CategoriesController> logger)
         {
             this.categoriesService = categoriesService;
+            this.logger = logger;
         }
 
         public IActionResult ByName(string name)

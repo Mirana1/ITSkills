@@ -1,12 +1,12 @@
 ﻿namespace ITSkills.Web.ViewModels.MyCourses
 {
-    using System.Collections.Generic;
-
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
-    public class PaymentViewModel : IMapFrom<MyCourse>
+    public class PaymentViewModel : IMapFrom<MyCourse>, IMapFrom<Course>
     {
-        public IEnumerable<CoursesDropDownViewModel> Courses { get; set; }
+        public ApplicationUser User { get; set; }
+
+        public Course Course { get; set; }
     }
 }

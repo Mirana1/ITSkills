@@ -1,8 +1,10 @@
 ﻿namespace ITSkills.Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading.Tasks;
     using ITSkills.Data;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels;
@@ -10,18 +12,36 @@
     using ITSkills.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.Extensions.Caching.Distributed;
+    using Microsoft.Extensions.Caching.Memory;
 
     public class HomeController : BaseController
     {
         private readonly ICategoriesService categoriesService;
         private readonly ICoursesService coursesService;
         private readonly ApplicationDbContext db;
+        private readonly IDistributedCache distributedCache;
+        private readonly IMyCoursesService myCoursesService;
 
-        public HomeController(ICategoriesService categoriesService, ICoursesService coursesService, ApplicationDbContext db)
+        public HomeController(ICategoriesService categoriesService, ICoursesService coursesService, ApplicationDbContext db, IDistributedCache distributedCache, IMyCoursesService myCoursesService)
         {
             this.categoriesService = categoriesService;
             this.coursesService = coursesService;
             this.db = db;
+            this.distributedCache = distributedCache;
+            this.myCoursesService = myCoursesService;
+        }
+
+        public async Task<IActionResult> CacheTest()
+        {
+            var data = await this.distributedCache.GetStringAsync("DateTimeAsString");
+            if (data == null)
+            {
+                data = DateTime.UtcNow.ToString();
+                await this.distributedCache.SetStringAsync("DateTimeAsString", data, new DistributedCacheEntryOptions { AbsoluteExpirationRelativeToNow = TimeSpan.FromDays(2) });
+            }
+
+            return this.Ok(data);
         }
 
         public IActionResult Index()
@@ -30,7 +50,8 @@
             var categories = this.categoriesService
                 .GetAll<IndexCategoryViewModel>();
             viewModel.Categories = categories;
-
+            var myCourses = this.myCoursesService.GetAll<MyCoursesViewModel>();
+            viewModel.MyCourses = myCourses;
             return this.View(viewModel);
         }
 

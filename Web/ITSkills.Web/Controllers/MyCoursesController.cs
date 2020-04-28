@@ -12,27 +12,36 @@
 
     public class MyCoursesController : BaseController
     {
+        public const string NotFoundRoute = "NotFound";
         private readonly IMyCoursesService myCourseService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ICoursesService courseService;
+        private readonly ICoursesService coursesService;
 
-        public MyCoursesController(IMyCoursesService myCourseService, UserManager<ApplicationUser> userManager, ICoursesService courseService)
+        public MyCoursesController(IMyCoursesService myCourseService, UserManager<ApplicationUser> userManager, ICoursesService coursesService)
         {
             this.myCourseService = myCourseService;
             this.userManager = userManager;
-            this.courseService = courseService;
+            this.coursesService = coursesService;
         }
 
         [Authorize]
-        public async Task<IActionResult> Payment()
+        public ActionResult Payment(int id)
         {
-            var courses = this.courseService.GetAll<CoursesDropDownViewModel>();
-            var viewModel = new PaymentViewModel
+            if (!this.coursesService.TryGetById<CoursesViewModel>(id))
             {
-                Courses = courses
-            };
+                return this.View(NotFoundRoute);
+            }
+
+            var viewModel = this.coursesService.GetById<PaymentViewModel>(id);
 
             return this.View(viewModel);
         }
+
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult> Payment(int courseId, string userId)
+        //{
+
+        //}
     }
 }

@@ -11,8 +11,6 @@
 
         T GetByTitle<T>(string title);
 
-        IEnumerable<T> Search<T>(string searchWord, string title);
-
         T GetById<T>(int id);
 
         bool TryGetById<T>(int id);

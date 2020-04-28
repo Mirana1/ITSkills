@@ -50,15 +50,6 @@
             return query.To<T>().ToList();
         }
 
-        public IEnumerable<T> Search<T>(string searchWord, string title)
-        {
-            IQueryable<Course> query = this.coursesRepository
-                              .All()
-                              .OrderBy(x => x.Title);
-
-            return query.To<T>().ToList();
-        }
-
         public T GetById<T>(int id)
         {
             return this.coursesRepository
