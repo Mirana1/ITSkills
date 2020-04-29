@@ -1,0 +1,42 @@
+﻿.container lector-info {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+section {
+    background-color: #f2f3f4;
+}
+
+.container img {
+    float: unset;
+    max-width: 90px;
+    width: 100%;
+    margin-right: 950px;
+    border-radius: 50%;
+}
+
+.p .no-courses {
+    color: darkslateblue;
+}
+* {
+    box-sizing: border-box;
+}
+
+.column {
+    float: left;
+    width: 400px;
+    padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+body > header > nav > div > a {
+    width: 100px;
+}

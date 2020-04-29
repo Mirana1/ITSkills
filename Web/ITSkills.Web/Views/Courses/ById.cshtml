@@ -4,6 +4,7 @@
 }
 <head>
     <script src="https://kit.fontawesome.com/e496302054.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/css/courseStyle.css" />
 </head>
 <body>
     <div class="text-center">
@@ -27,20 +28,18 @@
         </section>
         <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
             <u>LECTIONS</u>
-            <div class="lections">
+            <div class="row">
                 @if (Model.Lections.Count() == 0)
                 {
-                    <p style="color: darkslateblue;">There are no lections yet.</p>
+                    <p class="no-courses" style="">There are no lections yet.</p>
                 }
                 else
                 {
                     @foreach (var lection in Model.Lections)
                     {
-                        <ul class="lectures-list col-md-12 col-sm-12 col-xs-12 text-left">
-                            <li class="lecture col-md-6 col-sm-12 visible-sm visible-xs no-padding">
-                                <span class="lecture-name" style="text-transform:uppercase"><a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a></span>
-                            </li>
-                        </ul>
+                        <div class="column">
+                            <span class="lecture-name" style="text-transform:uppercase"><a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a></span>
+                        </div>
                     }
                 }
             </div>
@@ -60,14 +59,10 @@
         <section class="grey-container about-section bottom-buffer-lg" id="course-lections">
             <div class="lector-info">
                 <u>LECTOR</u>
-                @*<div class="lector-avatar">
-                        <img src="~/img/lector.jpg" class="img-thumbnail" />
-                    </div>
-                    <p class="lector-name">@Model.UserUserName</p>*@
                 <div class="container lector-info">
                     @if (Model.User.ImageUrl == null)
                     {
-                        <img src="https://img.icons8.com/pastel-glyph/2x/person-male.png" />
+                        <img src="~/img/anonymous_user.png" />
                     }
                     else
                     {
@@ -94,25 +89,3 @@
         <button type="submit" class="btn btn-warning"><a asp-controller="MyCourses" asp-action="Payment" asp-route-id="@Model.Id">Join!</a></button>
     </div>
 </body>
-
-<style>
-    .container lector-info {
-        border: 2px solid #dedede;
-        background-color: #f1f1f1;
-        border-radius: 5px;
-        padding: 10px;
-        margin: 10px 0;
-    }
-
-    section {
-        background-color: #f2f3f4;
-    }
-
-    .container img {
-        float: unset;
-        max-width: 90px;
-        width: 100%;
-        margin-right: 950px;
-        border-radius: 50%;
-    }
-</style>
