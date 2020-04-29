@@ -1,5 +1,6 @@
 ﻿namespace ITSkills.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -59,12 +60,14 @@
                 .FirstOrDefault();
         }
 
-        public T GetByTitle<T>(string title)
+        public IEnumerable<T> GetByTitle<T>(string title)
         {
-            return this.coursesRepository.All()
-                .Where(x => x.Title.Replace(" ", "-") == title.Replace(" ", "-"))
-                .To<T>()
-                .FirstOrDefault();
+            return this.coursesRepository
+            .AllAsNoTracking()
+            .Where(x => x.Title.Contains(title))
+            .To<T>()
+            .ToList();
+
         }
 
         public bool TryGetById<T>(int id)

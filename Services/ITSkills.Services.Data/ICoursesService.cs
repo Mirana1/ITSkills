@@ -9,7 +9,7 @@
 
         Task<int> CreateAsync(string title, string description, int categoryId, decimal? price, string usedId, string acquiredKnowledge, string requirements, string imageUrl);
 
-        T GetByTitle<T>(string title);
+        IEnumerable<T> GetByTitle<T>(string title);
 
         T GetById<T>(int id);
 

@@ -1,7 +1,10 @@
 ﻿namespace ITSkills.Web.Controllers
 {
+    using System.Linq;
     using System.Threading.Tasks;
+
     using ITSkills.Common;
+    using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Courses;
@@ -14,12 +17,25 @@
         private readonly ICoursesService coursesService;
         private readonly ICategoriesService categoriesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext db;
 
         public CoursesController(ICoursesService coursesService, ICategoriesService categoriesService, UserManager<ApplicationUser> userManager)
         {
             this.coursesService = coursesService;
             this.categoriesService = categoriesService;
             this.userManager = userManager;
+        }
+
+        public IActionResult Index(string searchString)
+        {
+            var courses = this.coursesService.GetByTitle<SearchCourseViewModel>(searchString);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                courses = courses.Where(x => x.Title.Contains(searchString));
+            }
+
+            return this.View(courses);
         }
 
         public IActionResult ById(int id)

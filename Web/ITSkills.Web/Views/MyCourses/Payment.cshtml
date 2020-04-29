@@ -3,39 +3,40 @@
     ViewData["Title"] = "Course payment";
 }
 
+    <head>
+        <link rel="stylesheet" href="~/css/backToCoursebtn.css" />
+    </head>
 <h3>Course payment</h3>
-<div class="row text-center">
+<div class="confirmation text-center">
     <ul class="column">
         <li>
-            <h5>Title</h5>
-            @Model.Title
-            <hr />
+            <h3>Title</h3>
+            <p>@Model.Title</p>
         </li>
+        <hr />
         <li>
-            <h5>First Name</h5>
-            @Model.User.FirstName
-            <hr />
+            <h3>Username</h3>
+            <p>@Model.Username</p>
         </li>
-        <li>
-            <h5>Last Name</h5>
-            @Model.User.LastName
-            <hr />
-        </li>
-        <div class="column">
-            <h5>Price</h5>
-            @if (Model.Price == 0)
-            {
-                <h6>Free</h6>
-            }
-            else
-            {
-                <h6>@Model.Price</h6>
-            }
-            <hr />
-        </div>
+        <hr />
+        <h3>Price</h3>
+        @if (Model.Price == 0)
+        {
+            <p>Free</p>
+        }
+        else
+        {
+            <p>@Model.Price BGN</p>
+        }
     </ul>
+    <hr />
+    <h4>Are  you sure you want to continue?</h4>
+    <button class="button" type="submit"><span>Join</span></button>
     <style>
-        div {
-            column-rule: 4px double #ff00ff;
+        .confirmation {
+            column-count: 2;
+            column-gap: 40px;
+            column-rule: 1px solid #d3d3d3;
         }
     </style>
+    

@@ -1,7 +1,8 @@
-﻿@model ITSkills.Web.ViewModels.Home.SearchCourseViewModel
+﻿@model List<ITSkills.Web.ViewModels.Courses.SearchCourseViewModel>
+
 <div class="container">
     <div class="media-container-row">
-        @foreach (var course in Model.Courses)
+        @foreach (var course in Model)
         {
             <div class="card p-3 col-12 col-md-6 col-lg-4">
                 <div class="card-wrapper">
@@ -10,11 +11,11 @@
                     </div>
                     <div class="card-box">
                         <h4 class="card-title mbr-fonts-style display-5"><a asp-controller="Course" asp-action="ById" asp-route-id="@course.Id">@course.Title</a></h4>
-                       
-                            <p class="mbr-text mbr-fonts-style display-7">
-                                @course.Description<br><strong>Created by </strong><br>
-                            </p>
-                       
+
+                        <p class="mbr-text mbr-fonts-style display-7">
+                            @course.Description<br><strong>Created by </strong><br>
+                        </p>
+
                         @if (course.Price == null)
                         {
                             <p>Free</p>
@@ -27,5 +28,6 @@
                 </div>
             </div>
         }
+
     </div>
 </div>

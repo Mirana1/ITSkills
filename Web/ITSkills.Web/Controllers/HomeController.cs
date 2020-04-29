@@ -55,32 +55,32 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Search(string title, string searchWord)
-        {
-            var searchedCourses = new List<string>();
+        //public IActionResult Search(string title, string searchWord)
+        //{
+        //    var searchedCourses = new List<string>();
 
-            var allCourses = from c in db.Courses
-                             orderby c.Title
-                             select c.Title;
+        //    var allCourses = from c in db.Courses
+        //                     orderby c.Title
+        //                     select c.Title;
 
-            searchedCourses.AddRange(allCourses.Distinct());
-            ViewBag.title = new SelectList(searchedCourses);
+        //    searchedCourses.AddRange(allCourses.Distinct());
+        //    ViewBag.title = new SelectList(searchedCourses);
 
-            var courses = from c in db.Courses
-                          select c;
+        //    var courses = from c in db.Courses
+        //                  select c;
 
-            if (!string.IsNullOrEmpty(searchWord))
-            {
-                courses = courses.Where(c => c.Title.Contains(searchWord));
-            }
+        //    if (!string.IsNullOrEmpty(searchWord))
+        //    {
+        //        courses = courses.Where(c => c.Title.Contains(searchWord));
+        //    }
 
-            if (!string.IsNullOrEmpty(title))
-            {
-                courses = courses.Where(c => c.Title == title);
-            }
+        //    if (!string.IsNullOrEmpty(title))
+        //    {
+        //        courses = courses.Where(c => c.Title == title);
+        //    }
 
-            return View(courses.ToList());
-        }
+        //    return View(courses.ToList());
+        //}
 
         public IActionResult Privacy()
         {

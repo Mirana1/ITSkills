@@ -31,8 +31,9 @@
                 return this.View(GlobalConstants.NotFoundRoute);
             }
 
+            var currentUser = HttpContext.User.Identity.Name;
             var viewModel = this.coursesService.GetById<PaymentViewModel>(id);
-
+            viewModel.Username = currentUser;
             return this.View(viewModel);
         }
 

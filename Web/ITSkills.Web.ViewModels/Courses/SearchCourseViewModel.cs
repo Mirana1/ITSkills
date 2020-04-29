@@ -1,11 +1,9 @@
-﻿namespace ITSkills.Web.ViewModels.Home
+﻿namespace ITSkills.Web.ViewModels.Courses
 {
     using System;
-    using System.Collections.Generic;
 
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
-    using ITSkills.Web.ViewModels.Categories;
 
     public class SearchCourseViewModel : IMapFrom<Course>
     {
@@ -22,7 +20,5 @@
         public DateTime CreatedOn { get; set; }
 
         public ApplicationUser User { get; set; }
-
-        public IEnumerable<CoursesInCategoryViewModel> Courses { get; set; }
     }
 }

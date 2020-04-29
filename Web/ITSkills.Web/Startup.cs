@@ -3,7 +3,6 @@
     using System;
     using System.Reflection;
 
-    using ITSkills.Common;
     using ITSkills.Data;
     using ITSkills.Data.Common;
     using ITSkills.Data.Common.Repositories;
@@ -20,7 +19,6 @@
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.SqlServer;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
@@ -150,6 +148,7 @@
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("myCoursePayment", "/Course/Payment/{id}", new { controller = "MyCourses", action = "Payment" });
+                        endpoints.MapControllerRoute("courseSearch", "/Course/Index/{seachWord}", new { controller = "Courses", action = "Index" });
                         endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });
                         endpoints.MapControllerRoute("lectionView", "/Lection/ById/{id}", new { controller = "Lections", action = "ById" });
                         endpoints.MapControllerRoute("courseCategory", "/Category/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });

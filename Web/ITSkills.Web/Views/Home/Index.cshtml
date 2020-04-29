@@ -10,19 +10,20 @@
 }
 else
 {
-    <div class="text-center">
-        <h1 class="display-4">Categories</h1>
+    <div class="tabbable">
+        <ul id="myTab" class="nav nav-tabs">
+            @foreach (var category in Model.Categories)
+            {
+                <li><a href="@category.Url">@category.Name</a></li>
+            }
+        </ul>
     </div>
-    <div class="card-group">
-        @foreach (var category in Model.Categories)
+    <div class="text-center">
+        <h1 class="display-4">My courses</h1>
+        @if (Model.MyCourses.Count() == null)
         {
-            <div class="card">
-                <img src="@category.ImageUrl" class="card-img-top" alt="@category.Name" width="250" height="190">
-                <div class="card-body">
-                    <h5 class="card-title">@category.Name</h5>
-                    <a href=@category.Url class="btn btn-primary">See category</a>
-                </div>
-            </div>
+            <p>You haven't added any courses yet.</p>
         }
     </div>
+
 }
