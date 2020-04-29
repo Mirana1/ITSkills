@@ -7,6 +7,14 @@
     {
         public ApplicationUser User { get; set; }
 
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
         public Course Course { get; set; }
+
+        public string Title { get; set; }
+
+        public decimal? Price { get; set; }
     }
 }

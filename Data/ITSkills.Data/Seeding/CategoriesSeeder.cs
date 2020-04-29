@@ -16,7 +16,7 @@
                 return;
             }
 
-            var categories = new List<string> { "C#", "Machine Learning", "SQL", "Network Secutiry", "Unix" };
+            var categories = new List<string> { "Development", "IT & Software", "Design", "Marketing", "Business" };
 
             foreach (var category in categories)
             {

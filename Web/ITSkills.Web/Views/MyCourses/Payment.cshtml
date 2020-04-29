@@ -4,56 +4,38 @@
 }
 
 <h3>Course payment</h3>
-<hr />
 <div class="row text-center">
-    <dl class="column col-2">
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Course.Title)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.User.FirstName)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.User.LastName)
-        </dd>
-        @*@if (Model.Course.Price == 0)
-        {
-            <h3>Price : Free</h3>
+    <ul class="column">
+        <li>
+            <h5>Title</h5>
+            @Model.Title
+            <hr />
+        </li>
+        <li>
+            <h5>First Name</h5>
+            @Model.User.FirstName
+            <hr />
+        </li>
+        <li>
+            <h5>Last Name</h5>
+            @Model.User.LastName
+            <hr />
+        </li>
+        <div class="column">
+            <h5>Price</h5>
+            @if (Model.Price == 0)
+            {
+                <h6>Free</h6>
+            }
+            else
+            {
+                <h6>@Model.Price</h6>
+            }
+            <hr />
+        </div>
+    </ul>
+    <style>
+        div {
+            column-rule: 4px double #ff00ff;
         }
-        <hr />
-        else
-        {*@
-        <dt>
-            @Html.DisplayNameFor(model => model.Course.Price)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Course.Price)
-        </dd>
-        @*}*@
-    </dl>
-<style>
-    * {
-        box-sizing: border-box;
-    }
-
-    .row {
-        display: flex;
-    }
-
-    /* Create two equal columns that sits next to each other */
-    .column {
-        flex: 50%;
-        padding: 10px;
-        height: 600px;
-        width: 500px;
-    }
-</style>
+    </style>

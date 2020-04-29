@@ -1,5 +1,6 @@
 ﻿namespace ITSkills.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -21,5 +22,15 @@
         public int CourseId { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
+
+        public string PaymentCode { get; set; }
+
+        public bool HasPayed { get; set; }
+
+        public decimal Price { get; set; }
+
+        public string Username { get; set; }
+
+        public DateTime PaymentDate { get; set; }
     }
 }
