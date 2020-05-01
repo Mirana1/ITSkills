@@ -18,8 +18,10 @@ section {
     border-radius: 50%;
 }
 
-.p .no-courses {
+.no-courses {
     color: darkslateblue;
+    margin-left:480px;
+    font-weight : bold;
 }
 * {
     box-sizing: border-box;

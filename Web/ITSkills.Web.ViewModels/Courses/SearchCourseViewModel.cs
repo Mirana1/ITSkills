@@ -1,7 +1,7 @@
 ﻿namespace ITSkills.Web.ViewModels.Courses
 {
     using System;
-
+    using System.Collections.Generic;
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
@@ -20,5 +20,7 @@
         public DateTime CreatedOn { get; set; }
 
         public ApplicationUser User { get; set; }
+
+        public IEnumerable<ViewModel> Courses { get; set; }
     }
 }

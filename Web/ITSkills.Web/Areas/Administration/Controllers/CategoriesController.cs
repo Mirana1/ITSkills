@@ -24,13 +24,11 @@
             this.categoriesService = categoriesService;
         }
 
-        // GET: Administration/Categories
         public async Task<IActionResult> Index()
         {
             return this.View(await this.dbContext.Categories.ToListAsync());
         }
 
-        // GET: Administration/Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -67,7 +65,6 @@
             return this.View(input);
         }
 
-        // GET: Administration/Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,7 +72,8 @@
                 return this.NotFound();
             }
 
-            var category = await this.dbContext.Categories.FindAsync(id);
+            var category = this.categoriesService.GetById<EditCategoryViewModel>(id);
+
             if (category == null)
             {
                 return this.NotFound();
@@ -111,8 +109,10 @@
                         throw;
                     }
                 }
+
                 return this.RedirectToAction(nameof(this.Index));
             }
+
             return this.View(category);
         }
 
@@ -133,7 +133,8 @@
             return this.View(category);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

@@ -1,6 +1,5 @@
 ﻿namespace ITSkills.Web.Controllers
 {
-    using System.Threading.Tasks;
     using ITSkills.Common;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
@@ -9,7 +8,9 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
+    [Authorize]
     public class MyCoursesController : BaseController
     {
         private readonly IMyCoursesService myCourseService;
@@ -23,7 +24,6 @@
             this.coursesService = coursesService;
         }
 
-        [Authorize]
         public ActionResult Payment(int id)
         {
             if (!this.coursesService.TryGetById<CoursesViewModel>(id))
@@ -31,17 +31,23 @@
                 return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            var currentUser = HttpContext.User.Identity.Name;
+            var currentUser = this.HttpContext.User.Identity.Name;
             var viewModel = this.coursesService.GetById<PaymentViewModel>(id);
             viewModel.Username = currentUser;
             return this.View(viewModel);
         }
 
-        //[Authorize]
         //[HttpPost]
-        //public async Task<IActionResult> Payment(int courseId, string userId)
+        //public async Task<IActionResult> Payment(int courseId, string userId, string paymentCode)
         //{
+        //    var isAdded = this.myCourseService.AddCourseToUserAsync(courseId, userId, paymentCode);
 
+        //    if (isAdded)
+        //    {
+        //        return this.Redirect("/Trips/All");
+        //    }
+
+        //    return this.Redirect($"/Trips/Details?tripId={tripId}");
         //}
     }
 }

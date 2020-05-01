@@ -12,8 +12,10 @@
     using ITSkills.Services.Data;
     using ITSkills.Services.Mapping;
     using ITSkills.Services.Messaging;
+    using ITSkills.Services.Models;
+    using ITSkills.Web.InputModels;
     using ITSkills.Web.ViewModels;
-
+    using ITSkills.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -39,7 +41,8 @@
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
-                .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddRoles<ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddDistributedSqlServerCache(options =>
             {
@@ -106,7 +109,11 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings
+                (typeof(ErrorViewModel).GetTypeInfo().Assembly,
+                typeof(CategoryCreateInputModel).GetTypeInfo().Assembly,
+                typeof(CategoryViewModel).GetTypeInfo().Assembly,
+                typeof(CategoryServiceModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
@@ -147,12 +154,12 @@
             app.UseEndpoints(
                 endpoints =>
                     {
+                        endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("myCoursePayment", "/Course/Payment/{id}", new { controller = "MyCourses", action = "Payment" });
                         endpoints.MapControllerRoute("courseSearch", "/Course/Index/{seachWord}", new { controller = "Courses", action = "Index" });
                         endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });
                         endpoints.MapControllerRoute("lectionView", "/Lection/ById/{id}", new { controller = "Lections", action = "ById" });
                         endpoints.MapControllerRoute("courseCategory", "/Category/{name:minlength(3)}", new { controller = "Categories", action = "ByName" });
-                        endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                         endpoints.MapRazorPages();
                     });

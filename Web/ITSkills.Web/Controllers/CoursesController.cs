@@ -49,26 +49,26 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
-        public IActionResult Create()
-        {
-            var categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
-            var viewModel = new CreateCourseViewModel
-            {
-                Categories = categories,
-            };
-            return this.View(viewModel);
-        }
+        //[Authorize]
+        //public IActionResult Create()
+        //{
+        //    var categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
+        //    var viewModel = new CreateCourseViewModel
+        //    {
+        //        Categories = categories,
+        //    };
+        //    return this.View(viewModel);
+        //}
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateCourseViewModel input)
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var userId = user.Id;
-            var courseId = await this.coursesService.CreateAsync(input.Title, input.Description, input.CategoryId, input.Price, userId, input.AcquiredKnowledge, input.Requirements, input.ImageUrl);
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult> Create(CreateCourseViewModel input)
+        //{
+        //    var user = await this.userManager.GetUserAsync(this.User);
+        //    var userId = user.Id;
+        //    var courseId = await this.coursesService.CreateAsync(input.Title, input.Description, input.CategoryId, input.Price, userId, input.AcquiredKnowledge, input.Requirements, input.ImageUrl);
 
-            return this.RedirectToAction(nameof(this.ById), new { id = courseId });
-        }
+        //    return this.RedirectToAction(nameof(this.ById), new { id = courseId });
+        //}
     }
 }

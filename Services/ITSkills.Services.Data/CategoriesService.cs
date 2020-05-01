@@ -4,21 +4,31 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using AutoMapper;
     using ITSkills.Data.Common.Repositories;
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
+    using ITSkills.Services.Models;
     using Microsoft.EntityFrameworkCore;
 
     public class CategoriesService : ICategoriesService
     {
         private readonly IDeletableEntityRepository<Category> categoryRepository;
-
+        private const string InvalidCategoryIdErrorMessage = "Category with ID: {0} does not exist.";
         public const string InvalidCategoryTitleErrorMessage = "Category with name {0} does not exist.";
 
         public CategoriesService(IDeletableEntityRepository<Category> categoryRepository)
         {
             this.categoryRepository = categoryRepository;
+        }
+
+        public async Task<bool> Create(CategoryServiceModel categoryServiceModel)
+        {
+            Category category = Mapper.Map<Category>(categoryServiceModel);
+            await this.categoryRepository.AddAsync(category);
+            int result = await this.categoryRepository.SaveChangesAsync();
+
+            return result > 0;
         }
 
         public async Task<int> CreateAsync(string name, string imageUrl, string description)
@@ -58,7 +68,7 @@
                 .FirstOrDefault();
         }
 
-        public T GetById<T>(int id)
+        public T GetById<T>(int? id)
         {
             return this.categoryRepository
                 .All()
@@ -84,5 +94,6 @@
             return this.categoryRepository.AllAsNoTracking().Any(c => c.Name == name);
         }
 
+       
     }
 }

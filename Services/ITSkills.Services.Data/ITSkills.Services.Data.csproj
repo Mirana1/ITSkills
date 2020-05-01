@@ -21,7 +21,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\ITSkills.Data.Common\ITSkills.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\ITSkills.Data.Models\ITSkills.Data.Models.csproj" />
+    <ProjectReference Include="..\..\ITSkills.Common\ITSkills.Common.csproj" />
     <ProjectReference Include="..\ITSkills.Services.Mapping\ITSkills.Services.Mapping.csproj" />
+    <ProjectReference Include="..\ITSkills.Services.Models\ITSkills.Services.Models.csproj" />
   </ItemGroup>
 
 </Project>

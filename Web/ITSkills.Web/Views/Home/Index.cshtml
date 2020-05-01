@@ -4,6 +4,9 @@
 
 @model ITSkills.Web.ViewModels.Home.IndexViewModel
 
+    <head>
+        <link rel="stylesheet" href="~/css/backToCoursebtn.css" />
+    </head>
 @if (!this.User.Identity.IsAuthenticated)
 {
     <partial name="NotLoggedIn" />
@@ -14,7 +17,7 @@ else
         <ul id="myTab" class="nav nav-tabs">
             @foreach (var category in Model.Categories)
             {
-                <li><a href="@category.Url">@category.Name</a></li>
+            <button class="button"><li><a href="@category.Url" style="color:lightgray;">@category.Name</a></li></button>
             }
         </ul>
     </div>

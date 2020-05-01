@@ -22,6 +22,7 @@
             this.userManager = userManager;
         }
 
+        [Authorize]
         public IActionResult ById(int id)
         {
             if (!this.lectionsService.TryGetById<LectionsViewModel>(id))
@@ -36,26 +37,26 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
-        public IActionResult Create()
-        {
-            var courses = this.coursesService.GetAll<CoursesDropDownMenuViewModel>();
-            var viewModel = new CreateLectionViewModel
-            {
-                Courses = courses,
-            };
-            return this.View(viewModel);
-        }
+        //[Authorize]
+        //public IActionResult Create()
+        //{
+        //    var courses = this.coursesService.GetAll<CoursesDropDownMenuViewModel>();
+        //    var viewModel = new CreateLectionViewModel
+        //    {
+        //        Courses = courses,
+        //    };
+        //    return this.View(viewModel);
+        //}
 
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> Create(CreateLectionViewModel input)
-        {
-            var user = await this.userManager.GetUserAsync(this.User);
-            var userId = user.Id;
-            var lectionId = await this.lectionsService.CreateAsync(input.Title, input.Description, input.CourseId, input.Url, userId);
+        //[Authorize]
+        //[HttpPost]
+        //public async Task<IActionResult> Create(CreateLectionViewModel input)
+        //{
+        //    var user = await this.userManager.GetUserAsync(this.User);
+        //    var userId = user.Id;
+        //    var lectionId = await this.lectionsService.CreateAsync(input.Title, input.Description, input.CourseId, input.Url, userId);
 
-            return this.RedirectToAction(nameof(this.ById), new { id = lectionId });
-        }
+        //    return this.RedirectToAction(nameof(this.ById), new { id = lectionId });
+        //}
     }
 }
