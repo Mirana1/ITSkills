@@ -5,7 +5,7 @@
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
-    public class CategoryServiceModel : IMapFrom<Course>, IMapTo<Course>
+    public class CategoryServiceModel : IMapTo<Category>, IMapFrom<Category>
     {
         public int Id { get; set; }
 

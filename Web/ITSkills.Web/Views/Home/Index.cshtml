@@ -4,22 +4,20 @@
 
 @model ITSkills.Web.ViewModels.Home.IndexViewModel
 
-    <head>
-        <link rel="stylesheet" href="~/css/backToCoursebtn.css" />
-    </head>
+<head>
+    <link rel="stylesheet" href="~/css/sidebar.css" />
+</head>
 @if (!this.User.Identity.IsAuthenticated)
 {
     <partial name="NotLoggedIn" />
 }
 else
 {
-    <div class="tabbable">
-        <ul id="myTab" class="nav nav-tabs">
-            @foreach (var category in Model.Categories)
-            {
-            <button class="button"><li><a href="@category.Url" style="color:lightgray;">@category.Name</a></li></button>
-            }
-        </ul>
+    <div class="sidebar">
+        @foreach (var category in Model.Categories)
+        {
+            <a href="@category.Url">@category.Name</a>
+        }
     </div>
     <div class="text-center">
         <h1 class="display-4">My courses</h1>
@@ -28,5 +26,4 @@ else
             <p>You haven't added any courses yet.</p>
         }
     </div>
-
 }

@@ -15,6 +15,7 @@
     using ITSkills.Services.Models;
     using ITSkills.Web.InputModels;
     using ITSkills.Web.ViewModels;
+    using ITSkills.Web.ViewModels.Administration.Categories;
     using ITSkills.Web.ViewModels.Categories;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -110,10 +111,8 @@
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             AutoMapperConfig.RegisterMappings
-                (typeof(ErrorViewModel).GetTypeInfo().Assembly,
-                typeof(CategoryCreateInputModel).GetTypeInfo().Assembly,
-                typeof(CategoryViewModel).GetTypeInfo().Assembly,
-                typeof(CategoryServiceModel).GetTypeInfo().Assembly);
+                (typeof(ErrorViewModel).GetTypeInfo().Assembly);
+
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

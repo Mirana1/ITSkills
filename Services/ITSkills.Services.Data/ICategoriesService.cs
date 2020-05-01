@@ -7,18 +7,22 @@
 
     public interface ICategoriesService
     {
-        Task<bool> Create(CategoryServiceModel categoryServiceModel);
-
         Task<int> CreateAsync(string name, string imageUrl, string description);
+
+        Task EditAsync(int id, string name, string imageUrl, string description);
+
+        Task DeleteAsync(int id);
 
         IEnumerable<T> GetAll<T>(int? count = null);
 
         T GetByName<T>(string name);
 
-        T GetById<T>(int? id);
+        T GetById<T>(int id);
 
         Task<int> GeIdByTitleAsync(string categoryTitle);
 
         bool TryGetCategoryById<T>(string name);
+
+        bool CategoryExists(string name);
     }
 }

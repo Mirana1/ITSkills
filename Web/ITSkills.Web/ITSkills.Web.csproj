@@ -44,6 +44,7 @@
     <ProjectReference Include="..\..\Services\ITSkills.Services.Messaging\ITSkills.Services.Messaging.csproj" />
     <ProjectReference Include="..\..\Services\ITSkills.Services\ITSkills.Services.csproj" />
     <ProjectReference Include="..\ITSkills.Web.Infrastructure\ITSkills.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\ITSkills.Web.InputModels\ITSkills.Web.InputModels.csproj" />
     <ProjectReference Include="..\ITSkills.Web.ViewModels\ITSkills.Web.ViewModels.csproj" />
   </ItemGroup>
 

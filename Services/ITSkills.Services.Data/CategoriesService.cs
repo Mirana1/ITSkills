@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using AutoMapper;
     using ITSkills.Data.Common.Repositories;
     using ITSkills.Data.Models;
@@ -20,15 +21,6 @@
         public CategoriesService(IDeletableEntityRepository<Category> categoryRepository)
         {
             this.categoryRepository = categoryRepository;
-        }
-
-        public async Task<bool> Create(CategoryServiceModel categoryServiceModel)
-        {
-            Category category = Mapper.Map<Category>(categoryServiceModel);
-            await this.categoryRepository.AddAsync(category);
-            int result = await this.categoryRepository.SaveChangesAsync();
-
-            return result > 0;
         }
 
         public async Task<int> CreateAsync(string name, string imageUrl, string description)
@@ -68,13 +60,15 @@
                 .FirstOrDefault();
         }
 
-        public T GetById<T>(int? id)
+        public T GetById<T>(int id)
         {
-            return this.categoryRepository
+            var category = this.categoryRepository
                 .All()
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();
+
+            return category;
         }
 
         public async Task<int> GeIdByTitleAsync(string categoryTitle)
@@ -89,11 +83,38 @@
             return category.Id;
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            var category = this.categoryRepository
+                .All()
+                .Where(c => c.Id == id)
+                .FirstOrDefault();
+
+            this.categoryRepository.Delete(category);
+            await this.categoryRepository.SaveChangesAsync();
+        }
+
         public bool TryGetCategoryById<T>(string name)
         {
             return this.categoryRepository.AllAsNoTracking().Any(c => c.Name == name);
         }
 
-       
+        public async Task EditAsync(int id, string name, string imageUrl, string description)
+        {
+            var category = this.categoryRepository.All().Where(c => c.Id == id).FirstOrDefault();
+            category.Name = name;
+            category.ImageUrl = imageUrl;
+            category.Description = description;
+
+            this.categoryRepository.Update(category);
+            await this.categoryRepository.SaveChangesAsync();
+        }
+
+        public bool CategoryExists(string name)
+        {
+            return this.categoryRepository
+                .All()
+                .Any(n => n.Name.ToLower() == name.ToLower());
+        }
     }
 }

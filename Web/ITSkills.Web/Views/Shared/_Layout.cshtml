@@ -7,6 +7,7 @@
     <title>ITSkills</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <partial name="_Favicons" />
 </head>
 <body>
@@ -31,18 +32,14 @@
                         </li>
                         @*@if (this.User.IsInRole("Admin"))
                             {*@
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" style="color:#222222;" id="navbardrop" data-toggle="dropdown">
-                                    Administration
-                                </a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Categories" asp-action="Index">Category</a>
-                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Courses" asp-action="Index">Course</a>
-                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Lections" asp-action="Index">Lection</a>
-                                </div>
-                            </li>
-                        </ul>
+                        <div class="w3-dropdown-hover">
+                            <button class="w3-button">Administration</button>
+                            <div class="w3-dropdown-content w3-bar-block w3-border">
+                                <a class="dropdown-item" asp-area="Administration" asp-controller="Categories" asp-action="Index">Category</a>
+                                <a class="dropdown-item" asp-area="Administration" asp-controller="Courses" asp-action="Index">Course</a>
+                                <a class="dropdown-item" asp-area="Administration" asp-controller="Lections" asp-action="Index">Lection</a>
+                            </div>
+                        </div>
                         <form class="form-inline" asp-controller="Courses" asp-action="Index" method="get">
                             <input class="form-control mr-sm-2" type="text" placeholder="Search..." name="searchWord">
                             <button class="btn btn-outline-secondary my-2 my-sm-0" style="background-color: #fafafa;" type="submit">Search</button>
@@ -52,7 +49,7 @@
                 </div>
             </div>
         </nav>
-        
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">

@@ -2,10 +2,12 @@
 {
     using System.Linq;
     using System.Threading.Tasks;
-
+    using AutoMapper;
     using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
+    using ITSkills.Services.Models;
+    using ITSkills.Web.InputModels;
     using ITSkills.Web.ViewModels.Administration.Categories;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
@@ -65,7 +67,7 @@
             return this.View(input);
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
@@ -84,36 +86,20 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Description,ImageUrl,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Edit(CategoryEditInputModel input)
         {
-            if (id != category.Id)
+            if (!this.categoriesService.CategoryExists(input.Name))
             {
                 return this.NotFound();
             }
-
-            if (this.ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                try
-                {
-                    this.dbContext.Update(category);
-                    await this.dbContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!this.CategoryExists(category.Id))
-                    {
-                        return this.NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-
-                return this.RedirectToAction(nameof(this.Index));
+                return this.View(input);
             }
 
-            return this.View(category);
+            await this.categoriesService.EditAsync(input.Id, input.Name, input.ImageUrl, input.Description);
+
+            return this.Redirect("/Administration/Categories");
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -125,6 +111,7 @@
 
             var category = await this.dbContext.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (category == null)
             {
                 return this.NotFound();
@@ -138,15 +125,8 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await this.dbContext.Categories.FindAsync(id);
-            this.dbContext.Categories.Remove(category);
-            await this.dbContext.SaveChangesAsync();
+            await this.categoriesService.DeleteAsync(id);
             return this.RedirectToAction(nameof(this.Index));
-        }
-
-        private bool CategoryExists(int id)
-        {
-            return this.dbContext.Categories.Any(e => e.Id == id);
         }
     }
 }

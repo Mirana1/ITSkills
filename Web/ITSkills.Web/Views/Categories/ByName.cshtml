@@ -2,6 +2,9 @@
 @{
     this.ViewData["Title"] = Model.Name;
 }
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
 <body>
     @if (Model.CoursesCount == 0)
     {
@@ -9,9 +12,10 @@
     }
     else
     {
-        <h1 class="display-3">@this.ViewData["Title"]</h1>
-        <div>
-            @Model.Description
+        <div class="w3-bar w3-amber" style="width:100%;">
+            <div class="w3-container w3-center w3-animate-left">
+                <div class="w3-bar-item">@this.ViewData["Title"]</div>
+            </div>
         </div>
         <br />
         <div class="card-deck">
