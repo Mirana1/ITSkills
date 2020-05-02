@@ -96,11 +96,11 @@
             await this.categoryRepository.SaveChangesAsync();
         }
 
-        public bool CategoryExists(string name)
+        public bool CategoryExists(int id)
         {
             return this.categoryRepository
                 .All()
-                .Any(n => n.Name.ToLower() == name.ToLower());
+                .Any(n => n.Id == id);
         }
     }
 }

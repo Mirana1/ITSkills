@@ -1,12 +1,11 @@
 ﻿namespace ITSkills.Web.Areas.Administration.Controllers
 {
-    using System.Linq;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
-    using AutoMapper;
+
+    using ITSkills.Common;
     using ITSkills.Data;
-    using ITSkills.Data.Models;
     using ITSkills.Services.Data;
-    using ITSkills.Services.Models;
     using ITSkills.Web.InputModels;
     using ITSkills.Web.ViewModels.Administration.Categories;
     using Microsoft.AspNetCore.Authorization;
@@ -28,21 +27,22 @@
 
         public async Task<IActionResult> Index()
         {
-            return this.View(await this.dbContext.Categories.ToListAsync());
+            IEnumerable<AllCategoriesViewModel> categories = this.categoriesService.GetAll<AllCategoriesViewModel>();
+            return this.View(categories);
         }
 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
-                return this.View("NotFound");
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
             var category = await this.dbContext.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
-                return this.NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
             return this.View(category);
@@ -71,14 +71,14 @@
         {
             if (id == null)
             {
-                return this.NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
             var category = this.categoriesService.GetById<CategoryEditInputModel>(id);
 
             if (category == null)
             {
-                return this.NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
             return this.View(category);
@@ -88,10 +88,10 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CategoryEditInputModel input)
         {
-            //if (!this.categoriesService.CategoryExists(input.Name))
-            //{
-            //    return this.NotFound();
-            //}
+            if (!this.categoriesService.CategoryExists(input.Id))
+            {
+                return this.View(GlobalConstants.NotFoundRoute);
+            }
 
             if (!this.ModelState.IsValid)
             {

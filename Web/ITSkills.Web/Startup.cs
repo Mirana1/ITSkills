@@ -122,7 +122,8 @@
         {
             AutoMapperConfig.RegisterMappings
                 (typeof(ErrorViewModel).GetTypeInfo().Assembly,
-                typeof(CategoryEditInputModel).GetTypeInfo().Assembly);
+                typeof(CategoryEditInputModel).GetTypeInfo().Assembly,
+                typeof(AllCategoriesViewModel).GetTypeInfo().Assembly);
 
 
             // Seed data on application startup

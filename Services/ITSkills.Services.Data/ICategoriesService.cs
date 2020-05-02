@@ -22,6 +22,6 @@
 
         bool TryGetCategoryById<T>(string name);
 
-        bool CategoryExists(string name);
+        bool CategoryExists(int id);
     }
 }
