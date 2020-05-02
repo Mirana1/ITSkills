@@ -12,7 +12,7 @@
 
     [Authorize]
     [Area("Administration")]
-    public class LectionsController : Controller
+    public class LectionsController : AdministrationController
     {
         private readonly ApplicationDbContext _context;
 

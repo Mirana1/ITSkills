@@ -1,6 +1,7 @@
 ﻿namespace ITSkills.Services.Data
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using ITSkills.Services.Models;
@@ -18,8 +19,6 @@
         T GetByName<T>(string name);
 
         T GetById<T>(int id);
-
-        Task<int> GeIdByTitleAsync(string categoryTitle);
 
         bool TryGetCategoryById<T>(string name);
 

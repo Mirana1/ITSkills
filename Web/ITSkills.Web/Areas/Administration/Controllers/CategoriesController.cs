@@ -15,7 +15,7 @@
 
     [Authorize]
     [Area("Administration")]
-    public class CategoriesController : Controller
+    public class CategoriesController : AdministrationController
     {
         private readonly ApplicationDbContext dbContext;
         private readonly ICategoriesService categoriesService;
@@ -74,7 +74,7 @@
                 return this.NotFound();
             }
 
-            var category = this.categoriesService.GetById<EditCategoryViewModel>(id);
+            var category = this.categoriesService.GetById<CategoryEditInputModel>(id);
 
             if (category == null)
             {
@@ -88,10 +88,11 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(CategoryEditInputModel input)
         {
-            if (!this.categoriesService.CategoryExists(input.Name))
-            {
-                return this.NotFound();
-            }
+            //if (!this.categoriesService.CategoryExists(input.Name))
+            //{
+            //    return this.NotFound();
+            //}
+
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);

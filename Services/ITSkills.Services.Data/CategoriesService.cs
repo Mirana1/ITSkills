@@ -15,8 +15,6 @@
     public class CategoriesService : ICategoriesService
     {
         private readonly IDeletableEntityRepository<Category> categoryRepository;
-        private const string InvalidCategoryIdErrorMessage = "Category with ID: {0} does not exist.";
-        public const string InvalidCategoryTitleErrorMessage = "Category with name {0} does not exist.";
 
         public CategoriesService(IDeletableEntityRepository<Category> categoryRepository)
         {
@@ -69,18 +67,6 @@
                 .FirstOrDefault();
 
             return category;
-        }
-
-        public async Task<int> GeIdByTitleAsync(string categoryTitle)
-        {
-            var category = await this.categoryRepository.AllAsNoTracking().SingleOrDefaultAsync(c => c.Name == categoryTitle);
-
-            if (category == null)
-            {
-                throw new ArgumentNullException(string.Format(InvalidCategoryTitleErrorMessage, categoryTitle));
-            }
-
-            return category.Id;
         }
 
         public async Task DeleteAsync(int id)

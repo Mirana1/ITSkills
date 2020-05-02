@@ -5,15 +5,15 @@
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
-    public class EditCategoryViewModel : IMapFrom<Course>
+    public class CategoryEditViewModel : IMapTo<Course>
     {
-        [Required]
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
-        [Required]
+        [Display(Name = "Image Url")]
         public string ImageUrl { get; set; }
     }
 }

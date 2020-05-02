@@ -9,6 +9,18 @@
     public static class QueryableMappingExtensions
     {
         public static IQueryable<TDestination> To<TDestination>(
+           this IQueryable source,
+           object parameters)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException(nameof(source));
+            }
+
+            return source.ProjectTo<TDestination>(AutoMapperConfig.MapperInstance.ConfigurationProvider, parameters);
+        }
+
+        public static IQueryable<TDestination> To<TDestination>(
             this IQueryable source,
             params Expression<Func<TDestination, object>>[] membersToExpand)
         {
@@ -18,18 +30,6 @@
             }
 
             return source.ProjectTo(AutoMapperConfig.MapperInstance.ConfigurationProvider, null, membersToExpand);
-        }
-
-        public static IQueryable<TDestination> To<TDestination>(
-            this IQueryable source,
-            object parameters)
-        {
-            if (source == null)
-            {
-                throw new ArgumentNullException(nameof(source));
-            }
-
-            return source.ProjectTo<TDestination>(AutoMapperConfig.MapperInstance.ConfigurationProvider, parameters);
         }
     }
 }
