@@ -25,21 +25,16 @@
             this.categoriesService = categoriesService;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IEnumerable<AllCategoriesViewModel> categories = this.categoriesService.GetAll<AllCategoriesViewModel>();
             return this.View(categories);
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return this.View(GlobalConstants.NotFoundRoute);
-            }
+            var category = this.categoriesService.GetById<CategoryDetailsViewModel>(id);
 
-            var category = await this.dbContext.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
                 return this.View(GlobalConstants.NotFoundRoute);
@@ -67,7 +62,7 @@
             return this.View(input);
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public IActionResult Edit(int id)
         {
             if (id == null)
             {
@@ -103,15 +98,9 @@
             return this.Redirect("/Administration/Categories");
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return this.NotFound();
-            }
-
-            var category = await this.dbContext.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = this.categoriesService.GetById<DeleteCategoryViewModel>(id);
 
             if (category == null)
             {

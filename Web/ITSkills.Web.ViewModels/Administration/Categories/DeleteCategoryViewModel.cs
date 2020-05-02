@@ -5,7 +5,7 @@
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
-    public class CategoryDetailsViewModel : IMapFrom<Category>
+    public class DeleteCategoryViewModel : IMapFrom<Category>
     {
         public int Id { get; set; }
 

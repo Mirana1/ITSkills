@@ -70,8 +70,6 @@
                         options.MinimumSameSitePolicy = SameSiteMode.None;
                     });
 
-            
-            //var mappingConfig = new MapperConfiguration(m => m.AddProfile(new ITSkillsProfile()));
             services.AddControllersWithViews(configure =>
             {
                 configure.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
@@ -107,23 +105,15 @@
             services.AddTransient<IMyCoursesService, MyCoursesService>();
         }
 
-        //public class ITSkillsProfile : Profile
-        //{
-        //    public ITSkillsProfile()
-        //    {
-        //        CreateMap<Category, CategoryServiceModel>();
-        //        CreateMap<Category, CategoryEditInputModel>();
-        //        CreateMap<Category, CategoryEditViewModel>();
-        //    }
-        //}
-
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             AutoMapperConfig.RegisterMappings
                 (typeof(ErrorViewModel).GetTypeInfo().Assembly,
                 typeof(CategoryEditInputModel).GetTypeInfo().Assembly,
-                typeof(AllCategoriesViewModel).GetTypeInfo().Assembly);
+                typeof(AllCategoriesViewModel).GetTypeInfo().Assembly,
+                typeof(CategoryDetailsViewModel).GetTypeInfo().Assembly,
+                typeof(DeleteCategoryViewModel).GetTypeInfo().Assembly);
 
 
             // Seed data on application startup
