@@ -1,4 +1,4 @@
-﻿namespace ITSkills.Web.ViewModels.Courses
+﻿namespace ITSkills.Web.ViewModels.Administration.Courses
 {
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;

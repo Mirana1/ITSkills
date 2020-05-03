@@ -9,6 +9,7 @@
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Administration.Courses;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,14 @@
         private readonly ApplicationDbContext _context;
         private readonly ICoursesService coursesService;
         private readonly ICategoriesService categoriesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public CoursesController(ApplicationDbContext context, ICoursesService coursesService, ICategoriesService categoriesService)
+        public CoursesController(ApplicationDbContext context, ICoursesService coursesService, ICategoriesService categoriesService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             this.coursesService = coursesService;
             this.categoriesService = categoriesService;
+            this.userManager = userManager;
         }
 
         // GET: Administration/Courses
@@ -33,11 +36,8 @@
         {
             IEnumerable<AllCoursesViewModel> courses = this.coursesService.GetAll<AllCoursesViewModel>();
             return this.View(courses);
-            //var applicationDbContext = _context.Courses.Include(c => c.Category).Include(c => c.User);
-            //return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Administration/Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -57,41 +57,33 @@
             return View(course);
         }
 
-        // GET: Administration/Courses/Create
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            var users = this.userManager.Users;
+
+            IEnumerable<CategoryDropDownViewModel> categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
+            var viewModel = new CreateCourseViewModel
+            {
+                Categories = categories,
+                Users = users,
+            };
+            return this.View(viewModel);
         }
 
-        //public IActionResult Create()
-        //{
-        //    var categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
-        // var user = this.
-        //    var viewModel = new CreateCourseViewModel
-        //    {
-        //        Categories = categories,
-        //    };
-        //    return this.View();
-        //}
-
-        // POST: Administration/Courses/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Title,Description,Price,ImageUrl,UserId,Requirements,AcquiredKnowledge,CategoryId,Id,CreatedOn,ModifiedOn")] Course course)
+        public async Task<IActionResult> Create(CreateCourseViewModel input)
         {
-            if (ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                _context.Add(course);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return this.View(input);
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", course.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", course.UserId);
-            return View(course);
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = user.Id;
+            await this.coursesService.CreateAsync(input.Title, input.Description, input.CategoryId, input.Price, userId, input.AcquiredKnowledge, input.Requirements, input.ImageUrl);
+
+            return this.Redirect("/Administration/Courses");
         }
 
         // GET: Administration/Courses/Edit/5

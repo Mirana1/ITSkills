@@ -1,7 +1,9 @@
-﻿@model ITSkills.Data.Models.Course
+﻿@model ITSkills.Web.ViewModels.Administration.Courses.CreateCourseViewModel
 
 @{
     ViewData["Title"] = "Create";
+    var categories = Model.Categories.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+    var users = Model.Users.Select(x => new SelectListItem(x.UserName, x.Id.ToString()));
 }
 
 <h2>Create</h2>
@@ -34,7 +36,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
+                <select asp-for="UserId" asp-items="users" class="form-control"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Requirements" class="control-label"></label>
@@ -47,18 +50,14 @@
                 <span asp-validation-for="AcquiredKnowledge" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId"></select>
+                <label asp-for="CategoryId"></label>
+                <select asp-for="CategoryId" asp-items="categories" class="form-control"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CreatedOn" class="control-label"></label>
                 <input asp-for="CreatedOn" class="form-control" />
                 <span asp-validation-for="CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-success" />

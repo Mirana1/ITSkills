@@ -1,4 +1,4 @@
-﻿@{
+﻿@*@{
     this.ViewData["Title"] = "Create a new course";
     var categories = Model.Categories.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
 }
@@ -51,4 +51,4 @@
 </form>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-}
+}*@

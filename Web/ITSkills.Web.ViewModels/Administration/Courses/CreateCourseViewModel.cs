@@ -16,7 +16,7 @@
         public string Title { get; set; }
 
         [Required]
-        [StringLength(200, ErrorMessage = "Description should be at least {2} characters", MinimumLength = 100)]
+        [StringLength(200, ErrorMessage = "Description should be at least {2} characters", MinimumLength = 50)]
         public string Description { get; set; }
 
         public decimal? Price { get; set; }
@@ -26,7 +26,7 @@
 
         public string UserId { get; set; }
 
-        public IEnumerable<UsersViewModel> User { get; set; }
+        public IEnumerable<ApplicationUser> Users { get; set; }
 
         [Required]
         public string Requirements { get; set; }
@@ -36,10 +36,8 @@
         [Required]
         public string AcquiredKnowledge { get; set; }
 
-        public IEnumerable<CategoryViewModel> Categories { get; set; }
+        public IEnumerable<CategoryDropDownViewModel> Categories { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
-        public DateTime? ModifiedOn { get; set; }
     }
 }
