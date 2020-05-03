@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using ITSkills.Common;
     using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
@@ -86,62 +86,42 @@
             return this.Redirect("/Administration/Courses");
         }
 
-        // GET: Administration/Courses/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var course = await _context.Courses.FindAsync(id);
+            var users = this.userManager.Users;
+            IEnumerable<CategoryDropDownViewModel> categories = this.categoriesService.GetAll<CategoryDropDownViewModel>();
+            var course = this.coursesService.GetById<EditCourseViewModel>(id);
             if (course == null)
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", course.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", course.UserId);
-            return View(course);
+
+            course.Categories = categories;
+            course.Users = users;
+            return this.View(course);
         }
 
-        // POST: Administration/Courses/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Title,Description,Price,ImageUrl,UserId,Requirements,AcquiredKnowledge,CategoryId,Id,CreatedOn,ModifiedOn")] Course course)
+        public async Task<IActionResult> Edit(EditCourseViewModel input)
         {
-            if (id != course.Id)
+            if (!this.coursesService.CourseExists(input.Id))
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            if (ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(course);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CourseExists(course.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return this.View(input);
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Id", course.CategoryId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", course.UserId);
-            return View(course);
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = user.Id;
+            await this.coursesService.EditAsync(input.Id, input.Title, input.Description, input.Price, input.ImageUrl, userId, input.Requirements, input.AcquiredKnowledge, input.CategoryId);
+
+            return this.Redirect("/Administration/Courses");
         }
 
-        // GET: Administration/Courses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,8 +141,8 @@
             return View(course);
         }
 
-        // POST: Administration/Courses/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
@@ -172,9 +152,5 @@
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CourseExists(int id)
-        {
-            return _context.Courses.Any(e => e.Id == id);
-        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace ITSkills.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -35,6 +34,23 @@
             await this.coursesRepository.AddAsync(course);
             await this.coursesRepository.SaveChangesAsync();
             return course.Id;
+        }
+
+        public async Task EditAsync(int id, string title, string description, decimal? price, string imageUrl, string userId, string requirements, string acquiredKnowledge, int categoryId)
+        {
+            var course = this.coursesRepository.All().Where(c => c.Id == id).FirstOrDefault();
+
+            course.Title = title;
+            course.Description = description;
+            course.Price = price;
+            course.ImageUrl = imageUrl;
+            course.UserId = userId;
+            course.Requirements = requirements;
+            course.AcquiredKnowledge = acquiredKnowledge;
+            course.CategoryId = categoryId;
+
+            this.coursesRepository.Update(course);
+            await this.coursesRepository.SaveChangesAsync();
         }
 
         public IEnumerable<T> GetAll<T>(int? count = null)
@@ -73,6 +89,13 @@
         public bool TryGetById<T>(int id)
         {
             return this.coursesRepository.AllAsNoTracking().Any(x => x.Id == id);
+        }
+
+        public bool CourseExists(int? id)
+        {
+            return this.coursesRepository
+                .All()
+                .Any(n => n.Id == id);
         }
     }
 }

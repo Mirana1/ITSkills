@@ -3,9 +3,8 @@
     using ITSkills.Common;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Categories;
+
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
-    using System;
 
     public class CategoriesController : BaseController
     {
