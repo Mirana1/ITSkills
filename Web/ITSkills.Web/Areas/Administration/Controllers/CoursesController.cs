@@ -115,9 +115,7 @@
                 return this.View(input);
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
-            var userId = user.Id;
-            await this.coursesService.EditAsync(input.Id, input.Title, input.Description, input.Price, input.ImageUrl, userId, input.Requirements, input.AcquiredKnowledge, input.CategoryId);
+            await this.coursesService.EditAsync(input.Id, input.Title, input.Description, input.Price, input.ImageUrl, input.UserId, input.Requirements, input.AcquiredKnowledge, input.CategoryId);
 
             return this.Redirect("/Administration/Courses");
         }
