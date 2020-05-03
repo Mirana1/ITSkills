@@ -1,11 +1,13 @@
 ﻿namespace ITSkills.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
+    using ITSkills.Web.ViewModels.Administration.Courses;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -29,8 +31,10 @@
         // GET: Administration/Courses
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Courses.Include(c => c.Category).Include(c => c.User);
-            return View(await applicationDbContext.ToListAsync());
+            IEnumerable<AllCoursesViewModel> courses = this.coursesService.GetAll<AllCoursesViewModel>();
+            return this.View(courses);
+            //var applicationDbContext = _context.Courses.Include(c => c.Category).Include(c => c.User);
+            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Administration/Courses/Details/5

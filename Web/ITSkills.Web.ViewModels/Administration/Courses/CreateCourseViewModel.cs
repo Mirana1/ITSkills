@@ -26,7 +26,7 @@
 
         public string UserId { get; set; }
 
-        public IEnumerable<UsersListViewModel> User { get; set; }
+        public IEnumerable<UsersViewModel> User { get; set; }
 
         [Required]
         public string Requirements { get; set; }
@@ -36,7 +36,7 @@
         [Required]
         public string AcquiredKnowledge { get; set; }
 
-        public IEnumerable<CategoryDropDownViewModel> Categories { get; set; }
+        public IEnumerable<CategoryViewModel> Categories { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

@@ -1,16 +1,12 @@
 ﻿namespace ITSkills.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AutoMapper;
     using ITSkills.Data.Common.Repositories;
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
-    using ITSkills.Services.Models;
-    using Microsoft.EntityFrameworkCore;
 
     public class CategoriesService : ICategoriesService
     {

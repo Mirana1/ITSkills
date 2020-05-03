@@ -2,7 +2,7 @@
 {
     using System;
     using System.Reflection;
-    using AutoMapper;
+
     using ITSkills.Data;
     using ITSkills.Data.Common;
     using ITSkills.Data.Common.Repositories;
@@ -12,11 +12,10 @@
     using ITSkills.Services.Data;
     using ITSkills.Services.Mapping;
     using ITSkills.Services.Messaging;
-    using ITSkills.Services.Models;
     using ITSkills.Web.InputModels;
     using ITSkills.Web.ViewModels;
     using ITSkills.Web.ViewModels.Administration.Categories;
-    using ITSkills.Web.ViewModels.Categories;
+    using ITSkills.Web.ViewModels.Administration.Courses;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -108,13 +107,15 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            AutoMapperConfig.RegisterMappings
-                (typeof(ErrorViewModel).GetTypeInfo().Assembly,
+            AutoMapperConfig.RegisterMappings(
+                typeof(ErrorViewModel).GetTypeInfo().Assembly,
                 typeof(CategoryEditInputModel).GetTypeInfo().Assembly,
                 typeof(AllCategoriesViewModel).GetTypeInfo().Assembly,
                 typeof(CategoryDetailsViewModel).GetTypeInfo().Assembly,
-                typeof(DeleteCategoryViewModel).GetTypeInfo().Assembly);
-
+                typeof(DeleteCategoryViewModel).GetTypeInfo().Assembly,
+                typeof(AllCoursesViewModel).GetTypeInfo().Assembly,
+                typeof(CategoryViewModel).GetTypeInfo().Assembly,
+                typeof(UsersViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

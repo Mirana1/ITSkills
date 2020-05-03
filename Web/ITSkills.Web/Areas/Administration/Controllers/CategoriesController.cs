@@ -4,24 +4,20 @@
     using System.Threading.Tasks;
 
     using ITSkills.Common;
-    using ITSkills.Data;
     using ITSkills.Services.Data;
     using ITSkills.Web.InputModels;
     using ITSkills.Web.ViewModels.Administration.Categories;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
 
     [Authorize]
     [Area("Administration")]
     public class CategoriesController : AdministrationController
     {
-        private readonly ApplicationDbContext dbContext;
         private readonly ICategoriesService categoriesService;
 
-        public CategoriesController(ApplicationDbContext context, ICategoriesService categoriesService)
+        public CategoriesController(ICategoriesService categoriesService)
         {
-            this.dbContext = context;
             this.categoriesService = categoriesService;
         }
 
@@ -64,11 +60,6 @@
 
         public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return this.View(GlobalConstants.NotFoundRoute);
-            }
-
             var category = this.categoriesService.GetById<CategoryEditInputModel>(id);
 
             if (category == null)
