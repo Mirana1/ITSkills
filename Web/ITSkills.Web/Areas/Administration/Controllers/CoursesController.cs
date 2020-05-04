@@ -37,23 +37,34 @@
             return this.View(courses);
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //var course = await _context.Courses
+            //    .Include(c => c.Category)
+            //    .Include(c => c.User)
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (course == null)
+            //{
+            //    return NotFound();
+            //}
+            if (!this.coursesService.CourseExists(id))
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            var course = await _context.Courses
-                .Include(c => c.Category)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var course = this.coursesService.GetById<DetailsCourseViewModel>(id);
+
             if (course == null)
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            return View(course);
+            return this.View(course);
         }
 
         public IActionResult Create()
