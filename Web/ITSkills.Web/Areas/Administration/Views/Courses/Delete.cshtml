@@ -1,5 +1,4 @@
-﻿@model ITSkills.Data.Models.Course
-
+﻿@model ITSkills.Web.ViewModels.Administration.Courses.DeleteCourseViewModel
 @{
     ViewData["Title"] = "Delete";
 }
@@ -36,10 +35,10 @@
             @Html.DisplayFor(model => model.ImageUrl)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.UserId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.User.Id)
+            @Html.DisplayFor(model => model.UserId)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Requirements)
@@ -54,10 +53,10 @@
             @Html.DisplayFor(model => model.AcquiredKnowledge)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.CategoryId)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Category.Id)
+            @Html.DisplayFor(model => model.CategoryId)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.CreatedOn)

@@ -97,5 +97,12 @@
                 .All()
                 .Any(n => n.Id == id);
         }
+
+        public async Task DeleteAsync(int id)
+        {
+            var searchedCourse = this.coursesRepository.All().Where(c => c.Id == id).FirstOrDefault();
+            this.coursesRepository.Delete(searchedCourse);
+            await this.coursesRepository.SaveChangesAsync();
+        }
     }
 }

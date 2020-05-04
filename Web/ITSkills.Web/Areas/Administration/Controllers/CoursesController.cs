@@ -1,17 +1,17 @@
 ﻿namespace ITSkills.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using ITSkills.Common;
     using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Administration.Courses;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
 
     [Authorize]
@@ -31,7 +31,6 @@
             this.userManager = userManager;
         }
 
-        // GET: Administration/Courses
         public async Task<IActionResult> Index()
         {
             IEnumerable<AllCoursesViewModel> courses = this.coursesService.GetAll<AllCoursesViewModel>();
@@ -120,23 +119,16 @@
             return this.Redirect("/Administration/Courses");
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
+            if (!this.coursesService.CourseExists(id))
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            var course = await _context.Courses
-                .Include(c => c.Category)
-                .Include(c => c.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
-            {
-                return NotFound();
-            }
+            var course = this.coursesService.GetById<DeleteCourseViewModel>(id);
 
-            return View(course);
+            return this.View(course);
         }
 
         [HttpPost]
@@ -144,11 +136,8 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await this.coursesService.DeleteAsync(id);
+            return this.RedirectToAction(nameof(this.Index));
         }
-
     }
 }

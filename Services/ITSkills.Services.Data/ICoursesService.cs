@@ -11,6 +11,8 @@
 
         Task EditAsync(int id, string title, string description, decimal? price, string imageUrl, string userId, string requirements, string acquiredKnowledge, int categoryId);
 
+        Task DeleteAsync(int id);
+
         IEnumerable<T> GetByTitle<T>(string title);
 
         T GetById<T>(int id);
