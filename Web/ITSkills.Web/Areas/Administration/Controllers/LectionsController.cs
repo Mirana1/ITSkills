@@ -1,10 +1,13 @@
 ﻿namespace ITSkills.Web.Areas.Administration.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using ITSkills.Data;
     using ITSkills.Data.Models;
+    using ITSkills.Services.Data;
+    using ITSkills.Web.ViewModels.Administration.Lections;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,17 +18,19 @@
     public class LectionsController : AdministrationController
     {
         private readonly ApplicationDbContext _context;
+        private readonly ILectionsService lectionsService;
 
-        public LectionsController(ApplicationDbContext context)
+        public LectionsController(ApplicationDbContext context, ILectionsService lectionsService)
         {
             _context = context;
+            this.lectionsService = lectionsService;
         }
 
         // GET: Administration/Lections
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var applicationDbContext = _context.Lections.Include(l => l.Course).Include(l => l.User);
-            return View(await applicationDbContext.ToListAsync());
+            IEnumerable<AllLectionsViewModel> lections = this.lectionsService.GetAll<AllLectionsViewModel>();
+            return this.View(lections);
         }
 
         // GET: Administration/Lections/Details/5

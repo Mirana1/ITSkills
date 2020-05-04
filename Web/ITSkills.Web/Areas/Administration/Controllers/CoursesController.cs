@@ -4,7 +4,6 @@
     using System.Threading.Tasks;
 
     using ITSkills.Common;
-    using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Administration.Courses;
@@ -12,46 +11,30 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
 
     [Authorize]
     [Area("Administration")]
     public class CoursesController : AdministrationController
     {
-        private readonly ApplicationDbContext _context;
         private readonly ICoursesService coursesService;
         private readonly ICategoriesService categoriesService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public CoursesController(ApplicationDbContext context, ICoursesService coursesService, ICategoriesService categoriesService, UserManager<ApplicationUser> userManager)
+        public CoursesController(ICoursesService coursesService, ICategoriesService categoriesService, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
             this.coursesService = coursesService;
             this.categoriesService = categoriesService;
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             IEnumerable<AllCoursesViewModel> courses = this.coursesService.GetAll<AllCoursesViewModel>();
             return this.View(courses);
         }
 
-        public async Task<IActionResult> Details(int id)
+        public IActionResult Details(int id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var course = await _context.Courses
-            //    .Include(c => c.Category)
-            //    .Include(c => c.User)
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (course == null)
-            //{
-            //    return NotFound();
-            //}
             if (!this.coursesService.CourseExists(id))
             {
                 return this.View(GlobalConstants.NotFoundRoute);

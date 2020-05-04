@@ -16,6 +16,7 @@
     using ITSkills.Web.ViewModels;
     using ITSkills.Web.ViewModels.Administration.Categories;
     using ITSkills.Web.ViewModels.Administration.Courses;
+    using ITSkills.Web.ViewModels.Administration.Lections;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -120,7 +121,9 @@
                 typeof(CategoryDropDownViewModel).GetTypeInfo().Assembly,
                 typeof(EditCourseViewModel).GetTypeInfo().Assembly,
                 typeof(DeleteCourseViewModel).GetTypeInfo().Assembly,
-                typeof(DetailsCourseViewModel).GetTypeInfo().Assembly);
+                typeof(DetailsCourseViewModel).GetTypeInfo().Assembly,
+                typeof(AllLectionsViewModel).GetTypeInfo().Assembly,
+                typeof(CourseViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())
