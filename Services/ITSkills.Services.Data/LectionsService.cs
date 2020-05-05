@@ -48,6 +48,20 @@
             return query.To<T>().ToList();
         }
 
+        public async Task EditAsync(int id, string title, string description, string url, string userId, int courseId)
+        {
+            var lection = this.lectionsRepository.All().Where(l => l.Id == id).FirstOrDefault();
+
+            lection.Title = title;
+            lection.Description = description;
+            lection.Url = url;
+            lection.UserId = userId;
+            lection.CourseId = courseId;
+
+            this.lectionsRepository.Update(lection);
+            await this.lectionsRepository.SaveChangesAsync();
+        }
+
         public T GetById<T>(int id)
         {
             return this.lectionsRepository
@@ -62,5 +76,11 @@
             return this.lectionsRepository.AllAsNoTracking().Any(l => l.Id == id);
         }
 
+        public bool LectionExists(int? id)
+        {
+            return this.lectionsRepository.All().Any(e => e.Id == id);
+        }
+
+        
     }
 }

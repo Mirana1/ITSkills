@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using ITSkills.Common;
     using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
@@ -18,6 +18,7 @@
     [Area("Administration")]
     public class LectionsController : AdministrationController
     {
+        private const string RedirectToRoute = "/Administration/Lections/Details/{0}";
         private readonly ApplicationDbContext _context;
         private readonly ILectionsService lectionsService;
         private readonly ICoursesService coursesService;
@@ -84,55 +85,40 @@
             return this.Redirect("/Administration/Lections");
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var users = this.userManager.Users;
+            IEnumerable<CoursesDropDownMenuViewModel> courses = this.coursesService.GetAll<CoursesDropDownMenuViewModel>();
+            var lection = this.lectionsService.GetById<EditLectionViewModel>(id);
 
-            var lection = await _context.Lections.FindAsync(id);
             if (lection == null)
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", lection.CourseId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", lection.UserId);
-            return View(lection);
+
+            lection.Users = users;
+            lection.Courses = courses;
+
+            return this.View(lection);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CourseId,Title,Url,Description,UserId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Lection lection)
+        public async Task<IActionResult> Edit(EditLectionViewModel input)
         {
-            if (id != lection.Id)
+            if (!this.lectionsService.LectionExists(input.Id))
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            if (ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(lection);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LectionExists(lection.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                return this.View(input);
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", lection.CourseId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", lection.UserId);
-            return View(lection);
+
+            await this.lectionsService.EditAsync(input.Id, input.Title, input.Description, input.Url, input.UserId, input.CourseId);
+
+            return this.Redirect(string.Format(RedirectToRoute, input.Id));
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -162,11 +148,6 @@
             _context.Lections.Remove(lection);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool LectionExists(int id)
-        {
-            return _context.Lections.Any(e => e.Id == id);
         }
     }
 }
