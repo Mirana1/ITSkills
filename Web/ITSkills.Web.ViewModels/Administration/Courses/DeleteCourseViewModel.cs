@@ -6,6 +6,7 @@
 
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
+    using ITSkills.Web.ViewModels.Courses;
 
     public class DeleteCourseViewModel : IMapFrom<Course>, IHaveCustomMappings
     {
@@ -38,7 +39,7 @@
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<DeleteCourseViewModel, UsersViewModel>().ForMember(id => id.Id, user => user.MapFrom(md => md.UserId));
-            configuration.CreateMap<DeleteCourseViewModel, CategoryViewModel>().ForMember(id => id.Id, category => category.MapFrom(c => c.CategoryId));
+            configuration.CreateMap<DeleteCourseViewModel, CoursesViewModel>().ForMember(id => id.Id, category => category.MapFrom(c => c.CategoryId));
         }
     }
 }

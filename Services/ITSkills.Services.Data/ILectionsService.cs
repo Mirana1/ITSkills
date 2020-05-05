@@ -13,6 +13,8 @@
 
         Task EditAsync(int id, string title, string description, string url, string userId, int courseId);
 
+        Task DeleteAsync(int id);
+
         bool TryGetById<T>(int id);
 
         bool LectionExists(int? id);

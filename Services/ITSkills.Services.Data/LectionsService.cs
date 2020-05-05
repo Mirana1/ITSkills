@@ -81,6 +81,11 @@
             return this.lectionsRepository.All().Any(e => e.Id == id);
         }
 
-        
+        public async Task DeleteAsync(int id)
+        {
+            var searchedLection = this.lectionsRepository.All().Where(l => l.Id == id).FirstOrDefault();
+            this.lectionsRepository.Delete(searchedLection);
+            await this.lectionsRepository.SaveChangesAsync();
+        }
     }
 }

@@ -121,33 +121,24 @@
             return this.Redirect(string.Format(RedirectToRoute, input.Id));
         }
 
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var lection = await _context.Lections
-                .Include(l => l.Course)
-                .Include(l => l.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var lection = this.lectionsService.GetById<DeleteLectionViewModel>(id);
             if (lection == null)
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            return View(lection);
+            return this.View(lection);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var lection = await _context.Lections.FindAsync(id);
-            _context.Lections.Remove(lection);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            await this.lectionsService.DeleteAsync(id);
+            return this.Redirect("/Administration/Lections");
         }
     }
 }
