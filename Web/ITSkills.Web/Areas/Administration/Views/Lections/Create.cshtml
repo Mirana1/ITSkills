@@ -1,20 +1,21 @@
-﻿@model ITSkills.Data.Models.Lection
+﻿@model ITSkills.Web.ViewModels.Administration.Lections.CreateLectionViewModel
 
 @{
     ViewData["Title"] = "Create";
+    var courses = Model.Courses.Select(x => new SelectListItem(x.Title, x.Id.ToString()));
+    var users = Model.Users.Select(x => new SelectListItem(x.UserName, x.Id.ToString()));
 }
 
-<h2>Create</h2>
-
-<h4>Lection</h4>
+<h2>Create lection</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CourseId" class="control-label"></label>
-                <select asp-for="CourseId" class ="form-control" asp-items="ViewBag.CourseId"></select>
+                <label asp-for="CourseId"></label>
+                <select asp-for="CourseId" asp-items="courses" class="form-control"></select>
+                <span asp-validation-for="CourseId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -33,29 +34,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
-                <select asp-for="UserId" class ="form-control" asp-items="ViewBag.UserId"></select>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="IsDeleted" /> @Html.DisplayNameFor(model => model.IsDeleted)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <label asp-for="DeletedOn" class="control-label"></label>
-                <input asp-for="DeletedOn" class="form-control" />
-                <span asp-validation-for="DeletedOn" class="text-danger"></span>
+                <select asp-for="UserId" asp-items="users" class="form-control"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CreatedOn" class="control-label"></label>
                 <input asp-for="CreatedOn" class="form-control" />
                 <span asp-validation-for="CreatedOn" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ModifiedOn" class="control-label"></label>
-                <input asp-for="ModifiedOn" class="form-control" />
-                <span asp-validation-for="ModifiedOn" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-success" />

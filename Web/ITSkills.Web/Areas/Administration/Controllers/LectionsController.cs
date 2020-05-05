@@ -9,6 +9,7 @@
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Administration.Lections;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
@@ -19,21 +20,23 @@
     {
         private readonly ApplicationDbContext _context;
         private readonly ILectionsService lectionsService;
+        private readonly ICoursesService coursesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public LectionsController(ApplicationDbContext context, ILectionsService lectionsService)
+        public LectionsController(ApplicationDbContext context, ILectionsService lectionsService, ICoursesService coursesService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             this.lectionsService = lectionsService;
+            this.coursesService = coursesService;
+            this.userManager = userManager;
         }
 
-        // GET: Administration/Lections
         public IActionResult Index()
         {
             IEnumerable<AllLectionsViewModel> lections = this.lectionsService.GetAll<AllLectionsViewModel>();
             return this.View(lections);
         }
 
-        // GET: Administration/Lections/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -53,33 +56,34 @@
             return View(lection);
         }
 
-        // GET: Administration/Lections/Create
         public IActionResult Create()
         {
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
-            return View();
+            var users = this.userManager.Users;
+
+            IEnumerable<CoursesDropDownMenuViewModel> courses = this.coursesService.GetAll<CoursesDropDownMenuViewModel>();
+            var viewModel = new CreateLectionViewModel
+            {
+                Courses = courses,
+                Users = users,
+            };
+
+            return this.View(viewModel);
         }
 
-        // POST: Administration/Lections/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CourseId,Title,Url,Description,UserId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Lection lection)
+        public async Task<IActionResult> Create(CreateLectionViewModel input)
         {
-            if (ModelState.IsValid)
+            if (this.ModelState.IsValid)
             {
-                _context.Add(lection);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var user = await this.userManager.GetUserAsync(this.User);
+                var userId = user.Id;
+                await this.lectionsService.CreateAsync(input.Title, input.Description, input.CourseId, input.Url, userId);
             }
-            ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id", lection.CourseId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", lection.UserId);
-            return View(lection);
+
+            return this.Redirect("/Administration/Lections");
         }
 
-        // GET: Administration/Lections/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -97,9 +101,6 @@
             return View(lection);
         }
 
-        // POST: Administration/Lections/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CourseId,Title,Url,Description,UserId,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Lection lection)
@@ -134,7 +135,6 @@
             return View(lection);
         }
 
-        // GET: Administration/Lections/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -154,7 +154,6 @@
             return View(lection);
         }
 
-        // POST: Administration/Lections/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

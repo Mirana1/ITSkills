@@ -123,7 +123,9 @@
                 typeof(DeleteCourseViewModel).GetTypeInfo().Assembly,
                 typeof(DetailsCourseViewModel).GetTypeInfo().Assembly,
                 typeof(AllLectionsViewModel).GetTypeInfo().Assembly,
-                typeof(CourseViewModel).GetTypeInfo().Assembly);
+                typeof(CourseViewModel).GetTypeInfo().Assembly,
+                typeof(CreateLectionViewModel).GetTypeInfo().Assembly,
+                typeof(CoursesDropDownMenuViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

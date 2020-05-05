@@ -5,7 +5,6 @@
 
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
-    using ITSkills.Web.ViewModels.Courses;
 
     public class LectionsViewModel : IMapFrom<Lection>
     {

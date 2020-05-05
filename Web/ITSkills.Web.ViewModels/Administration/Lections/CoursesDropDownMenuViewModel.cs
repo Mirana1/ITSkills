@@ -1,4 +1,4 @@
-﻿namespace ITSkills.Web.ViewModels.Lections
+﻿namespace ITSkills.Web.ViewModels.Administration.Lections
 {
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
