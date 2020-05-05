@@ -38,23 +38,16 @@
             return this.View(lections);
         }
 
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var lection = this.lectionsService.GetById<DetailsLectionViewModel>(id);
 
-            var lection = await _context.Lections
-                .Include(l => l.Course)
-                .Include(l => l.User)
-                .FirstOrDefaultAsync(m => m.Id == id);
             if (lection == null)
             {
-                return NotFound();
+                return this.View(GlobalConstants.NotFoundRoute);
             }
 
-            return View(lection);
+            return this.View(lection);
         }
 
         public IActionResult Create()
