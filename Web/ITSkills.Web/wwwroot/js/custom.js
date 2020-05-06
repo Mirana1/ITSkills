@@ -42,4 +42,3 @@ $(function () {
         $('.fadein :first-child').fadeOut().next('div').fadeIn().end().appendTo('.fadein');
     }, 5000);
 })(jQuery);
-

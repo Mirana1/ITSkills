@@ -1,11 +1,13 @@
 ﻿namespace ITSkills.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Linq;
 
     using ITSkills.Common;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Courses;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json.Linq;
 
     public class CoursesController : BaseController
     {
@@ -16,13 +18,13 @@
             this.coursesService = coursesService;
         }
 
-        public IActionResult Index(string searchString)
+        public IActionResult Index(string title)
         {
-            var courses = this.coursesService.GetByTitle<SearchCourseViewModel>(searchString);
+            IEnumerable<SearchCourseViewModel> courses = this.coursesService.GetByTitle<SearchCourseViewModel>(title);
 
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(title))
             {
-                courses = courses.Where(x => x.Title.Contains(searchString));
+                courses = courses.Where(x => x.Title.ToLower().Contains(title));
             }
 
             return this.View(courses);

@@ -80,10 +80,9 @@
         {
             return this.coursesRepository
             .AllAsNoTracking()
-            .Where(x => x.Title.Contains(title))
+            .Where(x => x.Title.ToLower().Contains(title))
             .To<T>()
             .ToList();
-
         }
 
         public bool TryGetById<T>(int id)

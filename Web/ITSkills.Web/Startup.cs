@@ -17,6 +17,7 @@
     using ITSkills.Web.ViewModels.Administration.Categories;
     using ITSkills.Web.ViewModels.Administration.Courses;
     using ITSkills.Web.ViewModels.Administration.Lections;
+    using ITSkills.Web.ViewModels.Courses;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -110,6 +111,7 @@
         {
             AutoMapperConfig.RegisterMappings(
                 typeof(ErrorViewModel).GetTypeInfo().Assembly,
+                typeof(SearchCourseViewModel).GetTypeInfo().Assembly,
                 typeof(CategoryEditInputModel).GetTypeInfo().Assembly,
                 typeof(AllCategoriesViewModel).GetTypeInfo().Assembly,
                 typeof(CategoryDetailsViewModel).GetTypeInfo().Assembly,

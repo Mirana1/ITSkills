@@ -19,8 +19,5 @@
 
         public DateTime CreatedOn { get; set; }
 
-        public ApplicationUser User { get; set; }
-
-        public IEnumerable<ViewModel> Courses { get; set; }
     }
 }
