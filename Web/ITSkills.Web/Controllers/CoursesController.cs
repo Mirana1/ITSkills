@@ -67,15 +67,16 @@
             RandomGenerator generator = new RandomGenerator();
             string paymentCode = generator.RandomCode();
 
-            var user = await this.userManager.GetUserAsync(this.User);
-            var username = this.userManager.GetUserName(this.User);
-            input.Username = username;
+            var viewModel = this.coursesService.GetById<PaymentViewModel>(input.Id);
 
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userName = user.UserName;
             var userId = user.Id;
 
-            await this.coursesService.AddCourseToUserAsync(input.Id, userId, paymentCode);
+            await this.coursesService.AddCourseToUserAsync(input.Id, userId, paymentCode, viewModel.Price, userName);
 
-            return this.Redirect("/");
+            //not implemented ↓
+            return this.View("PaymentCode");
         }
     }
 }

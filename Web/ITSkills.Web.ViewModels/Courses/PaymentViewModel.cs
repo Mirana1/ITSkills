@@ -7,11 +7,11 @@
 
     public class PaymentViewModel : IMapFrom<Course>, IHaveCustomMappings
     {
+        public int Id { get; set; }
+
         public string UserId { get; set; }
 
         public string Username { get; set; }
-
-        public int Id { get; set; }
 
         public string Title { get; set; }
 
@@ -24,8 +24,6 @@
             configuration.CreateMap<PaymentViewModel, UserPaymentViewModel>()
                 .ForMember(id => id.Id, user => user.MapFrom(u => u.UserId))
                 .ForMember(un => un.Username, user => user.MapFrom(u => u.Username));
-            configuration.CreateMap<PaymentViewModel, Course>()
-                .ForMember(p => p.Price, c => c.MapFrom(course => course.Price));
         }
     }
 }

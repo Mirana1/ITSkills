@@ -107,13 +107,15 @@
             await this.coursesRepository.SaveChangesAsync();
         }
 
-        public async Task<int> AddCourseToUserAsync(int courseId, string userId, string paymentCode)
+        public async Task<int> AddCourseToUserAsync(int courseId, string userId, string paymentCode, decimal? price, string username)
         {
             var courseToUser = new MyCourse
             {
                 CourseId = courseId,
                 UserId = userId,
                 PaymentCode = paymentCode,
+                Price = price,
+                Username = username,
             };
 
             await this.myCoursesRepository.AddAsync(courseToUser);

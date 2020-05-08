@@ -7,7 +7,7 @@
     {
         IEnumerable<T> GetAll<T>(int? count = null);
 
-        Task<int> AddCourseToUserAsync(int courseId, string userId, string paymentCode);
+        Task<int> AddCourseToUserAsync(int courseId, string userId, string paymentCode, decimal? price, string username);
 
         Task<int> CreateAsync(string title, string description, int categoryId, decimal? price, string usedId, string acquiredKnowledge, string requirements, string imageUrl);
 
