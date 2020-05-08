@@ -18,6 +18,7 @@
     using ITSkills.Web.ViewModels.Administration.Courses;
     using ITSkills.Web.ViewModels.Administration.Lections;
     using ITSkills.Web.ViewModels.Courses;
+    using ITSkills.Web.ViewModels.MyCourses;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -110,6 +111,9 @@
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             AutoMapperConfig.RegisterMappings(
+                typeof(PaymentViewModel).GetTypeInfo().Assembly,
+                typeof(UserPaymentViewModel).GetTypeInfo().Assembly,
+                typeof(CoursePaymentViewModel).GetTypeInfo().Assembly,
                 typeof(ErrorViewModel).GetTypeInfo().Assembly,
                 typeof(SearchCourseViewModel).GetTypeInfo().Assembly,
                 typeof(CategoryEditInputModel).GetTypeInfo().Assembly,
@@ -172,7 +176,7 @@
                 endpoints =>
                     {
                         endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-                        endpoints.MapControllerRoute("myCoursePayment", "/Course/Payment/{id}", new { controller = "MyCourses", action = "Payment" });
+                        endpoints.MapControllerRoute("myCoursePayment", "/Course/Payment/{id}", new { controller = "Courses", action = "Payment" });
                         endpoints.MapControllerRoute("courseSearch", "/Course/Index/{seachWord}", new { controller = "Courses", action = "Index" });
                         endpoints.MapControllerRoute("courseLection", "/Course/ById/{id}", new { controller = "Courses", action = "ById" });
                         endpoints.MapControllerRoute("lectionView", "/Lection/ById/{id}", new { controller = "Lections", action = "ById" });

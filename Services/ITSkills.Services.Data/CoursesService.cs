@@ -12,9 +12,12 @@
     {
         private readonly IRepository<Course> coursesRepository;
 
-        public CoursesService(IRepository<Course> coursesRepository)
+        private readonly IRepository<MyCourse> myCoursesRepository;
+
+        public CoursesService(IRepository<Course> coursesRepository, IRepository<MyCourse> myCoursesRepository)
         {
             this.coursesRepository = coursesRepository;
+            this.myCoursesRepository = myCoursesRepository;
         }
 
         public async Task<int> CreateAsync(string title, string description, int categoryId, decimal? price, string userId, string acquiredKnowledge, string requirements, string imageUrl)
@@ -102,6 +105,20 @@
             var searchedCourse = this.coursesRepository.All().Where(c => c.Id == id).FirstOrDefault();
             this.coursesRepository.Delete(searchedCourse);
             await this.coursesRepository.SaveChangesAsync();
+        }
+
+        public async Task<int> AddCourseToUserAsync(int courseId, string userId, string paymentCode)
+        {
+            var courseToUser = new MyCourse
+            {
+                CourseId = courseId,
+                UserId = userId,
+                PaymentCode = paymentCode,
+            };
+
+            await this.myCoursesRepository.AddAsync(courseToUser);
+            await this.myCoursesRepository.SaveChangesAsync();
+            return courseToUser.Id;
         }
     }
 }

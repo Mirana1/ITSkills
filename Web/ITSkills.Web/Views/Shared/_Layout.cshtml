@@ -30,21 +30,21 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        @*@if (this.User.IsInRole("Admin"))
-                            {*@
-                        <div class="w3-dropdown-hover">
-                            <button class="w3-button">Administration</button>
-                            <div class="w3-dropdown-content w3-bar-block w3-border">
-                                <a class="dropdown-item" asp-area="Administration" asp-controller="Categories" asp-action="Index">Category</a>
-                                <a class="dropdown-item" asp-area="Administration" asp-controller="Courses" asp-action="Index">Course</a>
-                                <a class="dropdown-item" asp-area="Administration" asp-controller="Lections" asp-action="Index">Lection</a>
+                        @if (this.User.IsInRole("Administrator"))
+                        {
+                            <div class="w3-dropdown-hover">
+                                <button class="w3-button">Administration</button>
+                                <div class="w3-dropdown-content w3-bar-block w3-border">
+                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Categories" asp-action="Index">Category</a>
+                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Courses" asp-action="Index">Course</a>
+                                    <a class="dropdown-item" asp-area="Administration" asp-controller="Lections" asp-action="Index">Lection</a>
+                                </div>
                             </div>
-                        </div>
+                        }
                         <form class="form-inline" asp-controller="Courses" asp-action="Index" method="get">
-                            <input class="form-control mr-sm-2" type="text" id="course-search-bar"placeholder="Search..." name="title">
-                            
+                            <input class="form-control mr-sm-2" type="text" id="course-search-bar" placeholder="Search..." name="title">
+                            <button class="btn btn-outline-secondary my-2 my-sm-0" style="background-color: #fafafa;" type="submit">Search</button>
                         </form>
-                        @*}*@
                     </ul>
                 </div>
             </div>

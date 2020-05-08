@@ -10,6 +10,7 @@
         public Course()
         {
             this.Lections = new HashSet<Lection>();
+            this.UserCourses = new HashSet<MyCourse>();
         }
 
         public string Title { get; set; }
@@ -33,5 +34,7 @@
         public virtual Category Category { get; set; }
 
         public virtual ICollection<Lection> Lections { get; set; }
+
+        public virtual ICollection<MyCourse> UserCourses { get; set; }
     }
 }

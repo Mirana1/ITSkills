@@ -2,20 +2,27 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using ITSkills.Common;
+    using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Courses;
+
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Newtonsoft.Json.Linq;
 
     public class CoursesController : BaseController
     {
         private readonly ICoursesService coursesService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IMyCoursesService myCoursesService;
 
-        public CoursesController(ICoursesService coursesService)
+        public CoursesController(ICoursesService coursesService, UserManager<ApplicationUser> userManager, IMyCoursesService myCoursesService)
         {
             this.coursesService = coursesService;
+            this.userManager = userManager;
+            this.myCoursesService = myCoursesService;
         }
 
         public IActionResult Index(string title)
@@ -39,6 +46,36 @@
 
             var viewModel = this.coursesService.GetById<CoursesViewModel>(id);
             return this.View(viewModel);
+        }
+
+        public ActionResult Payment(int id)
+        {
+            if (!this.coursesService.TryGetById<CoursesViewModel>(id))
+            {
+                return this.View(GlobalConstants.NotFoundRoute);
+            }
+
+            var currentUser = this.HttpContext.User.Identity.Name;
+            var viewModel = this.coursesService.GetById<PaymentViewModel>(id);
+            viewModel.Username = currentUser;
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Payment(PaymentViewModel input)
+        {
+            RandomGenerator generator = new RandomGenerator();
+            string paymentCode = generator.RandomCode();
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            var username = this.userManager.GetUserName(this.User);
+            input.Username = username;
+
+            var userId = user.Id;
+
+            await this.coursesService.AddCourseToUserAsync(input.Id, userId, paymentCode);
+
+            return this.Redirect("/");
         }
     }
 }

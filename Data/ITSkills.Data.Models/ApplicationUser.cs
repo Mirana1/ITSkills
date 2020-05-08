@@ -19,6 +19,7 @@ namespace ITSkills.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.Courses = new HashSet<Course>();
             this.Lections = new HashSet<Lection>();
+            this.UserCourses = new HashSet<MyCourse>();
         }
 
         // Audit info
@@ -48,5 +49,7 @@ namespace ITSkills.Data.Models
         public virtual ICollection<Lection> Lections { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
+
+        public virtual ICollection<MyCourse> UserCourses { get; set; }
     }
 }

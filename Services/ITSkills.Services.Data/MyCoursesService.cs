@@ -1,10 +1,7 @@
 ﻿namespace ITSkills.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Cryptography;
-    using System.Text;
     using System.Threading.Tasks;
 
     using ITSkills.Data.Common.Repositories;
@@ -33,36 +30,6 @@
             return query.To<T>().ToList();
         }
 
-        public async Task<int> AddCourseToUserAsync(int courseId, string userId, string paymentCode)
-        {
-            var courseToUser = new MyCourse
-            {
-                CourseId = courseId,
-                UserId = userId,
-                PaymentCode = this.Hash(paymentCode),
-            };
 
-            await this.myCoursesRepository.AddAsync(courseToUser);
-            await this.myCoursesRepository.SaveChangesAsync();
-            return courseToUser.Id;
-        }
-
-        private string Hash(string input)
-        {
-            if (input == null)
-            {
-                return null;
-            }
-
-            var crypt = new SHA256Managed();
-            var hash = new StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input));
-            foreach (byte theByte in crypto)
-            {
-                hash.Append(theByte.ToString("x2"));
-            }
-
-            return hash.ToString();
-        }
     }
 }

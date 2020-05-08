@@ -1,32 +1,29 @@
 ﻿namespace ITSkills.Web.Areas.Administration.Controllers
 {
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
+
     using ITSkills.Common;
-    using ITSkills.Data;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Administration.Lections;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
-    using Microsoft.EntityFrameworkCore;
 
     [Authorize]
     [Area("Administration")]
     public class LectionsController : AdministrationController
     {
-        private const string RedirectToRoute = "/Administration/Lections/Details/{0}";
-        private readonly ApplicationDbContext _context;
+        private const string EditRedirectRoute = "/Administration/Lections/Details/{0}";
+
         private readonly ILectionsService lectionsService;
         private readonly ICoursesService coursesService;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public LectionsController(ApplicationDbContext context, ILectionsService lectionsService, ICoursesService coursesService, UserManager<ApplicationUser> userManager)
+        public LectionsController(ILectionsService lectionsService, ICoursesService coursesService, UserManager<ApplicationUser> userManager)
         {
-            _context = context;
             this.lectionsService = lectionsService;
             this.coursesService = coursesService;
             this.userManager = userManager;
@@ -111,7 +108,7 @@
 
             await this.lectionsService.EditAsync(input.Id, input.Title, input.Description, input.Url, input.UserId, input.CourseId);
 
-            return this.Redirect(string.Format(RedirectToRoute, input.Id));
+            return this.Redirect(string.Format(EditRedirectRoute, input.Id));
         }
 
         public IActionResult Delete(int id)

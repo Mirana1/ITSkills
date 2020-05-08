@@ -7,16 +7,6 @@ namespace ITSkills.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "MyCourseCourseId",
-                table: "Courses",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
-                name: "MyCourseUserId",
-                table: "Courses",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "MyCourses",
                 columns: table => new
@@ -27,11 +17,22 @@ namespace ITSkills.Data.Migrations
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true)
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    PaymentCode = table.Column<string>(nullable: true),
+                    HasPayed = table.Column<bool>(nullable: false),
+                    Price = table.Column<decimal>(nullable: true),
+                    Username = table.Column<string>(nullable: true),
+                    PaymentDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MyCourses", x => new { x.UserId, x.CourseId });
+                    table.ForeignKey(
+                        name: "FK_MyCourses_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MyCourses_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -41,44 +42,20 @@ namespace ITSkills.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_MyCourseUserId_MyCourseCourseId",
-                table: "Courses",
-                columns: new[] { "MyCourseUserId", "MyCourseCourseId" });
+                name: "IX_MyCourses_CourseId",
+                table: "MyCourses",
+                column: "CourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MyCourses_IsDeleted",
                 table: "MyCourses",
                 column: "IsDeleted");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Courses_MyCourses_MyCourseUserId_MyCourseCourseId",
-                table: "Courses",
-                columns: new[] { "MyCourseUserId", "MyCourseCourseId" },
-                principalTable: "MyCourses",
-                principalColumns: new[] { "UserId", "CourseId" },
-                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Courses_MyCourses_MyCourseUserId_MyCourseCourseId",
-                table: "Courses");
-
             migrationBuilder.DropTable(
                 name: "MyCourses");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Courses_MyCourseUserId_MyCourseCourseId",
-                table: "Courses");
-
-            migrationBuilder.DropColumn(
-                name: "MyCourseCourseId",
-                table: "Courses");
-
-            migrationBuilder.DropColumn(
-                name: "MyCourseUserId",
-                table: "Courses");
         }
     }
 }

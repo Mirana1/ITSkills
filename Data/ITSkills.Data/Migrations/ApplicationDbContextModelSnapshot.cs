@@ -211,12 +211,6 @@ namespace ITSkills.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("MyCourseCourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MyCourseUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
@@ -234,8 +228,6 @@ namespace ITSkills.Data.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("MyCourseUserId", "MyCourseCourseId");
 
                     b.ToTable("Courses");
                 });
@@ -317,13 +309,15 @@ namespace ITSkills.Data.Migrations
                     b.Property<DateTime>("PaymentDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Price")
+                    b.Property<decimal?>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("UserId", "CourseId");
+
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("IsDeleted");
 
@@ -477,10 +471,6 @@ namespace ITSkills.Data.Migrations
                     b.HasOne("ITSkills.Data.Models.ApplicationUser", "User")
                         .WithMany("Courses")
                         .HasForeignKey("UserId");
-
-                    b.HasOne("ITSkills.Data.Models.MyCourse", null)
-                        .WithMany("Courses")
-                        .HasForeignKey("MyCourseUserId", "MyCourseCourseId");
                 });
 
             modelBuilder.Entity("ITSkills.Data.Models.Lection", b =>
@@ -498,8 +488,14 @@ namespace ITSkills.Data.Migrations
 
             modelBuilder.Entity("ITSkills.Data.Models.MyCourse", b =>
                 {
+                    b.HasOne("ITSkills.Data.Models.Course", "Course")
+                        .WithMany("UserCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ITSkills.Data.Models.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("UserCourses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

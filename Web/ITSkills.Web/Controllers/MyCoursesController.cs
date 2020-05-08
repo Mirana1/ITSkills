@@ -24,30 +24,6 @@
             this.coursesService = coursesService;
         }
 
-        public ActionResult Payment(int id)
-        {
-            if (!this.coursesService.TryGetById<CoursesViewModel>(id))
-            {
-                return this.View(GlobalConstants.NotFoundRoute);
-            }
-
-            var currentUser = this.HttpContext.User.Identity.Name;
-            var viewModel = this.coursesService.GetById<PaymentViewModel>(id);
-            viewModel.Username = currentUser;
-            return this.View(viewModel);
-        }
-
-        //[HttpPost]
-        //public async Task<IActionResult> Payment(int courseId, string userId, string paymentCode)
-        //{
-        //    var isAdded = this.myCourseService.AddCourseToUserAsync(courseId, userId, paymentCode);
-
-        //    if (isAdded)
-        //    {
-        //        return this.Redirect("/Trips/All");
-        //    }
-
-        //    return this.Redirect($"/Trips/Details?tripId={tripId}");
-        //}
+        
     }
 }
