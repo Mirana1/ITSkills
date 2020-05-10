@@ -21,9 +21,16 @@ else
     </div>
     <div class="text-center">
         <h1 class="display-4">My courses</h1>
-        @if (Model.MyCourses.Count() == null)
+        @*@if (Model.MyCourses.Count() == 0)
         {
             <p>You haven't added any courses yet.</p>
         }
+        else
+        {
+            foreach (var course in Model.MyCourses)
+            {
+                <p>@course.Price</p>
+            }
+        }*@
     </div>
 }

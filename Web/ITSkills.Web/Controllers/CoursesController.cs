@@ -78,13 +78,16 @@
 
             await this.coursesService.AddCourseToUserAsync(input.Id, userId, paymentCode, viewModel.Price, userName);
 
-            return this.RedirectToAction(nameof(this.PaymentCode));
+            return this.RedirectToAction("PaymentCode", "Courses", new { userId = userId, courseId = viewModel.Id});
         }
 
         [Authorize]
-        public IActionResult PaymentCode(int id)
+        public async Task<IActionResult> PaymentCode(string userId, int courseId)
         {
-            var viewModel = this.myCoursesService.GetById<PaymentCodeViewModel>(id);
+            var user = await this.userManager.GetUserAsync(this.User);
+            userId = user.Id;
+
+            var viewModel = this.myCoursesService.GetById<PaymentCodeViewModel>(userId, courseId);
 
             return this.View(viewModel);
         }

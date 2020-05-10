@@ -30,11 +30,11 @@
             return query.To<T>().ToList();
         }
 
-        public T GetById<T>(int id)
+        public T GetById<T>(string userId, int courseId)
         {
             return this.myCoursesRepository
                         .All()
-                        .Where(mc => mc.Id == id)
+                        .Where(mc => mc.UserId == userId && mc.CourseId == courseId)
                         .To<T>()
                         .FirstOrDefault();
         }

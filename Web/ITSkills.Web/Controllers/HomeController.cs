@@ -6,10 +6,13 @@
     using System.Linq;
     using System.Threading.Tasks;
     using ITSkills.Data;
+    using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels;
     using ITSkills.Web.ViewModels.Categories;
     using ITSkills.Web.ViewModels.Home;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Caching.Distributed;
@@ -19,17 +22,17 @@
     {
         private readonly ICategoriesService categoriesService;
         private readonly ICoursesService coursesService;
-        private readonly ApplicationDbContext db;
         private readonly IDistributedCache distributedCache;
         private readonly IMyCoursesService myCoursesService;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public HomeController(ICategoriesService categoriesService, ICoursesService coursesService, ApplicationDbContext db, IDistributedCache distributedCache, IMyCoursesService myCoursesService)
+        public HomeController(ICategoriesService categoriesService, ICoursesService coursesService, IDistributedCache distributedCache, IMyCoursesService myCoursesService, UserManager<ApplicationUser> userManager)
         {
             this.categoriesService = categoriesService;
             this.coursesService = coursesService;
-            this.db = db;
             this.distributedCache = distributedCache;
             this.myCoursesService = myCoursesService;
+            this.userManager = userManager;
         }
 
         public async Task<IActionResult> CacheTest()
@@ -44,43 +47,22 @@
             return this.Ok(data);
         }
 
-        public IActionResult Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
+            //    var user = await this.userManager.GetUserAsync(this.User);
+            //    var userId = user.Id;
+
             var viewModel = new IndexViewModel();
             var categories = this.categoriesService
                 .GetAll<IndexCategoryViewModel>();
             viewModel.Categories = categories;
-            var myCourses = this.myCoursesService.GetAll<MyCoursesViewModel>();
-            viewModel.MyCourses = myCourses;
+
+            //var myCourses = this.myCoursesService.GetAll<MyCoursesViewModel>().Where(x => x.UserId == userId).ToList();
+            //viewModel.MyCourses = myCourses;
+
             return this.View(viewModel);
         }
-
-        //public IActionResult Search(string title, string searchWord)
-        //{
-        //    var searchedCourses = new List<string>();
-
-        //    var allCourses = from c in db.Courses
-        //                     orderby c.Title
-        //                     select c.Title;
-
-        //    searchedCourses.AddRange(allCourses.Distinct());
-        //    ViewBag.title = new SelectList(searchedCourses);
-
-        //    var courses = from c in db.Courses
-        //                  select c;
-
-        //    if (!string.IsNullOrEmpty(searchWord))
-        //    {
-        //        courses = courses.Where(c => c.Title.Contains(searchWord));
-        //    }
-
-        //    if (!string.IsNullOrEmpty(title))
-        //    {
-        //        courses = courses.Where(c => c.Title == title);
-        //    }
-
-        //    return View(courses.ToList());
-        //}
 
         public IActionResult Privacy()
         {

@@ -7,6 +7,6 @@
     {
         IEnumerable<T> GetAll<T>(int? count = null);
 
-        T GetById<T>(int id);
+        T GetById<T>(string userId, int courseId);
     }
 }

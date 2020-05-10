@@ -1,16 +1,26 @@
 ﻿namespace ITSkills.Web.ViewModels.Home
 {
-    using System.Collections.Generic;
-
+    using AutoMapper;
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
-    public class MyCoursesViewModel : IMapFrom<MyCourse>
+    public class MyCoursesViewModel : IMapFrom<MyCourse>, IHaveCustomMappings
     {
         public string UserId { get; set; }
 
-        public ApplicationUser User { get; set; }
+        public int CourseId { get; set; }
 
-        public IEnumerable<CoursesInMyCoursesViewModel> Courses { get; set; }
+        public decimal? Price { get; set; }
+
+        public string Title { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<MyCoursesViewModel, ApplicationUser>()
+                .ForMember(x => x.Id, y => y.MapFrom(s => s.UserId));
+            configuration.CreateMap<MyCoursesViewModel, Course>()
+                .ForMember(x => x.Id, y => y.MapFrom(s => s.CourseId))
+                .ForMember(x => x.Id, y => y.MapFrom(s => s.Title));
+        }
     }
 }

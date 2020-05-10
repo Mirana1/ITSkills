@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Payment";
 }
-
 <head>
     <link rel="stylesheet" href="~/css/backToCoursebtn.css" />
 </head>
@@ -32,7 +31,9 @@
     <hr />
     <h4>Are  you sure you want to continue?</h4>
     <form class="form-inline" asp-controller="Courses" asp-action="Payment" method="post">
-        <button class="button" type="submit"><span>Join</span></button>
+        <button class="button" type="submit" style=" margin-right: 100px; margin-left: 180px;">
+            <span>Join</span>
+        </button>
     </form>
 </div>
 <style>

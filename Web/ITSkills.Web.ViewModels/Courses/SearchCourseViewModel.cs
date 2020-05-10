@@ -1,7 +1,7 @@
 ﻿namespace ITSkills.Web.ViewModels.Courses
 {
     using System;
-    using System.Collections.Generic;
+
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
@@ -18,6 +18,5 @@
         public decimal? Price { get; set; }
 
         public DateTime CreatedOn { get; set; }
-
     }
 }
