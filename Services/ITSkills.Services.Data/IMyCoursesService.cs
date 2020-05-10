@@ -6,5 +6,7 @@
     public interface IMyCoursesService
     {
         IEnumerable<T> GetAll<T>(int? count = null);
+
+        T GetById<T>(int id);
     }
 }

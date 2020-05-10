@@ -8,7 +8,8 @@
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels.Courses;
-
+    using ITSkills.Web.ViewModels.MyCourses;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -48,6 +49,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
         public ActionResult Payment(int id)
         {
             if (!this.coursesService.TryGetById<CoursesViewModel>(id))
@@ -61,6 +63,7 @@
             return this.View(viewModel);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Payment(PaymentViewModel input)
         {
@@ -75,8 +78,15 @@
 
             await this.coursesService.AddCourseToUserAsync(input.Id, userId, paymentCode, viewModel.Price, userName);
 
-            //not implemented ↓
-            return this.View("PaymentCode");
+            return this.RedirectToAction(nameof(this.PaymentCode));
+        }
+
+        [Authorize]
+        public IActionResult PaymentCode(int id)
+        {
+            var viewModel = this.myCoursesService.GetById<PaymentCodeViewModel>(id);
+
+            return this.View(viewModel);
         }
     }
 }

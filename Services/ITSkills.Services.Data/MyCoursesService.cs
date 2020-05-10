@@ -30,6 +30,13 @@
             return query.To<T>().ToList();
         }
 
-
+        public T GetById<T>(int id)
+        {
+            return this.myCoursesRepository
+                        .All()
+                        .Where(mc => mc.Id == id)
+                        .To<T>()
+                        .FirstOrDefault();
+        }
     }
 }
