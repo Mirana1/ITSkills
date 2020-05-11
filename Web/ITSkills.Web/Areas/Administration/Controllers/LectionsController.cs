@@ -22,6 +22,9 @@
         private readonly ICoursesService coursesService;
         private readonly UserManager<ApplicationUser> userManager;
 
+        [TempData]
+        public string StatusMessage { get; set; }
+
         public LectionsController(ILectionsService lectionsService, ICoursesService coursesService, UserManager<ApplicationUser> userManager)
         {
             this.lectionsService = lectionsService;
@@ -72,6 +75,7 @@
                 await this.lectionsService.CreateAsync(input.Title, input.Description, input.CourseId, input.Url, userId);
             }
 
+            this.StatusMessage = "Lection created!";
             return this.Redirect("/Administration/Lections");
         }
 

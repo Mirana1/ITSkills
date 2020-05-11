@@ -50,16 +50,20 @@
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            //    var user = await this.userManager.GetUserAsync(this.User);
-            //    var userId = user.Id;
-
             var viewModel = new IndexViewModel();
+
             var categories = this.categoriesService
                 .GetAll<IndexCategoryViewModel>();
             viewModel.Categories = categories;
 
-            //var myCourses = this.myCoursesService.GetAll<MyCoursesViewModel>().Where(x => x.UserId == userId).ToList();
-            //viewModel.MyCourses = myCourses;
+            if (this.User.Identity.IsAuthenticated)
+            {
+                var user = await this.userManager.GetUserAsync(this.User);
+                var userId = user.Id;
+
+                var myCourses = this.myCoursesService.GetAll<MyCoursesViewModel>().Where(x => x.UserId == userId).ToList();
+                viewModel.MyCourses = myCourses;
+            }
 
             return this.View(viewModel);
         }
