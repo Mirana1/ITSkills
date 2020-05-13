@@ -1,62 +1,50 @@
 ﻿namespace ITSkills.Web.Controllers
 {
-    using System.Threading.Tasks;
     using ITSkills.Common;
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
+    using ITSkills.Web.ViewModels.Courses;
     using ITSkills.Web.ViewModels.Lections;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Threading.Tasks;
 
     public class LectionsController : BaseController
     {
         private readonly ILectionsService lectionsService;
-        private readonly ICoursesService coursesService;
+        private readonly IMyCoursesService myCoursesService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ICoursesService coursesService;
 
-        public LectionsController(ILectionsService lectionsService, ICoursesService coursesService, UserManager<ApplicationUser> userManager)
+        public LectionsController(ILectionsService lectionsService, IMyCoursesService myCoursesService, UserManager<ApplicationUser> userManager, ICoursesService coursesService)
         {
             this.lectionsService = lectionsService;
-            this.coursesService = coursesService;
+            this.myCoursesService = myCoursesService;
             this.userManager = userManager;
+            this.coursesService = coursesService;
         }
 
         [Authorize]
-        public IActionResult ById(int id)
+        public async Task<IActionResult> ById(int id)
         {
             if (!this.lectionsService.TryGetById<LectionsViewModel>(id))
             {
                 return this.View(GlobalConstants.NotFoundRoute);
             }
 
+            var user = await this.userManager.GetUserAsync(this.User);
+            var userId = user.Id;
+
+            if (!this.myCoursesService.IsHasPayed(userId))
+            {
+                return this.RedirectToAction("Payment", "Courses");
+            }
+
             var lections = this.lectionsService.GetAll<ListLectionsViewModel>();
             var viewModel = this.lectionsService.GetById<LectionsViewModel>(id);
             viewModel.Lections = lections;
-
             return this.View(viewModel);
         }
-
-        //[Authorize]
-        //public IActionResult Create()
-        //{
-        //    var courses = this.coursesService.GetAll<CoursesDropDownMenuViewModel>();
-        //    var viewModel = new CreateLectionViewModel
-        //    {
-        //        Courses = courses,
-        //    };
-        //    return this.View(viewModel);
-        //}
-
-        //[Authorize]
-        //[HttpPost]
-        //public async Task<IActionResult> Create(CreateLectionViewModel input)
-        //{
-        //    var user = await this.userManager.GetUserAsync(this.User);
-        //    var userId = user.Id;
-        //    var lectionId = await this.lectionsService.CreateAsync(input.Title, input.Description, input.CourseId, input.Url, userId);
-
-        //    return this.RedirectToAction(nameof(this.ById), new { id = lectionId });
-        //}
     }
 }

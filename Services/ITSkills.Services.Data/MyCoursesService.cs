@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
 
     using ITSkills.Data.Common.Repositories;
     using ITSkills.Data.Models;
@@ -37,6 +36,11 @@
                         .Where(mc => mc.UserId == userId && mc.CourseId == courseId)
                         .To<T>()
                         .FirstOrDefault();
+        }
+
+        public bool IsHasPayed(string userId)
+        {
+            return this.myCoursesRepository.All().Any(x => x.UserId == userId && x.HasPayed == true);
         }
     }
 }

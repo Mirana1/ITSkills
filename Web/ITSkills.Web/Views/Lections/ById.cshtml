@@ -6,26 +6,34 @@
 <head>
     <link rel="stylesheet" href="~/css/backToCoursebtn.css" />
 </head>
-<h4 class="text-center" style="text-transform:uppercase">@Model.Title</h4>
-<br />
-<div class="row">
-    <div class="column">
-        <iframe src="@Model.IFrameSource"></iframe>
-    </div>
-    <div class="column">
-        <form action="/Course/ById/@Model.CourseId">
-            <button class="button"><span>Back to course </span></button>
-        </form>
-        <div class="container">
-            <h2>All Lections</h2>
-            <ul class="list-group">
-                @foreach (var lection in Model.Lections.Where(x=>x.CourseId == courseId))
-                {
-                    <li class="list-group-item">
-                        <a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a>
-                    </li>
-                }
-            </ul>
+@if (Model.HasPayed.Equals(true))
+{
+  <p>test</p>
+}
+else
+{
+    <h4 class="text-center" style="text-transform:uppercase">@Model.Title</h4>
+    <br />
+    <div class="row">
+        <div class="column">
+            <iframe src="@Model.IFrameSource"></iframe>
+        </div>
+        <div class="column">
+            <form action="/Course/ById/@Model.CourseId">
+                <button class="button"><span>Back to course </span></button>
+            </form>
+            <div class="container">
+                <h2>All Lections</h2>
+                <ul class="list-group">
+                    @foreach (var lection in Model.Lections.Where(x => x.CourseId == courseId))
+                    {
+                        <li class="list-group-item">
+                            <a asp-controller="Lections" asp-action="ById" asp-route-id="@lection.Id">@lection.Title</a>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
-</div>
+
+}

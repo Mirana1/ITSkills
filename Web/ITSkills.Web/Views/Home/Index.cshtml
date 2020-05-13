@@ -6,6 +6,7 @@
 
 <head>
     <link rel="stylesheet" href="~/css/sidebar.css" />
+    <link rel="stylesheet" href="~/css/cardStyle.css" />
 </head>
 @if (!this.User.Identity.IsAuthenticated)
 {
@@ -25,16 +26,24 @@ else
         {
             @if (Model.MyCourses.Count() > 0)
             {
-                foreach (var course in Model.MyCourses)
-                {
-                    <p>@course.Price</p>
-                }
-
+                <div class="row">
+                    @foreach (var course in Model.MyCourses)
+                    {
+                        <div class="column">
+                            <div class="card">
+                                <img src="@course.ImageUrl" />
+                                <p><a asp-controller="Course" asp-action="ById" asp-route-id="@course.CourseId">@course.Title</a></p>
+                            </div>
+                        </div>
+                    }
+                </div>
             }
             else
             {
-                <h1>TEST</h1>
+                <h2>You don't have any courses yet...</h2>
             }
         }
     </div>
 }
+<style>
+</style>

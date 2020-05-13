@@ -14,6 +14,8 @@
 
         public string Title { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<MyCoursesViewModel, ApplicationUser>()

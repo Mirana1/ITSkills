@@ -3,10 +3,12 @@
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
 
+    using AutoMapper;
+
     using ITSkills.Data.Models;
     using ITSkills.Services.Mapping;
 
-    public class LectionsViewModel : IMapFrom<Lection>
+    public class LectionsViewModel : IMapFrom<Lection>, IHaveCustomMappings
     {
         public string Title { get; set; }
 
@@ -17,6 +19,8 @@
         public int CourseId { get; set; }
 
         public Course Course { get; set; }
+
+        public bool HasPayed { get; set; }
 
         public IEnumerable<ListLectionsViewModel> Lections { get; set; }
 
@@ -35,6 +39,12 @@
                     return this.Url;
                 }
             }
+        }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<MyCourse, LectionsViewModel>()
+                .ForMember(x => x.HasPayed, y => y.MapFrom(s => s.HasPayed));
         }
     }
 }

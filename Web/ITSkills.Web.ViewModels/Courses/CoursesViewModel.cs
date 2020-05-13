@@ -27,5 +27,6 @@
         public string AcquiredKnowledge { get; set; }
 
         public IEnumerable<LectionsInCourseViewModel> Lections { get; set; }
+
     }
 }

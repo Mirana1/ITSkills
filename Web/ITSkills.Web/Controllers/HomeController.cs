@@ -1,22 +1,19 @@
 ﻿namespace ITSkills.Web.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
-    using ITSkills.Data;
+
     using ITSkills.Data.Models;
     using ITSkills.Services.Data;
     using ITSkills.Web.ViewModels;
-    using ITSkills.Web.ViewModels.Categories;
     using ITSkills.Web.ViewModels.Home;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.Extensions.Caching.Distributed;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class HomeController : BaseController
     {
@@ -62,6 +59,17 @@
                 var userId = user.Id;
 
                 var myCourses = this.myCoursesService.GetAll<MyCoursesViewModel>().Where(x => x.UserId == userId).ToList();
+                var coursesTitles = this.coursesService.GetAll<CoursesInMyCoursesViewModel>();
+
+                foreach (var course in myCourses)
+                {
+                    foreach (var title in coursesTitles.Where(x => x.Id == course.CourseId))
+                    {
+                        course.ImageUrl = title.ImageUrl;
+                        course.Title = title.Title;
+                    }
+                }
+
                 viewModel.MyCourses = myCourses;
             }
 
